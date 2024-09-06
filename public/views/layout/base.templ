@@ -1,0 +1,9 @@
+package layout
+
+templ Base(title string) {
+@Header(title) {
+<div id="main-container" class="flex flex-col mx-auto text-center h-screen">
+  { children... }
+</div>
+}
+}

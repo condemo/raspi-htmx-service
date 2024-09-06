@@ -1,0 +1,5 @@
+.env
+bin/
+tmp/
+public/views/**/*.txt
+public/static/css/input.css
