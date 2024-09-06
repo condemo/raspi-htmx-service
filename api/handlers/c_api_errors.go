@@ -18,7 +18,11 @@ var InternalServerError = NewApiError(
 )
 
 func NewApiError(err error, msg string, status int) ApiError {
-	return ApiError{}
+	return ApiError{
+		Err:    err,
+		Msg:    msg,
+		Status: status,
+	}
 }
 
 func (e ApiError) Error() string {
