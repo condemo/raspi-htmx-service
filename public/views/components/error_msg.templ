@@ -1,0 +1,9 @@
+package components
+
+import "github.com/condemo/raspi-htmx-service/api/handlers/errors"
+
+templ SimpleError(e errors.UINofifyError) {
+	<p>
+		{ e.Msg }
+	</p>
+}

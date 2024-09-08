@@ -1,0 +1,19 @@
+package core
+
+import (
+	"github.com/condemo/raspi-htmx-service/api/handlers/errors"
+	"strconv"
+)
+
+templ ErrorPage(e errors.ApiError, el ...errors.ApiError) {
+	<h1>{ strconv.FormatInt(int64(e.Status), 10) }</h1>
+	<p>
+		{ e.Msg }
+	</p>
+	<hr/>
+	for _, err := range el {
+		<p>
+			{ err.Msg }
+		</p>
+	}
+}
