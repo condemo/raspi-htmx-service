@@ -1,0 +1,20 @@
+{
+  "short_name": "GusRP",
+  "manifest_version": 2,
+  "version": "0.0.1",
+  "name": "GusRaspi",
+  "start_url": "/",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "./img/raspi_v1-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/raspi_v1-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
