@@ -1,9 +1,14 @@
 package layout
 
+import "github.com/condemo/raspi-htmx-service/public/views/components"
+
 templ Base(title string) {
-@Header(title) {
-<div id="main-container" class="flex flex-col mx-auto text-center h-screen">
-  { children... }
-</div>
-}
+	@Header(title) {
+		<body hx-boost="true">
+			<div id="main-container" class="flex flex-col mx-auto text-center h-screen">
+				@components.Navbar()
+				{ children... }
+			</div>
+		</body>
+	}
 }
