@@ -1,0 +1,37 @@
+package components
+
+templ Infobar() {
+	<div class="stats stats-vertical lg:stats-horizontal shadow" id="info_bar" hx-swap-oob="true">
+		<div class="stat">
+			<div class="stat-title">SD CARD</div>
+			<div class="stat-value text-2xl">86GB/116GB</div>
+		</div>
+		<div class="stat">
+			<div class="stat-title">Toshiba</div>
+			<div class="stat-value text-2xl">634GB/953GB</div>
+		</div>
+		<div class="stat">
+			<div class="stat-title">Ram Usage</div>
+			<div class="stat-value text-2xl">
+				953mb/3945mb
+				(29.2%)
+			</div>
+			<div class="stat-title">Net Speed</div>
+			<div class="stat-value text-2xl">&#8593; 0,23kb &#8595; 0,64kb</div>
+		</div>
+		<div class="stat">
+			<div class="stat-title">Cpu Usage</div>
+			<div class="stat-value text-2xl">
+				1.23% 2.64% 0.01% 5.32%
+			</div>
+			<div class="stat-title">Cpu Temp</div>
+			<div class="stat-value text-2xl">56°C</div>
+		</div>
+		<div class="stat">
+			<div class="stat-title">Vent Status</div>
+			<div class="stat-value text-success text-2xl">[on]</div>
+			<div class="stat-title">Vent Speed</div>
+			<div class="stat-value text-2xl">2395rpm</div>
+		</div>
+	</div>
+}
