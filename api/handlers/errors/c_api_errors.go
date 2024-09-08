@@ -1,10 +1,5 @@
 package errors
 
-import (
-	"errors"
-	"net/http"
-)
-
 type ApiError struct {
 	Err    error
 	Msg    string
@@ -22,12 +17,6 @@ func NewApiError(err error, msg string, status int) ApiError {
 func (e ApiError) Error() string {
 	return e.Err.Error()
 }
-
-var InternalServerError = NewApiError(
-	errors.New("internal server error"),
-	"internal server errror",
-	http.StatusInternalServerError,
-)
 
 type UINofifyError struct {
 	Msg string

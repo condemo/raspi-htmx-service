@@ -54,6 +54,7 @@ func (s *ApiServer) Run() {
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*30)
 	defer cancel()
+
 	// server.Shutdown ends the execution of the program
 	// after waiting for all active connections to finish or 30 seconds to pass
 	server.Shutdown(ctx)
