@@ -1,9 +1,16 @@
 package core
 
-import "github.com/condemo/raspi-htmx-service/public/views/layout"
+import (
+	"github.com/condemo/raspi-htmx-service/public/views/components"
+	"github.com/condemo/raspi-htmx-service/public/views/layout"
+	"github.com/condemo/raspi-htmx-service/tools"
+)
 
 templ Home() {
 	@layout.Base("Home") {
-		<h1>HomeView</h1>
+		<div hx-ext="ws" ws-connect="/ws/info">
+			@components.Infobar(tools.NewSysInfo())
+			<h1>HomeView</h1>
+		</div>
 	}
 }
