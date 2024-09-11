@@ -8,9 +8,9 @@ import (
 
 templ Home() {
 	@layout.Base("Home") {
-		<div hx-ext="ws" ws-connect="/ws/info">
+		<div hx-ext="ws" ws-connect="/ws/info" id="home-container">
+			@components.Infobar(tools.NewSysInfo())
 			<div id="view-container">
-				@components.Infobar(tools.NewSysInfo())
 				<h1>HomeView</h1>
 			</div>
 		</div>

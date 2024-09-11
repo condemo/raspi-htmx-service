@@ -3,7 +3,7 @@ package components
 import "github.com/condemo/raspi-htmx-service/tools"
 
 templ Infobar(i *tools.SysInfo) {
-	<div class="stats stats-vertical lg:stats-horizontal shadow" id="info_bar" hx-swap-oob="true">
+	<div class="stats stats-vertical lg:stats-horizontal shadow" id="info_bar">
 		<div class="stat">
 			<div class="stat-title">SD CARD</div>
 			<div class="stat-value text-2xl">{ i.RootUsed }/{ i.RootTotal }</div>
