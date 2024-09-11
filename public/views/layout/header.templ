@@ -9,6 +9,8 @@ templ Header(title string) {
 			<title>{ title } | Raspi</title>
 			<link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
 			<link rel="manifest" href="/static/manifest.json"/>
+			<script src="/static/js/htmx.js"></script>
+			<script src="/static/js/htmx-ws.js"></script>
 		</head>
 		{ children... }
 	</html>

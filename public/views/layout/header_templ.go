@@ -39,7 +39,7 @@ func Header(title string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" | Raspi</title><link rel=\"stylesheet\" type=\"text/css\" href=\"/static/css/style.css\"><link rel=\"manifest\" href=\"/static/manifest.json\"></head>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" | Raspi</title><link rel=\"stylesheet\" type=\"text/css\" href=\"/static/css/style.css\"><link rel=\"manifest\" href=\"/static/manifest.json\"><script src=\"/static/js/htmx.js\"></script><script src=\"/static/js/htmx-ws.js\"></script></head>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
