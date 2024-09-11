@@ -25,16 +25,20 @@ func NewApiServer(addr string) *ApiServer {
 func (s *ApiServer) Run() {
 	router := http.NewServeMux()
 	view := http.NewServeMux()
+	ws := http.NewServeMux()
 	fs := http.FileServer(http.Dir("public/static"))
 
 	router.Handle("/", view)
 	router.Handle("/static/", http.StripPrefix("/static/", fs))
+	router.Handle("/ws/", http.StripPrefix("/ws", ws))
 
 	// Handlers
 	viewHandler := handlers.NewViewHandler()
+	wsHandler := handlers.NewWSHandler()
 
 	// Routes Load
 	viewHandler.RegisterRoutes(view)
+	wsHandler.RegisterRoutes(ws)
 
 	server := http.Server{
 		Addr:         s.addr,
