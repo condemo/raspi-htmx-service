@@ -7,7 +7,6 @@ templ Base(title string) {
 		<body hx-boost="true">
 			<div id="main-container" class="flex flex-col mx-auto text-center h-screen">
 				@components.Navbar()
-				@components.Infobar()
 				{ children... }
 			</div>
 			@components.Footer()
