@@ -65,13 +65,11 @@ func (h *WSHandler) writeLoop(c *websocket.Conn, s chan struct{}) {
 		select {
 		case <-t.C:
 			h.sysInfo.Update()
-			// TODO: crear dinámicamente infobar con la info
-			tmpl, err := templ.ToGoHTML(context.Background(), components.Infobar())
+			tmpl, err := templ.ToGoHTML(context.Background(), components.Infobar(h.sysInfo))
 			if err != nil {
 				fmt.Println("error converting component to html:", err)
 				return
 			}
-
 			c.WriteMessage(websocket.TextMessage, []byte(tmpl))
 
 		case <-s:
