@@ -18,6 +18,7 @@ func MakeHandler(f customHandler) http.HandlerFunc {
 		if err := f(w, r); err != nil {
 			switch err := err.(type) {
 			case errors.UINofifyError:
+				w.WriteHeader(err.Status)
 				RenderTempl(w, r, components.SimpleError(err))
 			case errors.ApiError:
 				RenderTempl(w, r, core.ErrorPage(err))
