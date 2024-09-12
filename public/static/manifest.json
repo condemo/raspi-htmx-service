@@ -3,7 +3,7 @@
   "manifest_version": 2,
   "version": "0.0.1",
   "name": "GusRaspi",
-  "start_url": "/",
+  "start_url": "/app/",
   "display": "standalone",
   "background_color": "#282A36",
   "icons": [
