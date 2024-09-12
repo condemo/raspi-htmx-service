@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/condemo/raspi-htmx-service/api/handlers"
+	"github.com/condemo/raspi-htmx-service/api/handlers/middlewares"
 	"github.com/condemo/raspi-htmx-service/store"
 )
 
@@ -32,7 +33,7 @@ func (s *ApiServer) Run() {
 	ws := http.NewServeMux()
 	fs := http.FileServer(http.Dir("public/static"))
 
-	router.Handle("/", view)
+	router.Handle("/app/", http.StripPrefix("/app", middlewares.RequireAuth(view)))
 	router.Handle("/auth/", http.StripPrefix("/auth", auth))
 	router.Handle("/static/", http.StripPrefix("/static/", fs))
 	router.Handle("/ws/", http.StripPrefix("/ws", ws))
