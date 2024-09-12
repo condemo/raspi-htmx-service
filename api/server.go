@@ -24,19 +24,23 @@ func NewApiServer(addr string) *ApiServer {
 
 func (s *ApiServer) Run() {
 	router := http.NewServeMux()
+	auth := http.NewServeMux()
 	view := http.NewServeMux()
 	ws := http.NewServeMux()
 	fs := http.FileServer(http.Dir("public/static"))
 
 	router.Handle("/", view)
+	router.Handle("/auth/", http.StripPrefix("/auth", auth))
 	router.Handle("/static/", http.StripPrefix("/static/", fs))
 	router.Handle("/ws/", http.StripPrefix("/ws", ws))
 
 	// Handlers
+	authHandler := handlers.NewAuthHandler()
 	viewHandler := handlers.NewViewHandler()
 	wsHandler := handlers.NewWSHandler()
 
 	// Routes Load
+	authHandler.RegisterRoutes(auth)
 	viewHandler.RegisterRoutes(view)
 	wsHandler.RegisterRoutes(ws)
 
