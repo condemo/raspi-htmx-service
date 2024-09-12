@@ -10,15 +10,18 @@ import (
 	"time"
 
 	"github.com/condemo/raspi-htmx-service/api/handlers"
+	"github.com/condemo/raspi-htmx-service/store"
 )
 
 type ApiServer struct {
-	addr string
+	store store.Store
+	addr  string
 }
 
-func NewApiServer(addr string) *ApiServer {
+func NewApiServer(addr string, s store.Store) *ApiServer {
 	return &ApiServer{
-		addr: addr,
+		addr:  addr,
+		store: s,
 	}
 }
 
@@ -35,7 +38,7 @@ func (s *ApiServer) Run() {
 	router.Handle("/ws/", http.StripPrefix("/ws", ws))
 
 	// Handlers
-	authHandler := handlers.NewAuthHandler()
+	authHandler := handlers.NewAuthHandler(s.store)
 	viewHandler := handlers.NewViewHandler()
 	wsHandler := handlers.NewWSHandler()
 
