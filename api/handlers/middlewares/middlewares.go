@@ -1,6 +1,11 @@
 package middlewares
 
-import "net/http"
+import (
+	"context"
+	"net/http"
+
+	"github.com/condemo/raspi-htmx-service/api/utils"
+)
 
 type Middleware func(next http.Handler) http.HandlerFunc
 
@@ -10,5 +15,34 @@ func MiddlewareStack(m ...Middleware) Middleware {
 			next = m[i](next)
 		}
 		return next.ServeHTTP
+	}
+}
+
+func RequireAuth(next http.Handler) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		c, err := r.Cookie("raspi-token")
+		if err != nil {
+			w.Header().Set("Cache-Control", "no-cache")
+			http.Redirect(w, r, "/auth/login", http.StatusPermanentRedirect)
+			return
+		}
+
+		if c.Value == "" {
+			w.Header().Set("Cache-Control", "no-cache")
+			http.Redirect(w, r, "/auth/login", http.StatusPermanentRedirect)
+			return
+		}
+
+		claims, err := utils.ValidateJWT(c.Value)
+		if err != nil {
+			w.Header().Set("Cache-Control", "no-cache")
+			http.Redirect(w, r, "/auth/login", http.StatusPermanentRedirect)
+			return
+		}
+
+		id := claims.UserID
+		ctx := context.WithValue(r.Context(), utils.UserID("userID"), id)
+
+		next.ServeHTTP(w, r.Clone(ctx))
 	}
 }
