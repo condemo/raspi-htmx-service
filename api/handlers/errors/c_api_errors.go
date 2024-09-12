@@ -19,7 +19,15 @@ func (e ApiError) Error() string {
 }
 
 type UINofifyError struct {
-	Msg string
+	Msg    string
+	Status int
+}
+
+func NewUINotifyError(msg string, status int) UINofifyError {
+	return UINofifyError{
+		Msg:    msg,
+		Status: status,
+	}
 }
 
 func (e UINofifyError) Error() string {
