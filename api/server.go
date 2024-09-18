@@ -34,7 +34,7 @@ func (s *ApiServer) Run() {
 	fs := http.FileServer(http.Dir("public/static"))
 
 	router.Handle("/app/", http.StripPrefix("/app", middlewares.RequireAuth(view)))
-	router.Handle("/auth/", http.StripPrefix("/auth", auth))
+	router.Handle("/auth/", http.StripPrefix("/auth", middlewares.Logger(auth)))
 	router.Handle("/static/", http.StripPrefix("/static/", fs))
 	router.Handle("/ws/", http.StripPrefix("/ws", ws))
 

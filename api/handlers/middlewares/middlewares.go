@@ -7,6 +7,16 @@ import (
 	"github.com/condemo/raspi-htmx-service/api/utils"
 )
 
+type wrapperResponse struct {
+	http.ResponseWriter
+	status int
+}
+
+func (wr *wrapperResponse) WriteHeader(status int) {
+	wr.ResponseWriter.WriteHeader(status)
+	wr.status = status
+}
+
 type Middleware func(next http.Handler) http.HandlerFunc
 
 func MiddlewareStack(m ...Middleware) Middleware {
