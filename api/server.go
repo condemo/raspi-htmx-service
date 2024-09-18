@@ -33,8 +33,14 @@ func (s *ApiServer) Run() {
 	ws := http.NewServeMux()
 	fs := http.FileServer(http.Dir("public/static"))
 
+	// Middlewares
+	basicMiddleware := middlewares.MiddlewareStack(
+		middlewares.Logger,
+		middlewares.Recover,
+	)
+
 	router.Handle("/app/", http.StripPrefix("/app", middlewares.RequireAuth(view)))
-	router.Handle("/auth/", http.StripPrefix("/auth", middlewares.Logger(auth)))
+	router.Handle("/auth/", http.StripPrefix("/auth", basicMiddleware(auth)))
 	router.Handle("/static/", http.StripPrefix("/static/", fs))
 	router.Handle("/ws/", http.StripPrefix("/ws", ws))
 
