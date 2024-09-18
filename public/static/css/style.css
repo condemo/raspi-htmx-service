@@ -1643,11 +1643,6 @@ html {
   margin-right: auto;
 }
 
-.my-3 {
-  margin-top: 0.75rem;
-  margin-bottom: 0.75rem;
-}
-
 .my-9 {
   margin-top: 2.25rem;
   margin-bottom: 2.25rem;
@@ -1657,12 +1652,12 @@ html {
   display: flex;
 }
 
-.h-screen {
-  height: 100vh;
-}
-
 .h-4 {
   height: 1rem;
+}
+
+.h-screen {
+  height: 100vh;
 }
 
 .w-4 {
@@ -1697,15 +1692,6 @@ html {
 
 .p-4 {
   padding: 1rem;
-}
-
-.py-3 {
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-}
-
-.pt-3 {
-  padding-top: 0.75rem;
 }
 
 .text-center {
