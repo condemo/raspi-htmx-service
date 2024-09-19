@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/condemo/raspi-htmx-service/api/handlers"
-	"github.com/condemo/raspi-htmx-service/api/handlers/middlewares"
+	"github.com/condemo/raspi-htmx-service/api/middlewares"
 	"github.com/condemo/raspi-htmx-service/store"
 )
 
