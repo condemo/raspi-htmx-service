@@ -39,6 +39,11 @@ func (s *ApiServer) Run() {
 		middlewares.Recover,
 	)
 
+	// Redirect to app route
+	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, "/app", http.StatusSeeOther)
+	})
+
 	router.Handle("/app/", http.StripPrefix("/app", middlewares.RequireAuth(view)))
 	router.Handle("/auth/", http.StripPrefix("/auth", basicMiddleware(auth)))
 	router.Handle("/static/", http.StripPrefix("/static/", fs))
