@@ -346,7 +346,7 @@ func Infobar(i *tools.SysInfo) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		} else {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"stat-title\">Vent Status</div><div class=\"stat-value text-error text-2xl\">[off]</div>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"stat-title\">Vent Status</div><div class=\"stat-value text-error text-3xl\">[off]</div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
