@@ -1,7 +1,9 @@
 package core
 
+import "github.com/condemo/raspi-htmx-service/public/views/layout"
+
 templ ConfigPage() {
-	<div>
+	@layout.Base("Config") {
 		<h1 class="text-4xl">Config</h1>
-	</div>
+	}
 }

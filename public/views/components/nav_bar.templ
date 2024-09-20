@@ -7,7 +7,7 @@ templ Navbar() {
 		</div>
 		<div class="navbar-end">
 			<a class="link link-primary mx-2" hx-get="/auth/login" hx-target="body" hx-push-url="true">Login</a>
-			<a class="link link-secondary mx-2" hx-get="/app/config" hx-target="#home-container" hx-push-url="true">Config</a>
+			<a class="link link-secondary mx-2" hx-get="/app/config" hx-target="body" hx-push-url="true">Config</a>
 			<a class="link link-error mx-2" hx-post="/auth/logout">Logout</a>
 		</div>
 	</div>
