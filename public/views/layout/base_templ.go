@@ -40,7 +40,7 @@ func Base(title string) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<body hx-boost=\"true\"><div id=\"main-container\" class=\"flex flex-col mx-auto text-center h-screen\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <body hx-boost=\"true\" hx-ext=\"ws\" ws-connect=\"/ws/info\"><div id=\"main-container\" class=\"flex flex-col mx-auto text-center h-screen\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
