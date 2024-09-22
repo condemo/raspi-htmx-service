@@ -1,0 +1,20 @@
+package components
+
+func isOpen(b bool) string {
+	if !b {
+		return "collapse collapse-arrow bg-base-200"
+	}
+	return "collapse collapse-arrow collapse-open bg-base-200"
+}
+
+templ AccordionSection(title string, open bool) {
+	<div class="collapse collapse-arrow bg-base-200">
+		<input type="radio" name="my-accordion-2" if open {
+	checked="checked"
+}/>
+		<div class="collapse-title text-xl font-medium">{ title }</div>
+		<div class="collapse-content">
+			{ children... }
+		</div>
+	</div>
+}
