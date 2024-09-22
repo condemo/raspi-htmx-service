@@ -9,19 +9,13 @@ templ ConfigPage() {
 	@layout.Base("Config") {
 		<h1 class="text-4xl py-3">Config</h1>
 		@components.AccordionSection("General", true) {
-			<p>
-				hello
-			</p>
+			@components.ConfigForm()
 		}
 		@components.AccordionSection("UI and Themes", false) {
-			<p>
-				hello
-			</p>
+			@components.ConfigForm()
 		}
 		@components.AccordionSection("Raspberry Info", false) {
-			<p>
-				hello
-			</p>
+			@components.ConfigForm()
 		}
 	}
 }
