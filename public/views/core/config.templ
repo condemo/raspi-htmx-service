@@ -10,21 +10,15 @@ import (
 templ ConfigPage() {
 	@layout.Base("Config") {
 		<h1 class="text-4xl py-3">Config</h1>
-		@components.AccordionSection("General", true) {
-			@components.ConfigForm()
-		}
-		@components.AccordionSection("UI and Themes", false) {
-			@components.ConfigForm()
-		}
-		@components.AccordionSection("Raspberry Info", false) {
-			@components.ConfigForm()
-		}
-		<div>
+		<div id="config-section">
+			@components.ConfigSection()
+		</div>
+		<div class="space-x-3">
 			// TODO: Cambiar hx-target de body a unicamente las secciones de config
 			// Hace falta replantear ambos componentes para que sean aún más dinámicos
 			// facilitando el envío desde el server de las distintas partes
-			<button class="btn btn-neutral w-1/6 mx-auto my-5" hx-get="/conf" hx-target="body">Reset</button>
 			<button class="btn btn-primary w-1/6 mx-auto my-5" hx-put="/conf">Save</button>
+			<button class="btn btn-neutral w-1/6 mx-auto my-5" hx-get="/conf" hx-target="#config-section">Reset</button>
 		</div>
 	}
 }
