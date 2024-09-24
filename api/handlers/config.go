@@ -20,7 +20,7 @@ func (h *ConfigHandler) RegisterRoutes(r *http.ServeMux) {
 }
 
 func (h *ConfigHandler) getConfig(w http.ResponseWriter, r *http.Request) error {
-	RenderTempl(w, r, components.ConfigSection())
+	RenderTempl(w, r, components.ConfigSection(config.UsConf))
 	return nil
 }
 

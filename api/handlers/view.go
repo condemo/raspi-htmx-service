@@ -3,6 +3,7 @@ package handlers
 import (
 	"net/http"
 
+	"github.com/condemo/raspi-htmx-service/config"
 	"github.com/condemo/raspi-htmx-service/public/views/core"
 )
 
@@ -23,6 +24,6 @@ func (h *ViewHandler) homeView(w http.ResponseWriter, r *http.Request) error {
 }
 
 func (h *ViewHandler) configView(w http.ResponseWriter, r *http.Request) error {
-	RenderTempl(w, r, core.ConfigPage())
+	RenderTempl(w, r, core.ConfigPage(config.UsConf))
 	return nil
 }

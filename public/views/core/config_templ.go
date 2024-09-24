@@ -9,13 +9,14 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
+	"github.com/condemo/raspi-htmx-service/config"
 	"github.com/condemo/raspi-htmx-service/public/views/components"
 	"github.com/condemo/raspi-htmx-service/public/views/layout"
 )
 
 // TODO: `ConfigPage` debería recibir toda la config en forma de struct
 // con las secciones para cada `AccordionSection` con nombre para pasarlas
-func ConfigPage() templ.Component {
+func ConfigPage(c config.UserConfig) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -49,7 +50,7 @@ func ConfigPage() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = components.ConfigSection().Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = components.ConfigSection(c).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

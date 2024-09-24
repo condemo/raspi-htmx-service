@@ -1,5 +1,7 @@
 package components
 
+import "github.com/condemo/raspi-htmx-service/config"
+
 templ AccordionSection(title string, open bool) {
 	<div class="collapse collapse-arrow bg-base-200">
 		<input type="radio" name="my-accordion-2" if open {
@@ -12,22 +14,22 @@ templ AccordionSection(title string, open bool) {
 	</div>
 }
 
-templ ConfigForm() {
-	<div class="rounded border-red-400 w-1/2 mx-auto">
-		<p>
-			hello
-		</p>
-	</div>
+templ ConfigForm(c config.Config) {
+	for k, val := range c.GetFields() {
+		<div class="rounded border-red-400 w-1/2 mx-auto">
+			// TODO: Definir la estructura de esto
+			<p>
+				{ k } -> { val }
+			</p>
+		</div>
+	}
 }
 
-templ ConfigSection() {
+templ ConfigSection(c config.UserConfig) {
 	@AccordionSection("General", true) {
-		@ConfigForm()
-	}
-	@AccordionSection("UI and Themes", false) {
-		@ConfigForm()
+		@ConfigForm(c.GeneralConf)
 	}
 	@AccordionSection("Raspberry Info", false) {
-		@ConfigForm()
+		@ConfigForm(c.InfoConf)
 	}
 }

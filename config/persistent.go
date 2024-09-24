@@ -15,9 +15,10 @@ func SaveConf() {
 	}
 	defer f.Close()
 
-	err = toml.NewEncoder(f).Encode(UIConf)
+	err = toml.NewEncoder(f).Encode(UsConf)
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	fmt.Println("Config Saved")
 }
