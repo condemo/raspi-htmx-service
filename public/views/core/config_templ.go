@@ -14,8 +14,6 @@ import (
 	"github.com/condemo/raspi-htmx-service/public/views/layout"
 )
 
-// TODO: `ConfigPage` debería recibir toda la config en forma de struct
-// con las secciones para cada `AccordionSection` con nombre para pasarlas
 func ConfigPage(c config.UserConfig) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -46,7 +44,7 @@ func ConfigPage(c config.UserConfig) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<h1 class=\"text-4xl py-3\">Config</h1><div id=\"config-section\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<h1 class=\"text-4xl py-3\">Config</h1><form hx-put=\"/conf\"><div id=\"config-section\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -54,7 +52,7 @@ func ConfigPage(c config.UserConfig) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"space-x-3\"><button class=\"btn btn-primary w-1/6 mx-auto my-5\" hx-put=\"/conf\">Save</button> <button class=\"btn btn-neutral w-1/6 mx-auto my-5\" hx-get=\"/conf\" hx-target=\"#config-section\">Reset</button></div>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"space-x-3\"><button class=\"btn btn-primary w-1/6 mx-auto my-5\" type=\"submit\">Save</button> <button class=\"btn btn-neutral w-1/6 mx-auto my-5\" hx-get=\"/conf\" hx-target=\"#config-section\">Reset</button></div></form>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
