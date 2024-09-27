@@ -30,10 +30,6 @@ func initEnvConfig() envConfig {
 	}
 }
 
-// TODO: Replantear la estructura de la conf structs
-// para que faciliten las cosas con el archivo toml y
-// a la vez que sea lo más idóneo para enviar a las vistas
-
 var (
 	confDir  string = getConfDir()
 	confFile string = confDir + "/conf.toml"
