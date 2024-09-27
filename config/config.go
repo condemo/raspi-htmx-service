@@ -5,6 +5,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/BurntSushi/toml"
 	"github.com/joho/godotenv"
 )
 
@@ -54,14 +55,14 @@ type UserConfig struct {
 }
 
 func loadUserConfig() UserConfig {
-	return UserConfig{
-		GeneralConf: GeneralConfig{
-			CurrentTheme: night,
-		},
-		InfoConf: InfoConfig{
-			InfoTick: time.Second * 2,
-		},
+	f, err := os.Open(confFile)
+	if err != nil {
+		log.Fatal(err)
 	}
+	us := &UserConfig{}
+	toml.NewDecoder(f).Decode(us)
+
+	return *us
 }
 
 var UsConf = loadUserConfig()
