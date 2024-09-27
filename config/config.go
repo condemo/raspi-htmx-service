@@ -33,64 +33,57 @@ func initEnvConfig() envConfig {
 // para que faciliten las cosas con el archivo toml y
 // a la vez que sea lo más idóneo para enviar a las vistas
 
-type Config interface {
-	GetFields() map[string]string
-}
-
 var (
 	confDir  string = getConfDir()
 	confFile string = confDir + "/conf.toml"
 )
 
-type theme string
+type Theme string
 
 const (
-	night     theme = "night"
-	cupcake   theme = "cupcake"
-	halloween theme = "halloween"
-	black     theme = "black"
-	sunset    theme = "sunset"
+	night     Theme = "night"
+	cupcake   Theme = "cupcake"
+	halloween Theme = "halloween"
+	black     Theme = "black"
+	sunset    Theme = "sunset"
 )
 
 type UserConfig struct {
-	GeneralConf generalConfig
-	InfoConf    infoConfig
+	GeneralConf GeneralConfig
+	InfoConf    InfoConfig
 }
 
 func loadUserConfig() UserConfig {
 	return UserConfig{
-		GeneralConf: generalConfig{
+		GeneralConf: GeneralConfig{
 			CurrentTheme: night,
 		},
-		InfoConf: infoConfig{
-			InfoTiming: time.Second * 2,
+		InfoConf: InfoConfig{
+			InfoTick: time.Second * 2,
 		},
 	}
 }
 
 var UsConf = loadUserConfig()
 
-type infoConfig struct {
-	InfoTiming time.Duration `toml:"info_timing"`
+type InfoConfig struct {
+	InfoTick time.Duration `toml:"info_tick"`
 }
 
-func (c infoConfig) GetFields() map[string]string {
-	m := make(map[string]string)
-	m["Info Update Timing"] = c.InfoTiming.String()
-
-	return m
+type GeneralConfig struct {
+	CurrentTheme Theme `toml:"theme"`
 }
 
-type generalConfig struct {
-	CurrentTheme theme `toml:"theme"`
+func (c GeneralConfig) GetThemeList() []Theme {
+	return []Theme{
+		night, cupcake, halloween,
+		black, sunset,
+	}
 }
 
-func (c generalConfig) GetFields() map[string]string {
-	m := make(map[string]string)
-	m["Theme"] = string(c.CurrentTheme)
-
-	return m
-}
+// TODO: Implementar un sistema para leer `conf.toml`
+// y cargar la config en `UserConfig` struct
+// Decidir si no hacer global la variable `UsConf`
 
 func getConfDir() string {
 	confDir, err := os.UserConfigDir()

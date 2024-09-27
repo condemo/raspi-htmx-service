@@ -2,23 +2,31 @@ package config
 
 import (
 	"fmt"
-	"log"
 	"os"
 
 	"github.com/BurntSushi/toml"
 )
 
-func SaveConf() {
+func SaveConf() error {
 	f, err := os.Create(confFile)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer f.Close()
 
 	err = toml.NewEncoder(f).Encode(UsConf)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
-	fmt.Println("Config Saved")
+	fmt.Println("Config Saved -> ", UsConf)
+	return nil
+}
+
+func UpdateConf(c UserConfig) error {
+	UsConf = c
+	if err := SaveConf(); err != nil {
+		return err
+	}
+	return nil
 }
