@@ -82,10 +82,6 @@ func (c GeneralConfig) GetThemeList() []Theme {
 	}
 }
 
-// TODO: Implementar un sistema para leer `conf.toml`
-// y cargar la config en `UserConfig` struct
-// Decidir si no hacer global la variable `UsConf`
-
 func getConfDir() string {
 	confDir, err := os.UserConfigDir()
 	if err != nil {
