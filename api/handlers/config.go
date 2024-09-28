@@ -36,5 +36,8 @@ func (h *ConfigHandler) updateConfig(w http.ResponseWriter, r *http.Request) err
 		return err
 	}
 
+	w.Header().Set("HX-Redirect", "/app/config")
+	w.WriteHeader(http.StatusAccepted)
+
 	return nil
 }
