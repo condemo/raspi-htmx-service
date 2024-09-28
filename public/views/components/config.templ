@@ -3,43 +3,50 @@ package components
 import "github.com/condemo/raspi-htmx-service/config"
 
 templ AccordionSection(title string, open bool) {
-<div class="collapse collapse-arrow bg-base-200">
-  <input type="radio" name="my-accordion-2" if open { checked="checked" } />
-  <div class="collapse-title text-xl font-medium">{ title }</div>
-  <div class="collapse-content">
-    { children... }
-  </div>
-</div>
+	<div class="collapse collapse-arrow bg-base-200">
+		<input type="radio" name="my-accordion-2" if open {
+	checked="checked"
+}/>
+		<div class="collapse-title text-xl font-medium">{ title }</div>
+		<div class="collapse-content">
+			{ children... }
+		</div>
+	</div>
 }
 
 templ RaspInfoConf(c config.InfoConfig) {
-<div class="rounded border-red-400 w-1/2 mx-auto">
-  <label for="info-tick">InfoTick</label>
-  <input id="info-tick" name="info-tick" type="text" class="input input-ghost w-1/6 max-w-xs" value={
-    string(c.InfoTick.String()) } />
-</div>
+	<div class="rounded border-red-400 w-1/2 mx-auto">
+		<label for="info-tick">InfoTick</label>
+		<input
+			id="info-tick"
+			name="info-tick"
+			type="text"
+			class="input input-ghost w-1/6 max-w-xs"
+			value={ string(c.InfoTick.String()) }
+		/>
+	</div>
 }
 
 templ ConfigSection(c config.UserConfig) {
-@AccordionSection("General", true) {
-@GeneralConf(c.GeneralConf)
-}
-@AccordionSection("Raspberry Info", false) {
-@RaspInfoConf(c.InfoConf)
-}
+	@AccordionSection("General", true) {
+		@GeneralConf(c.GeneralConf)
+	}
+	@AccordionSection("Raspberry Info", false) {
+		@RaspInfoConf(c.InfoConf)
+	}
 }
 
 templ GeneralConf(c config.GeneralConfig) {
-<div class="rounded border-red-400 w-1/2 mx-auto">
-  <label for="theme">Theme</label>
-  <select name="theme" id="theme" class="select select-primary w-1/2 max-w-xs">
-    for _, t := range c.GetThemeList() {
-    if t == c.CurrentTheme {
-    <option selected value={ string(t) }>{ string(t) }</option>
-    } else {
-    <option value={ string(t) }>{ string(t) }</option>
-    }
-    }
-  </select>
-</div>
+	<div class="rounded border-red-400 w-1/2 mx-auto">
+		<label for="theme">Theme: </label>
+		<select name="theme" id="theme" class="select select-primary w-1/6 max-w-xs">
+			for _, t := range c.GetThemeList() {
+				if t == c.CurrentTheme {
+					<option selected value={ string(t) }>{ string(t) }</option>
+				} else {
+					<option value={ string(t) }>{ string(t) }</option>
+				}
+			}
+		</select>
+	</div>
 }
