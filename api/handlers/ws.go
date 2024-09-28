@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/a-h/templ"
+	"github.com/condemo/raspi-htmx-service/config"
 	"github.com/condemo/raspi-htmx-service/public/views/components"
 	"github.com/condemo/raspi-htmx-service/tools"
 	"github.com/gorilla/websocket"
@@ -60,7 +61,7 @@ func (h *WSHandler) handleWS(c *websocket.Conn) {
 }
 
 func (h *WSHandler) writeLoop(c *websocket.Conn, s chan struct{}) {
-	t := time.NewTicker(time.Second * 2)
+	t := time.NewTicker(config.UsConf.InfoConf.InfoTick)
 	for {
 		select {
 		case <-t.C:
