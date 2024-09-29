@@ -15,7 +15,6 @@ func NewConfigHandler() *ConfigHandler {
 }
 
 func (h *ConfigHandler) RegisterRoutes(r *http.ServeMux) {
-	// TODO: Replantear toda la vaina desde 0
 	r.HandleFunc("GET /", MakeHandler(h.getConfig))
 	r.HandleFunc("PUT /", MakeHandler(h.updateConfig))
 }
