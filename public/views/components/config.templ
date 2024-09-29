@@ -7,7 +7,7 @@ templ AccordionSection(title string, open bool) {
 		<input type="radio" name="my-accordion-2" if open {
 	checked="checked"
 }/>
-		<div class="collapse-title text-xl font-medium">{ title }</div>
+		<div class="collapse-title text-2xl font-medium">{ title }</div>
 		<div class="collapse-content">
 			{ children... }
 		</div>
@@ -15,13 +15,13 @@ templ AccordionSection(title string, open bool) {
 }
 
 templ RaspInfoConf(c config.InfoConfig) {
-	<div class="rounded border-red-400 w-1/2 mx-auto">
+	<div class="rounded border-red-400 mx-auto bg-red-500">
 		<label for="info-tick">InfoTick</label>
 		<input
 			id="info-tick"
 			name="info-tick"
 			type="text"
-			class="input input-ghost w-1/6 max-w-xs"
+			class="input input-ghost md:w-1/6 w-1/2 max-w-xs"
 			value={ string(c.InfoTick.String()) }
 		/>
 	</div>
@@ -37,9 +37,9 @@ templ ConfigSection(c config.UserConfig) {
 }
 
 templ GeneralConf(c config.GeneralConfig) {
-	<div class="rounded border-red-400 w-1/2 mx-auto">
-		<label for="theme">Theme: </label>
-		<select name="theme" id="theme" class="select select-primary w-1/6 max-w-xs">
+	<div class="rounded border-red-400 mx-auto">
+		<label for="theme" class="text-xl">Theme: </label>
+		<select name="theme" id="theme" class="select select-primary md:w-1/6 w-1/2 max-w-xs text-lg">
 			for _, t := range c.GetThemeList() {
 				if t == c.CurrentTheme {
 					<option selected value={ string(t) }>{ string(t) }</option>

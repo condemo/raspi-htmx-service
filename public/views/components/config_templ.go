@@ -38,14 +38,14 @@ func AccordionSection(title string, open bool) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("><div class=\"collapse-title text-xl font-medium\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("><div class=\"collapse-title text-2xl font-medium\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `public/views/components/config.templ`, Line: 10, Col: 57}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `public/views/components/config.templ`, Line: 10, Col: 58}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -85,7 +85,7 @@ func RaspInfoConf(c config.InfoConfig) templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"rounded border-red-400 w-1/2 mx-auto\"><label for=\"info-tick\">InfoTick</label> <input id=\"info-tick\" name=\"info-tick\" type=\"text\" class=\"input input-ghost w-1/6 max-w-xs\" value=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"rounded border-red-400 mx-auto bg-red-500\"><label for=\"info-tick\">InfoTick</label> <input id=\"info-tick\" name=\"info-tick\" type=\"text\" class=\"input input-ghost md:w-1/6 w-1/2 max-w-xs\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -190,7 +190,7 @@ func GeneralConf(c config.GeneralConfig) templ.Component {
 			templ_7745c5c3_Var8 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"rounded border-red-400 w-1/2 mx-auto\"><label for=\"theme\">Theme: </label> <select name=\"theme\" id=\"theme\" class=\"select select-primary w-1/6 max-w-xs\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"rounded border-red-400 mx-auto\"><label for=\"theme\" class=\"text-xl\">Theme: </label> <select name=\"theme\" id=\"theme\" class=\"select select-primary md:w-1/6 w-1/2 max-w-xs text-lg\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
