@@ -26,7 +26,7 @@ func Navbar() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"navbar bg-base-100\"><div class=\"navbar-start\"><a class=\"btn btn-ghost text-xl\" href=\"/app\">GusRaspi</a></div><div class=\"navbar-end\"><a class=\"link link-primary mx-2\" hx-get=\"/auth/login\" hx-target=\"body\" hx-push-url=\"true\">Login</a> <a class=\"link link-secondary mx-2\" hx-get=\"/app/config\" hx-target=\"body\" hx-push-url=\"true\">Config</a> <a class=\"link link-error mx-2\" hx-post=\"/auth/logout\">Logout</a></div></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"navbar bg-base-100\"><div class=\"navbar-start\"><a class=\"btn btn-ghost text-2xl\" href=\"/app\">GusRaspi</a></div><div class=\"navbar-end\"><a class=\"link link-primary mx-2 text-lg\" hx-get=\"/auth/login\" hx-target=\"body\" hx-push-url=\"true\">Login</a> <a class=\"link link-secondary mx-2 text-lg\" hx-get=\"/app/config\" hx-target=\"body\" hx-push-url=\"true\">Config</a> <a class=\"link link-error mx-2 text-lg\" hx-post=\"/auth/logout\">Logout</a></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
