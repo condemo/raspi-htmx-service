@@ -1,22 +1,22 @@
 package core
 
 import (
-"github.com/condemo/raspi-htmx-service/config"
-"github.com/condemo/raspi-htmx-service/public/views/components"
-"github.com/condemo/raspi-htmx-service/public/views/layout"
+	"github.com/condemo/raspi-htmx-service/config"
+	"github.com/condemo/raspi-htmx-service/public/views/components"
+	"github.com/condemo/raspi-htmx-service/public/views/layout"
 )
 
 templ ConfigPage(c config.UserConfig) {
-@layout.Base("Config") {
-<h1 class="text-4xl py-3">Config</h1>
-<form hx-put="/conf">
-  <div id="config-section">
-    @components.ConfigSection(c)
-  </div>
-  <div class="space-x-3">
-    <button class="btn btn-primary w-1/6 mx-auto my-5" type="submit">Save</button>
-    <button class="btn btn-neutral w-1/6 mx-auto my-5" hx-get="/conf" hx-target="#config-section">Reset</button>
-  </div>
-</form>
-}
+	@layout.Base("Config") {
+		<h1 class="text-4xl py-3">Config</h1>
+		<form hx-put="/conf">
+			<div id="config-section">
+				@components.ConfigSection(c)
+			</div>
+			<div class="space-x-3 md:w-1/3 mx-auto w-full my-4">
+				<button class="btn btn-primary mx-auto my-5 text-lg w-1/3" type="submit">Save</button>
+				<button class="btn btn-neutral mx-auto my-5 text-lg w-1/3" hx-get="/conf" hx-target="#config-section">Reset</button>
+			</div>
+		</form>
+	}
 }

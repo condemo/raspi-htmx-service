@@ -52,7 +52,7 @@ func ConfigPage(c config.UserConfig) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"space-x-3\"><button class=\"btn btn-primary w-1/6 mx-auto my-5\" type=\"submit\">Save</button> <button class=\"btn btn-neutral w-1/6 mx-auto my-5\" hx-get=\"/conf\" hx-target=\"#config-section\">Reset</button></div></form>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"space-x-3 md:w-1/3 mx-auto w-full my-4\"><button class=\"btn btn-primary mx-auto my-5 text-lg w-1/3\" type=\"submit\">Save</button> <button class=\"btn btn-neutral mx-auto my-5 text-lg w-1/3\" hx-get=\"/conf\" hx-target=\"#config-section\">Reset</button></div></form>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
