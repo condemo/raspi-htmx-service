@@ -44,7 +44,7 @@ func ConfigPage(c config.UserConfig) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<h1 class=\"text-4xl py-3\">Config</h1><form hx-put=\"/conf\"><div id=\"config-section\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<h1 class=\"text-4xl py-3\">Config</h1><form hx-put=\"/conf\"><div id=\"config-section\" class=\"md:mx-3\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -52,7 +52,7 @@ func ConfigPage(c config.UserConfig) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"space-x-3 md:w-1/3 mx-auto w-full my-4\"><button class=\"btn btn-primary mx-auto my-5 text-lg w-1/3\" type=\"submit\">Save</button> <button class=\"btn btn-neutral mx-auto my-5 text-lg w-1/3\" hx-get=\"/conf\" hx-target=\"#config-section\">Reset</button></div></form>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"space-x-3 md:w-1/3 mx-auto w-full\"><button class=\"btn btn-primary mx-auto my-5 text-lg w-1/3\" type=\"submit\">Save</button> <button class=\"btn btn-neutral mx-auto my-5 text-lg w-1/3\" hx-get=\"/conf\" hx-target=\"#config-section\">Reset</button></div></form>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
