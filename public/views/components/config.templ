@@ -3,7 +3,7 @@ package components
 import "github.com/condemo/raspi-htmx-service/config"
 
 templ AccordionSection(title string, open bool) {
-	<div class="collapse collapse-arrow bg-primary text-black my-1">
+	<div class="collapse collapse-arrow bg-base-content text-black my-1">
 		<input type="radio" name="my-accordion-2" if open {
 	checked="checked"
 }/>
@@ -24,9 +24,9 @@ templ ConfigSection(c config.UserConfig) {
 }
 
 templ GeneralConf(c config.GeneralConfig) {
-	<div class="mx-auto bg-primary-content p-1 md:w-1/4 w-1/2 rounded-xl text-white">
+	<div class="mx-auto bg-neutral p-1 md:w-1/4 w-1/2 rounded-xl text-white">
 		<label for="theme" class="text-xl">Theme: </label>
-		<select name="theme" id="theme" class="select select-primary bg-primary-content max-w-xs text-lg">
+		<select name="theme" id="theme" class="select select-bordered bg-neutral max-w-xs text-lg">
 			for _, t := range c.GetThemeList() {
 				if t == c.CurrentTheme {
 					<option selected value={ string(t) }>{ string(t) }</option>
@@ -39,13 +39,13 @@ templ GeneralConf(c config.GeneralConfig) {
 }
 
 templ RaspInfoConf(c config.InfoConfig) {
-	<div class="mx-auto md:w-1/4 w-1/2 rounded-xl p-1 bg-primary-content text-white">
+	<div class="mx-auto md:w-1/4 w-1/2 rounded-xl p-1 bg-neutral text-white">
 		<label for="info-tick">InfoTick: </label>
 		<input
 			id="info-tick"
 			name="info-tick"
 			type="text"
-			class="input input-primary md:w-1/6 w-1/2 max-w-xs bg-primary-content"
+			class="input input-bordered md:w-1/6 w-1/2 max-w-xs"
 			value={ string(c.InfoTick.String()) }
 		/>
 	</div>

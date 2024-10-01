@@ -8,7 +8,8 @@ import (
 
 templ ConfigPage(c config.UserConfig) {
 	@layout.Base("Config") {
-		<h1 class="text-4xl py-3">Config</h1>
+		<h1 class="text-6xl font-bold py-3">Configuration</h1>
+		<hr class="p-2"/>
 		<form hx-put="/conf">
 			<div id="config-section" class="md:mx-3">
 				@components.ConfigSection(c)

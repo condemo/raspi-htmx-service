@@ -44,7 +44,7 @@ func ConfigPage(c config.UserConfig) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<h1 class=\"text-4xl py-3\">Config</h1><form hx-put=\"/conf\"><div id=\"config-section\" class=\"md:mx-3\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<h1 class=\"text-6xl font-bold py-3\">Configuration</h1><hr class=\"p-2\"><form hx-put=\"/conf\"><div id=\"config-section\" class=\"md:mx-3\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
