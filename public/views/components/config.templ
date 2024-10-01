@@ -4,7 +4,7 @@ import "github.com/condemo/raspi-htmx-service/config"
 
 templ AccordionSection(title string, open bool) {
 	<div class="collapse collapse-arrow bg-base-content text-black my-1">
-		<input type="radio" name="my-accordion-2" if open {
+		<input type="checkbox" if open {
 	checked="checked"
 }/>
 		<div class="collapse-title text-2xl font-medium">{ title }</div>
