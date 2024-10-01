@@ -2,10 +2,15 @@
   "short_name": "GusRP",
   "manifest_version": 2,
   "version": "0.0.1",
+  "id": "/",
   "name": "GusRaspi",
-  "start_url": "/app/",
+  "start_url": "/",
+  "scope": "/",
+  "description": "Dashboard para controlar servicios custom corriendo un mi Raspberry Pi 5",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#282A36",
+  "theme_color": "#282A36",
   "icons": [
     {
       "src": "./img/raspi_v1-192x192.png",
@@ -16,6 +21,22 @@
       "src": "./img/raspi_v1-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "./img/raspi_portrait.png",
+      "sizes": "553x855",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Raspi Screenshot"
+    },
+    {
+      "src": "./img/raspi_wide.png",
+      "sizes": "2102x1288",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Raspi Screenshot"
     }
   ]
 }
