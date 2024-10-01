@@ -32,20 +32,17 @@ func RequireAuth(next http.Handler) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		c, err := r.Cookie("raspi-token")
 		if err != nil {
-			w.Header().Set("Cache-Control", "no-cache")
 			http.Redirect(w, r, "/auth/login", http.StatusPermanentRedirect)
 			return
 		}
 
 		if c.Value == "" {
-			w.Header().Set("Cache-Control", "no-cache")
 			http.Redirect(w, r, "/auth/login", http.StatusPermanentRedirect)
 			return
 		}
 
 		claims, err := utils.ValidateJWT(c.Value)
 		if err != nil {
-			w.Header().Set("Cache-Control", "no-cache")
 			http.Redirect(w, r, "/auth/login", http.StatusPermanentRedirect)
 			return
 		}
