@@ -28,7 +28,7 @@ func AccordionSection(title string, open bool) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"collapse collapse-arrow bg-base-content text-black my-1\"><input type=\"checkbox\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"collapse collapse-arrow bg-base-300 text-white md:w-1/2 w-full my-1 mx-auto\"><input type=\"checkbox\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -151,7 +151,7 @@ func GeneralConf(c config.GeneralConfig) templ.Component {
 			templ_7745c5c3_Var6 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"mx-auto bg-neutral p-1 md:w-1/4 w-1/2 rounded-xl text-white\"><label for=\"theme\" class=\"text-xl\">Theme: </label> <select name=\"theme\" id=\"theme\" class=\"select select-bordered bg-neutral max-w-xs text-lg\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"mx-auto bg-neutral p-1 md:w-1/2 w-full rounded-xl text-white\"><label for=\"theme\" class=\"text-xl\">Theme: </label> <select name=\"theme\" id=\"theme\" class=\"select select-bordered bg-neutral max-w-xs text-lg\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -246,7 +246,7 @@ func RaspInfoConf(c config.InfoConfig) templ.Component {
 			templ_7745c5c3_Var11 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"mx-auto md:w-1/4 w-1/2 rounded-xl p-1 bg-neutral text-white\"><label for=\"info-tick\">InfoTick: </label> <input id=\"info-tick\" name=\"info-tick\" type=\"text\" class=\"input input-bordered md:w-1/6 w-1/2 max-w-xs\" value=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"mx-auto md:w-1/2 w-full rounded-xl p-1 bg-neutral text-white\"><label for=\"info-tick\">InfoTick: </label> <input id=\"info-tick\" name=\"info-tick\" type=\"text\" class=\"input input-bordered md:w-1/6 w-1/2 max-w-xs bg-neutral\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
