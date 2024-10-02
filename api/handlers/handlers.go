@@ -7,6 +7,7 @@ import (
 
 	"github.com/a-h/templ"
 	"github.com/condemo/raspi-htmx-service/api/handlers/errors"
+	"github.com/condemo/raspi-htmx-service/public/views/components"
 	"github.com/condemo/raspi-htmx-service/public/views/core"
 )
 
@@ -17,11 +18,15 @@ func MakeHandler(f CustomHandler) http.HandlerFunc {
 		if err := f(w, r); err != nil {
 			switch err := err.(type) {
 			case errors.UINofifyError:
-				w.WriteHeader(err.Status)
+				// Si el status code no es positivo htmx lo trata como un error
+				// w.WriteHeader(err.Status)
+				RenderTempl(w, r, components.SimpleError(err))
 			case errors.ApiError:
-				RenderTempl(w, r, core.ErrorPage(err))
+				RenderTempl(w, r, components.ApiError(err))
 			default:
-				fmt.Fprintf(w, "unformat error -> %s", err.Error())
+				// FIX: No enviar los errores tal cual al server
+				RenderTempl(w, r, core.ErrorPage(errors.NewUnformatError(http.StatusInternalServerError)))
+				slog.Error("Interal", "unformat", err.Error(), "path", r.URL.Path)
 			}
 			slog.Error("API ERROR", "err", err.Error(), "path", r.URL.Path)
 		}
