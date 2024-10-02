@@ -33,3 +33,17 @@ func NewUINotifyError(msg string, status int) UINofifyError {
 func (e UINofifyError) Error() string {
 	return e.Msg
 }
+
+type UnformatError struct {
+	Status int
+}
+
+func NewUnformatError(status int) UnformatError {
+	return UnformatError{
+		Status: status,
+	}
+}
+
+func (e UnformatError) Error() string {
+	return "unformat error, check reg log"
+}
