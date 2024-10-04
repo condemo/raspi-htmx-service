@@ -1,0 +1,38 @@
+package components
+
+import "fmt"
+
+// TODO: `ServiceCarousel` debería recibir una lista de 'servicios' en forma de struct
+// `ServiceCard` debería recibir el struct con la data inclido el nombre que se usará de id
+templ ServiceCarousel() {
+	<div id="service-carousel">
+		<div class="carousel carousel-center bg-neutral rounded-box w-full h-50 space-x-4 p-4 my-1">
+			for i := range 8 {
+				@ServiceCard(fmt.Sprintf("service-%d", i))
+			}
+		</div>
+	</div>
+}
+
+templ ServiceCard(name string) {
+	<div id={ name }>
+		<div class="carousel-item">
+			<div class="card bg-base-100 w-72 shadow-xl">
+				<figure class=" h-10 rounded-3xl m-1 bg-red-700">
+					<!-- <img -->
+					<!-- 	src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" -->
+					<!-- 	alt="Shoes" -->
+					<!-- 	class="rounded-xl h-14 w-full m-1" -->
+					<!-- /> -->
+				</figure>
+				<div class="card-body items-center text-center">
+					<h2 class="card-title">Shoes!</h2>
+					<p>If a dog chews shoes whose shoes does he choose?</p>
+					<div class="card-actions">
+						<button class="btn btn-primary">Buy Now</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+}

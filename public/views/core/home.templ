@@ -10,8 +10,8 @@ templ Home() {
 	@layout.Base("Home") {
 		<div id="home-container">
 			@components.Infobar(tools.NewSysInfo())
-			<div id="view-container">
-				<h1>HomeView</h1>
+			<div id="view-container" class="p-2">
+				@components.ServiceCarousel()
 			</div>
 		</div>
 	}
