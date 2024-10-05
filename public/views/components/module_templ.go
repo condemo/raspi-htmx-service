@@ -86,7 +86,7 @@ func ServiceCard(s types.RaspiService) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"><div class=\"carousel-item\"><div class=\"card bg-base-100 w-72 shadow-xl\"><figure class=\" h-10 rounded-3xl m-1 bg-base-300\"><h1 class=\"z-10\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"><div class=\"carousel-item shadow-sm shadow-slate-900\"><div class=\"card bg-base-100 w-72 shadow-xl\"><figure class=\" h-10 rounded-3xl m-1 bg-base-300\"><h1 class=\"z-10\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
