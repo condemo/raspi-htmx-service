@@ -32,6 +32,7 @@ func (s *ApiServer) Run() {
 	view := http.NewServeMux()
 	conf := http.NewServeMux()
 	ws := http.NewServeMux()
+	serv := http.NewServeMux()
 	fs := http.FileServer(http.Dir("public/static"))
 
 	// Middlewares
@@ -50,18 +51,21 @@ func (s *ApiServer) Run() {
 	router.Handle("/static/", http.StripPrefix("/static/", fs))
 	router.Handle("/ws/", http.StripPrefix("/ws", ws))
 	router.Handle("/conf/", http.StripPrefix("/conf", middlewares.RequireAuth(conf)))
+	router.Handle("/serv/", http.StripPrefix("/serv", serv))
 
 	// Handlers
 	authHandler := handlers.NewAuthHandler(s.store)
 	viewHandler := handlers.NewViewHandler()
 	wsHandler := handlers.NewWSHandler()
 	confHandler := handlers.NewConfigHandler()
+	servHanlder := handlers.NewServiceHandler()
 
 	// Routes Load
 	authHandler.RegisterRoutes(auth)
 	viewHandler.RegisterRoutes(view)
 	wsHandler.RegisterRoutes(ws)
 	confHandler.RegisterRoutes(conf)
+	servHanlder.RegisterRoutes(serv)
 
 	server := http.Server{
 		Addr:         s.addr,
