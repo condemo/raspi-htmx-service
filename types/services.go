@@ -2,7 +2,7 @@ package types
 
 import "fmt"
 
-type serviceStatus bool
+type ServiceStatus bool
 
 type Service interface {
 	Run() error
@@ -11,7 +11,7 @@ type Service interface {
 
 type RaspiService struct {
 	Name   string
-	Status serviceStatus
+	Status ServiceStatus
 }
 
 func NewRaspiService(name string) RaspiService {
@@ -27,5 +27,5 @@ func (s *RaspiService) Run() {
 
 func (s *RaspiService) Stop() {
 	// TODO:
-	fmt.Println(s.Name, "Stop")
+	fmt.Println(s.Name, "STOP")
 }
