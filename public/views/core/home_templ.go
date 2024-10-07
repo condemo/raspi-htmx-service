@@ -11,6 +11,7 @@ import templruntime "github.com/a-h/templ/runtime"
 import (
 	"github.com/condemo/raspi-htmx-service/public/views/components"
 	"github.com/condemo/raspi-htmx-service/public/views/layout"
+	"github.com/condemo/raspi-htmx-service/services"
 	"github.com/condemo/raspi-htmx-service/tools"
 )
 
@@ -56,7 +57,7 @@ func Home() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = components.ServiceCarousel().Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = components.ServiceCarousel(services.ServicesList).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -67,6 +68,10 @@ func Home() templ.Component {
 			return templ_7745c5c3_Err
 		})
 		templ_7745c5c3_Err = layout.Base("Home").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
