@@ -33,8 +33,9 @@ func MakeHandler(f CustomHandler) http.HandlerFunc {
 	}
 }
 
-func RenderTempl(w http.ResponseWriter, r *http.Request, c templ.Component) {
+func RenderTempl(w http.ResponseWriter, r *http.Request, c templ.Component) error {
 	c.Render(r.Context(), w)
+	return nil
 }
 
 func TextResponse(w http.ResponseWriter, msg string, status int) {
