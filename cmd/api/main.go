@@ -6,6 +6,7 @@ import (
 	"log"
 
 	"github.com/condemo/raspi-htmx-service/api"
+	"github.com/condemo/raspi-htmx-service/services"
 	"github.com/condemo/raspi-htmx-service/store"
 )
 
@@ -20,6 +21,9 @@ func main() {
 	}
 
 	store := store.NewStorage(db)
+
+	// Services Load
+	services.LoadServices()
 
 	apiServer := api.NewApiServer(*addr, store)
 	fmt.Println("Server Running on port", *addr)
