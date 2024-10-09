@@ -1,6 +1,10 @@
 package types
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/uptrace/bun"
+)
 
 type ServiceStatus bool
 
@@ -10,8 +14,11 @@ type Service interface {
 }
 
 type RaspiService struct {
-	Name   string
-	Status ServiceStatus
+	bun.BaseModel `bun:"table:services,alias:sv"`
+
+	Name   string        `bun:"name"`
+	Status ServiceStatus `bun:"status,notnull,type:bool"`
+	ID     int           `bun:",pk,autoincrement"`
 }
 
 func NewRaspiService(name string) RaspiService {
