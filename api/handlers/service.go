@@ -15,7 +15,7 @@ func NewServiceHandler() *ServiceHandler {
 }
 
 func (h *ServiceHandler) RegisterRoutes(r *http.ServeMux) {
-	r.HandleFunc("POST /", MakeHandler(h.switchService))
+	r.HandleFunc("PUT /", MakeHandler(h.switchService))
 }
 
 func (h *ServiceHandler) switchService(w http.ResponseWriter, r *http.Request) error {

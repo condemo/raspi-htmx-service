@@ -37,11 +37,5 @@ func (s *PostgresStorage) Init() (*bun.DB, error) {
 		return nil, err
 	}
 
-	_, err = s.db.NewCreateTable().Model((*types.RaspiService)(nil)).
-		IfNotExists().Exec(context.Background())
-	if err != nil {
-		return nil, err
-	}
-
 	return s.db, nil
 }

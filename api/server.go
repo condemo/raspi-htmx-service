@@ -58,14 +58,14 @@ func (s *ApiServer) Run() {
 	viewHandler := handlers.NewViewHandler()
 	wsHandler := handlers.NewWSHandler()
 	confHandler := handlers.NewConfigHandler()
-	servHanlder := handlers.NewServiceHandler()
+	servHandler := handlers.NewServiceHandler()
 
 	// Routes Load
 	authHandler.RegisterRoutes(auth)
 	viewHandler.RegisterRoutes(view)
 	wsHandler.RegisterRoutes(ws)
 	confHandler.RegisterRoutes(conf)
-	servHanlder.RegisterRoutes(serv)
+	servHandler.RegisterRoutes(serv)
 
 	server := http.Server{
 		Addr:         s.addr,

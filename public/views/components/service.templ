@@ -3,30 +3,31 @@ package components
 import (
 	"fmt"
 	"github.com/condemo/raspi-htmx-service/types"
+	"strconv"
 )
 
 // TODO: `ServiceCarousel` debería recibir una lista de 'servicios' en forma de struct
 // `ServiceCard` debería recibir el struct con la data inclido el nombre que se usará de id
-templ ServiceCarousel(sl []types.RaspiService) {
+templ ServiceCarousel(sl []types.Service) {
 	<div id="service-carousel">
 		<div class="carousel carousel-center bg-neutral rounded-box w-full h-50 space-x-4 p-4 my-1">
 			for _, s := range sl {
-				@ServiceCard(types.NewRaspiService(s.Name))
+				@ServiceCard(s)
 			}
 		</div>
 	</div>
 }
 
-templ ServiceCard(s types.RaspiService) {
-	<div id={ s.Name }>
+templ ServiceCard(d types.Service) {
+	<div id={ d.GetCardData().Name }>
 		<div class="carousel-item shadow-sm shadow-slate-900">
 			<div class="card bg-base-100 w-72 shadow-xl">
 				<figure class=" h-10 rounded-3xl m-1 bg-base-300">
-					<h1 class="z-10">{ s.Name }</h1>
+					<h1 class="z-10">{ d.GetCardData().Name }</h1>
 				</figure>
 				<div class="card-body items-center text-center">
 					<h2 class="card-title">
-						if s.Status {
+						if d.GetCardData().Status {
 							<span class="text-success">
 								[ON]
 							</span>
@@ -36,16 +37,14 @@ templ ServiceCard(s types.RaspiService) {
 							</span>
 						}
 					</h2>
-					<div id="card-body">
-						<p>If a dog chews shoes whose shoes does he choose?</p>
-					</div>
+					@ServiceInfo(d.GetCardData())
 					<div class="card-actions w-full flex justify-between">
 						<button
 							class="btn btn-accent w-36"
-							hx-vals={ string(fmt.Sprintf(`{"name": "%v" , "status" : %t }`, s.Name,
-            !s.Status)) }
-							hx-post={ string(templ.URL("/serv/")) }
-							hx-target={ string(fmt.Sprintf("#%s", s.Name)) }
+							hx-vals={ string(fmt.Sprintf(`{"name": "%v" , "status" : %t }`,
+            d.GetCardData().Name, !d.GetCardData().Status)) }
+							hx-put={ string(templ.URL("/serv/")) }
+							hx-target={ string(fmt.Sprintf("#%s", d.GetCardData().Name)) }
 							hx-swap="outerHTML"
 						>
 							<svg
@@ -84,5 +83,12 @@ templ ServiceCard(s types.RaspiService) {
 				</div>
 			</div>
 		</div>
+	</div>
+}
+
+templ ServiceInfo(d types.ServiceCardData) {
+	<div id="card-body">
+		<p>{ d.Name }</p>
+		<p>{ string(strconv.FormatBool(bool(d.Status))) }</p>
 	</div>
 }

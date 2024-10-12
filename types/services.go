@@ -2,8 +2,6 @@ package types
 
 import (
 	"fmt"
-
-	"github.com/uptrace/bun"
 )
 
 type ServiceStatus bool
@@ -11,28 +9,92 @@ type ServiceStatus bool
 type Service interface {
 	Run() error
 	Stop() error
+	GetFullData() ServiceFullData
+	GetCardData() ServiceCardData
+	SwitchStatus(bool)
 }
 
-type RaspiService struct {
-	bun.BaseModel `bun:"table:services,alias:sv"`
+type (
+	ServiceFullData struct{}
+	ServiceCardData struct {
+		Name   string
+		Status ServiceStatus
+	}
+)
 
-	Name   string        `bun:"name"`
-	Status ServiceStatus `bun:"status,notnull,type:bool"`
-	ID     int           `bun:",pk,autoincrement"`
+type WeatherService struct {
+	Name   string
+	Status ServiceStatus
+	ID     int64
 }
 
-func NewRaspiService(name string) RaspiService {
-	return RaspiService{
+func NewWeatherService() *WeatherService {
+	return &WeatherService{
+		Name: "WeatherService",
+	}
+}
+
+func (s WeatherService) Run() error {
+	// TODO:
+	fmt.Println(s.Name, "RUN")
+	return nil
+}
+
+func (s *WeatherService) SwitchStatus(st bool) {
+	s.Status = ServiceStatus(st)
+}
+
+func (s WeatherService) GetCardData() ServiceCardData {
+	return ServiceCardData{
+		Name:   s.Name,
+		Status: s.Status,
+	}
+}
+
+func (s WeatherService) GetFullData() ServiceFullData {
+	return ServiceFullData{}
+}
+
+func (s WeatherService) Stop() error {
+	// TODO:
+	fmt.Println(s.Name, "STOP")
+	return nil
+}
+
+// Demo
+type DemoService struct {
+	Name   string
+	Status ServiceStatus
+	ID     int64
+}
+
+func NewDemoService(name string) *DemoService {
+	return &DemoService{
 		Name: name,
 	}
 }
 
-func (s *RaspiService) Run() {
+func (s DemoService) Run() error {
 	// TODO:
-	fmt.Println(s.Name, "RUN")
+	return nil
 }
 
-func (s *RaspiService) Stop() {
+func (s DemoService) Stop() error {
 	// TODO:
-	fmt.Println(s.Name, "STOP")
+	return nil
+}
+
+func (s DemoService) GetFullData() ServiceFullData {
+	return ServiceFullData{}
+}
+
+func (s DemoService) GetCardData() ServiceCardData {
+	return ServiceCardData{
+		Name:   s.Name,
+		Status: s.Status,
+	}
+}
+
+func (s *DemoService) SwitchStatus(status bool) {
+	s.Status = ServiceStatus(status)
 }

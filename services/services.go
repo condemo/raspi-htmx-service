@@ -8,24 +8,25 @@ import (
 )
 
 // TODO: Otra variable global que podría implementar correctamente
-var ServicesList []types.RaspiService
+var ServicesList []types.Service
 
 func LoadServices() {
+	ServicesList = append(ServicesList, types.NewWeatherService())
 	for i := range 6 {
-		s := types.NewRaspiService(fmt.Sprintf("service-%d", i))
+		s := types.NewDemoService(fmt.Sprintf("Demo-%d", i))
 		ServicesList = append(ServicesList, s)
 	}
 }
 
 // TODO: CUTRE
-func UpdateService(n string, status bool) (types.RaspiService, error) {
+func UpdateService(n string, status bool) (types.Service, error) {
 	for i, service := range ServicesList {
-		if service.Name == n {
-			service.Status = types.ServiceStatus(status)
+		if service.GetCardData().Name == n {
+			service.SwitchStatus(status)
 			ServicesList[i] = service
 			return service, nil
 		}
 	}
 
-	return types.RaspiService{}, errors.New("service not found")
+	return &types.WeatherService{}, errors.New("service not found")
 }
