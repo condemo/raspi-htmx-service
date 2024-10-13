@@ -22,7 +22,13 @@ templ ServiceCard(d types.Service) {
 	<div id={ d.GetCardData().Name }>
 		<div class="carousel-item shadow-sm shadow-slate-900">
 			<div class="card bg-base-100 w-72 shadow-xl">
-				<figure class=" h-10 rounded-3xl m-1 bg-base-300">
+				<figure
+					if d.GetCardData().Status {
+						class="h-10 rounded-3xl m-1 bg-success text-black"
+					} else {
+						class="h-10 rounded-3xl m-1 bg-base-300"
+					}
+				>
 					<h1 class="z-10">{ d.GetCardData().Name }</h1>
 				</figure>
 				<div class="card-body items-center text-center">
@@ -40,27 +46,45 @@ templ ServiceCard(d types.Service) {
 					@ServiceInfo(d.GetCardData())
 					<div class="card-actions w-full flex justify-between">
 						<button
-							class="btn btn-accent w-36"
-							hx-vals={ string(fmt.Sprintf(`{"name": "%v" , "status" : %t }`,
-            d.GetCardData().Name, !d.GetCardData().Status)) }
+							if d.GetCardData().Status {
+								class="btn btn-error w-36"
+							} else {
+								class="btn btn-success w-36"
+							}
+							hx-vals={ string(fmt.Sprintf(`{"name": "%v" , "status" : %t }`, d.GetCardData().Name,
+            !d.GetCardData().Status)) }
 							hx-put={ string(templ.URL("/serv/")) }
-							hx-target={ string(fmt.Sprintf("#%s", d.GetCardData().Name)) }
+							hx-target={ string(fmt.Sprintf("#%s",
+            d.GetCardData().Name)) }
 							hx-swap="outerHTML"
 						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								class="size-6"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z"
-								></path>
-							</svg>
+							if !d.GetCardData().Status {
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="currentColor"
+									class="size-6"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z"
+									></path>
+								</svg>
+							} else {
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="currentColor"
+									class="size-6"
+								>
+									<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5"></path>
+								</svg>
+							}
 						</button>
 						<button class="btn bg-base-200 w-31">
 							<svg
