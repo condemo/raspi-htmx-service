@@ -14,6 +14,16 @@ arm-build:
 arm-run: arm-build
 	@./bin/${binary-name}-arm64
 
+start-manager:
+	@go run ./cmd/manager/main.go
+
+protogen:
+	@protoc \
+		--proto_path=proto "proto/manager.proto" \
+		--go_out=services/common/genproto/services --go_opt=paths=source_relative \
+		--go-grpc_out=services/common/genproto/services \
+		--go-grpc_opt=paths=source_relative
+
 clean:
 	@rm -rf ./bin/*
 	@go clean
