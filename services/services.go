@@ -7,7 +7,7 @@ import (
 	"github.com/condemo/raspi-htmx-service/types"
 )
 
-// TODO: Otra variable global que podría implementar correctamente
+// TODO: Reestructurar todo el archivo, debería estar en types?
 var ServicesList []types.Service
 
 func LoadServices() {
