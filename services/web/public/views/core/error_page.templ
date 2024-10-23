@@ -1,0 +1,14 @@
+package core
+
+import (
+	"github.com/condemo/raspi-htmx-service/services/web/api/handlers/errors"
+	"github.com/condemo/raspi-htmx-service/services/web/public/views/layout"
+	"strconv"
+)
+
+templ ErrorPage(e errors.UnformatError) {
+	@layout.Base("Error") {
+		<h1>{ strconv.FormatInt(int64(e.Status), 10) }</h1>
+		<p>{ e.Error() }</p>
+	}
+}

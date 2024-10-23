@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/condemo/raspi-htmx-service/api"
-	"github.com/condemo/raspi-htmx-service/store"
+	"github.com/condemo/raspi-htmx-service/services/web/api"
+	"github.com/condemo/raspi-htmx-service/services/web/store"
 )
 
 func main() {
