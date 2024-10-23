@@ -3,6 +3,7 @@ service1-name=manager
 
 full-build: build-manager build-htmx
 full-run: kill-all full-build run-manager run-htmx
+services-run: kill-all run-manager
 kill-all: kill-services kill-htmx
 
 amd64-build: templ-build
