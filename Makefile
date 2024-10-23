@@ -1,21 +1,30 @@
 binary-name=raspi-htmx
+service1-name=manager
 
-build: templ-build
+full-build: build-manager build-htmx
+full-run: kill-all full-build run-manager run-htmx
+kill-all: kill-services kill-htmx
+
+amd64-build: templ-build
+	# API
 	@GOOS=windows GOARCH=amd64 go build -o ./bin/${binary-name}-win.exe ./cmd/api/main.go
 	@GOOS=linux GOARCH=amd64 go build -o ./bin/${binary-name}-linux ./cmd/api/main.go
 	@GOOS=darwin GOARCH=amd64 go build -o ./bin/${binary-name}-darwin ./cmd/api/main.go
 
-run: build
+amd64-run: build
 	@./bin/${binary-name}-linux
 
-arm-build:
+build-htmx:
 	@GOOS=linux GOARCH=arm64 go build -o ./bin/${binary-name}-arm64 ./cmd/api/main.go
 
-arm-run: arm-build
+build-manager:
+	@GOOS=linux GOARCH=arm64 go build -o ./bin/${service1-name}-arm64 ./cmd/manager/main.go
+
+run-htmx: build-htmx
 	@./bin/${binary-name}-arm64
 
-start-manager:
-	@go run ./cmd/manager/main.go
+run-manager: build-manager
+	@./bin/${service1-name}-arm64 &
 
 protogen:
 	@protoc \
@@ -39,3 +48,10 @@ templ-build:
 
 templ-watch:
 	@templ generate --watch
+
+kill-services:
+	@lsof -t -i:8000 | xargs -r kill
+	@lsof -t -i:8080 | xargs -r kill
+
+kill-htmx:
+	@lsof -t -i:4000 | xargs -r kill
