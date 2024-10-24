@@ -25,7 +25,7 @@ run-htmx: build-htmx
 	@./bin/${binary-name}-arm64
 
 run-manager: build-manager
-	@./bin/${service1-name}-arm64 &
+	@./bin/${service1-name}-arm64
 
 protogen:
 	@protoc \
