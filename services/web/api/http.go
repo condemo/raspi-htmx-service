@@ -12,6 +12,8 @@ import (
 	"github.com/condemo/raspi-htmx-service/services/web/api/handlers"
 	"github.com/condemo/raspi-htmx-service/services/web/api/middlewares"
 	"github.com/condemo/raspi-htmx-service/services/web/store"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 type ApiServer struct {
@@ -33,6 +35,7 @@ func (s *ApiServer) Run() {
 	conf := http.NewServeMux()
 	ws := http.NewServeMux()
 	fs := http.FileServer(http.Dir("services/web/public/static"))
+	services := http.NewServeMux()
 
 	// Middlewares
 	basicMiddleware := middlewares.MiddlewareStack(
@@ -50,18 +53,24 @@ func (s *ApiServer) Run() {
 	router.Handle("/static/", http.StripPrefix("/static/", fs))
 	router.Handle("/ws/", http.StripPrefix("/ws", ws))
 	router.Handle("/conf/", http.StripPrefix("/conf", middlewares.RequireAuth(conf)))
+	router.Handle("/services/", http.StripPrefix("/services", basicMiddleware(services)))
+
+	// GRPC CONNS
+	managerGrpc := newManagerGrpcClient(":8080")
 
 	// Handlers
 	authHandler := handlers.NewAuthHandler(s.store)
 	viewHandler := handlers.NewViewHandler()
 	wsHandler := handlers.NewWSHandler()
 	confHandler := handlers.NewConfigHandler()
+	servHandler := handlers.NewServiceHandler(managerGrpc)
 
 	// Routes Load
 	authHandler.RegisterRoutes(auth)
 	viewHandler.RegisterRoutes(view)
 	wsHandler.RegisterRoutes(ws)
 	confHandler.RegisterRoutes(conf)
+	servHandler.RegisterRoutes(services)
 
 	server := http.Server{
 		Addr:         s.addr,
@@ -85,4 +94,13 @@ func (s *ApiServer) Run() {
 	// server.Shutdown ends the execution of the program
 	// after waiting for all active connections to finish or 30 seconds to pass
 	server.Shutdown(ctx)
+}
+
+func newManagerGrpcClient(addr string) *grpc.ClientConn {
+	conn, err := grpc.NewClient(addr, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		log.Fatalln("error creating grcp manager client", err)
+	}
+
+	return conn
 }
