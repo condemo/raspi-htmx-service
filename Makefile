@@ -34,6 +34,12 @@ protogen:
 		--go-grpc_out=services/common/genproto/services \
 		--go-grpc_opt=paths=source_relative
 
+	@protoc \
+		--proto_path=proto "proto/sys_info.proto" \
+		--go_out=services/common/genproto/services/sys_info --go_opt=paths=source_relative \
+		--go-grpc_out=services/common/genproto/services/sys_info \
+		--go-grpc_opt=paths=source_relative
+
 clean:
 	@rm -rf ./bin/*
 	@go clean
