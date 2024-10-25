@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option go_package = "github.com/condemo/common/services/manager";
+
+service ServiceManager {
+  rpc RegisterService(RegisterServiceRequest) returns (RegisterServiceResponse) {}
+  rpc GetServices(GetServicesRequest) returns (GetServicesResponse) {}
+}
+
+message RegisterServiceRequest {
+  int32 id = 1;
+  string name = 2;
+}
+
+message RegisterServiceResponse {
+  bool status = 1;
+  string message = 2;
+}
+
+message RaspiService {
+  string name = 1;
+}
+
+message GetServicesRequest {}
+
+message GetServicesResponse {
+  repeated RaspiService services = 1;
+}
+
