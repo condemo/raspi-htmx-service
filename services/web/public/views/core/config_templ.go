@@ -9,7 +9,7 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	"github.com/condemo/raspi-htmx-service/services/web/config"
+	"github.com/condemo/raspi-htmx-service/services/common/config"
 	"github.com/condemo/raspi-htmx-service/services/web/public/views/components"
 	"github.com/condemo/raspi-htmx-service/services/web/public/views/layout"
 )
