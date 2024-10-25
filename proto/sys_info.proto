@@ -1,0 +1,54 @@
+syntax= "proto3";
+
+option go_package = "github.com/condemo/common/services/sysinfo";
+
+service SysInfoService {
+  rpc GetInfo(GetInfoRequest) returns (GetInfoResponse) {}
+}
+
+message GetInfoRequest {}
+
+message GetInfoResponse {
+  SysInfo sisInfo = 1;
+}
+
+message SysInfo {
+  DiskInfo diskInfo = 1;
+  NetInfo netInfo = 2;
+  FanInfo fanInfo = 3;
+  MemInfo memInfo = 4;
+  CpuInfo cpuInfo = 5;
+}
+
+message NetInfo {
+  string NetUp = 1;
+  string NetDown = 2;
+}
+
+message MemInfo {
+  string MemPercent = 1;
+  string MemUsed = 2;
+  string MemTotal = 3;
+}
+
+message USBDrive {
+  string Name = 1;
+  string Used = 2;
+  string Total = 3;
+}
+
+message DiskInfo {
+  string RootUsed = 1;
+  string RootTotal = 2;
+  repeated USBDrive USBDrives = 3;
+}
+
+message CpuInfo {
+  string CpuTemp = 1;
+  repeated string CoreInfoList = 2;
+}
+
+message FanInfo {
+  string FanSpeed = 1;
+  bool FanStatus = 2;
+}
