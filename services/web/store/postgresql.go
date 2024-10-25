@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/condemo/raspi-htmx-service/services/web/config"
+	"github.com/condemo/raspi-htmx-service/services/common/config"
 	"github.com/condemo/raspi-htmx-service/services/web/types"
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"

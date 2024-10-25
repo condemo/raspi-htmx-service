@@ -174,7 +174,6 @@ func newNetInfo() *NetInfo {
 
 	// TODO: Cutre Fix
 	if len(speedSlice) < 2 {
-		fmt.Println("COLISION -> ", speedSlice)
 		speedSlice = []string{"0,0 kb", "0,0 kb"}
 	}
 

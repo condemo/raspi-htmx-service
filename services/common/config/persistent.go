@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/BurntSushi/toml"
@@ -19,7 +18,6 @@ func SaveConf() error {
 		return err
 	}
 
-	fmt.Println("Config Saved -> ", UsConf)
 	return nil
 }
 

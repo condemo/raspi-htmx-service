@@ -1,11 +1,10 @@
 package utils
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 
-	"github.com/condemo/raspi-htmx-service/services/web/config"
+	"github.com/condemo/raspi-htmx-service/services/common/config"
 )
 
 func ConfigParser(r *http.Request, conf *config.UserConfig) error {
@@ -23,6 +22,5 @@ func ConfigParser(r *http.Request, conf *config.UserConfig) error {
 	conf.GeneralConf.CurrentTheme = config.Theme(t)
 	conf.InfoConf.InfoTick = tick
 
-	fmt.Printf("Final Struct -> %+v\n", conf)
 	return nil
 }

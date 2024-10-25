@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/condemo/raspi-htmx-service/services/web/api/utils"
-	"github.com/condemo/raspi-htmx-service/services/web/config"
+	"github.com/condemo/raspi-htmx-service/services/common/config"
 	"github.com/condemo/raspi-htmx-service/services/web/public/views/components"
 )
 

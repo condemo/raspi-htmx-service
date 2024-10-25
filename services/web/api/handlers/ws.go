@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/a-h/templ"
-	"github.com/condemo/raspi-htmx-service/services/web/config"
+	"github.com/condemo/raspi-htmx-service/services/common/config"
 	"github.com/condemo/raspi-htmx-service/services/web/public/views/components"
 	"github.com/condemo/raspi-htmx-service/services/web/tools"
 	"github.com/gorilla/websocket"
