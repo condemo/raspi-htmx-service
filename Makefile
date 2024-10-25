@@ -1,9 +1,10 @@
 binary-name=raspi-htmx
 service1-name=manager
+service2-name=sysinfo
 
 full-build: build-manager build-htmx
 full-run: kill-all full-build run-manager run-htmx
-services-run: kill-all run-manager
+services-run: kill-all run-manager run-sysinfo
 kill-all: kill-services kill-htmx
 
 amd64-build: templ-build
@@ -21,11 +22,17 @@ build-htmx:
 build-manager:
 	@GOOS=linux GOARCH=arm64 go build -o ./bin/${service1-name}-arm64 ./cmd/manager/main.go
 
+build-sysinfo:
+	@GOOS=linux GOARCH=arm64 go build -o ./bin/${service2-name}-arm64 ./cmd/sys_info/main.go
+
 run-htmx: build-htmx
 	@./bin/${binary-name}-arm64
 
 run-manager: build-manager
-	@./bin/${service1-name}-arm64
+	@./bin/${service1-name}-arm64 &
+
+run-sysinfo: build-sysinfo
+	@./bin/${service2-name}-arm64
 
 protogen:
 	@protoc \
@@ -59,6 +66,7 @@ templ-watch:
 kill-services:
 	@lsof -t -i:8000 | xargs -r kill
 	@lsof -t -i:8080 | xargs -r kill
+	@lsof -t -i:9000 | xargs -r kill
 
 kill-htmx:
 	@lsof -t -i:4000 | xargs -r kill
