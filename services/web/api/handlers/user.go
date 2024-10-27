@@ -8,7 +8,7 @@ import (
 	"github.com/condemo/raspi-htmx-service/services/web/api/handlers/errors"
 	"github.com/condemo/raspi-htmx-service/services/web/api/utils"
 	"github.com/condemo/raspi-htmx-service/services/web/public/views/core"
-	"github.com/condemo/raspi-htmx-service/services/web/store"
+	"github.com/condemo/raspi-htmx-service/services/common/store"
 	"github.com/condemo/raspi-htmx-service/services/web/types"
 )
 

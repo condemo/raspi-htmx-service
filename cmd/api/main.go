@@ -6,7 +6,7 @@ import (
 	"log"
 
 	"github.com/condemo/raspi-htmx-service/services/web/api"
-	"github.com/condemo/raspi-htmx-service/services/web/store"
+	"github.com/condemo/raspi-htmx-service/services/common/store"
 )
 
 func main() {
