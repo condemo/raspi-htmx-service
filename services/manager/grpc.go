@@ -3,6 +3,9 @@ package manager
 import (
 	"log"
 	"net"
+	"os"
+	"os/signal"
+	"syscall"
 
 	handlers "github.com/condemo/raspi-htmx-service/services/manager/handlers/manager"
 	"github.com/condemo/raspi-htmx-service/services/manager/service"
@@ -28,7 +31,15 @@ func (s *grpcServer) Run() {
 	managerService := service.NewManagerService()
 	handlers.NewManagerGrpcHandler(gServer, managerService)
 
-	log.Println("HyperMedia grpc on port", s.addr)
+	go func() {
+		log.Println("SysInfo grpc on port", s.addr)
+		log.Fatal(gServer.Serve(lis))
+	}()
 
-	log.Fatal(gServer.Serve(lis))
+	sigC := make(chan os.Signal, 1)
+	signal.Notify(sigC, os.Interrupt, syscall.SIGTERM, syscall.SIGINT)
+
+	<-sigC
+
+	gServer.GracefulStop()
 }

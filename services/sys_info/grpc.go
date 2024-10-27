@@ -3,6 +3,9 @@ package sysinfo
 import (
 	"log"
 	"net"
+	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/condemo/raspi-htmx-service/services/sys_info/handlers"
 	"github.com/condemo/raspi-htmx-service/services/sys_info/service"
@@ -28,6 +31,15 @@ func (s *grpcServer) Run() {
 	sysInfoService := service.NewSysInfoService()
 	handlers.NewSysInfoGrpcHandler(gServer, sysInfoService)
 
-	log.Println("SysInfo grpc on port", s.addr)
-	log.Fatal(gServer.Serve(lis))
+	go func() {
+		log.Println("SysInfo grpc on port", s.addr)
+		log.Fatal(gServer.Serve(lis))
+	}()
+
+	sigC := make(chan os.Signal, 1)
+	signal.Notify(sigC, os.Interrupt, syscall.SIGTERM, syscall.SIGINT)
+
+	<-sigC
+
+	gServer.GracefulStop()
 }

@@ -9,9 +9,9 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/condemo/raspi-htmx-service/services/common/store"
 	"github.com/condemo/raspi-htmx-service/services/web/api/handlers"
 	"github.com/condemo/raspi-htmx-service/services/web/api/middlewares"
-	"github.com/condemo/raspi-htmx-service/services/common/store"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
