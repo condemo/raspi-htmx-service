@@ -9,12 +9,12 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
+	sysinfo "github.com/condemo/raspi-htmx-service/services/common/genproto/services/sys_info"
 	"github.com/condemo/raspi-htmx-service/services/web/public/views/components"
 	"github.com/condemo/raspi-htmx-service/services/web/public/views/layout"
-	"github.com/condemo/raspi-htmx-service/services/web/tools"
 )
 
-func Home() templ.Component {
+func Home(i *sysinfo.SysInfo) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -48,7 +48,7 @@ func Home() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = components.Infobar(tools.NewSysInfo()).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = components.Infobar(i).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

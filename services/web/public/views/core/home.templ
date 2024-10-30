@@ -1,15 +1,15 @@
 package core
 
 import (
+sysinfo "github.com/condemo/raspi-htmx-service/services/common/genproto/services/sys_info"
 "github.com/condemo/raspi-htmx-service/services/web/public/views/components"
 "github.com/condemo/raspi-htmx-service/services/web/public/views/layout"
-"github.com/condemo/raspi-htmx-service/services/web/tools"
 )
 
-templ Home() {
+templ Home(i *sysinfo.SysInfo) {
 @layout.Base("Home") {
 <div id="home-container">
-  @components.Infobar(tools.NewSysInfo())
+  @components.Infobar(i)
   <div id="view-container" class="p-2">
     @components.ServiceCarousel()
   </div>

@@ -56,12 +56,13 @@ func (s *ApiServer) Run() {
 	router.Handle("/services/", http.StripPrefix("/services", basicMiddleware(services)))
 
 	// GRPC CONNS
-	managerGrpc := newManagerGrpcClient(":8080")
+	managerGrpc := newGrpcClient(":8080")
+	sysinfoGrpc := newGrpcClient(":9000")
 
 	// Handlers
 	authHandler := handlers.NewAuthHandler(s.store)
-	viewHandler := handlers.NewViewHandler()
-	wsHandler := handlers.NewWSHandler()
+	viewHandler := handlers.NewViewHandler(sysinfoGrpc)
+	wsHandler := handlers.NewWSHandler(sysinfoGrpc)
 	confHandler := handlers.NewConfigHandler()
 	servHandler := handlers.NewServiceHandler(managerGrpc)
 
@@ -96,10 +97,10 @@ func (s *ApiServer) Run() {
 	server.Shutdown(ctx)
 }
 
-func newManagerGrpcClient(addr string) *grpc.ClientConn {
+func newGrpcClient(addr string) *grpc.ClientConn {
 	conn, err := grpc.NewClient(addr, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		log.Fatalln("error creating grcp manager client", err)
+		log.Fatalln("error creating grcp client", err)
 	}
 
 	return conn

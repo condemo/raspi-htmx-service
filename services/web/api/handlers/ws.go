@@ -3,28 +3,31 @@ package handlers
 import (
 	"context"
 	"fmt"
+	"log"
 	"net/http"
 	"sync"
 	"time"
 
 	"github.com/a-h/templ"
 	"github.com/condemo/raspi-htmx-service/services/common/config"
+	sysinfo "github.com/condemo/raspi-htmx-service/services/common/genproto/services/sys_info"
 	"github.com/condemo/raspi-htmx-service/services/web/public/views/components"
-	"github.com/condemo/raspi-htmx-service/services/web/tools"
 	"github.com/gorilla/websocket"
+	"google.golang.org/grpc"
 )
 
 type WSHandler struct {
-	sysInfo *tools.SysInfo
-	mu      *sync.RWMutex
-	conns   map[*websocket.Conn]struct{}
+	sysInfoConn sysinfo.SysInfoServiceClient
+	mu          *sync.RWMutex
+	conns       map[*websocket.Conn]struct{}
 }
 
-func NewWSHandler() *WSHandler {
+func NewWSHandler(siConn *grpc.ClientConn) *WSHandler {
+	si := sysinfo.NewSysInfoServiceClient(siConn)
 	return &WSHandler{
-		sysInfo: tools.NewSysInfo(),
-		mu:      new(sync.RWMutex),
-		conns:   make(map[*websocket.Conn]struct{}),
+		sysInfoConn: si,
+		mu:          new(sync.RWMutex),
+		conns:       make(map[*websocket.Conn]struct{}),
 	}
 }
 
@@ -65,8 +68,12 @@ func (h *WSHandler) writeLoop(c *websocket.Conn, s chan struct{}) {
 	for {
 		select {
 		case <-t.C:
-			h.sysInfo.Update()
-			tmpl, err := templ.ToGoHTML(context.Background(), components.Infobar(h.sysInfo))
+			si, err := h.sysInfoConn.GetInfo(context.Background(), &sysinfo.GetInfoRequest{})
+			if err != nil {
+				log.Fatalf("something wrong with GetInfo %v \n", err)
+			}
+
+			tmpl, err := templ.ToGoHTML(context.Background(), components.Infobar(si.GetSisInfo()))
 			if err != nil {
 				fmt.Println("error converting component to html:", err)
 				return

@@ -1,16 +1,25 @@
 package handlers
 
 import (
+	"context"
+	"log"
 	"net/http"
 
 	"github.com/condemo/raspi-htmx-service/services/common/config"
+	sysinfo "github.com/condemo/raspi-htmx-service/services/common/genproto/services/sys_info"
 	"github.com/condemo/raspi-htmx-service/services/web/public/views/core"
+	"google.golang.org/grpc"
 )
 
-type ViewHandler struct{}
+type ViewHandler struct {
+	infoConn sysinfo.SysInfoServiceClient
+}
 
-func NewViewHandler() *ViewHandler {
-	return &ViewHandler{}
+func NewViewHandler(ic *grpc.ClientConn) *ViewHandler {
+	inConn := sysinfo.NewSysInfoServiceClient(ic)
+	return &ViewHandler{
+		infoConn: inConn,
+	}
 }
 
 func (h *ViewHandler) RegisterRoutes(r *http.ServeMux) {
@@ -19,7 +28,12 @@ func (h *ViewHandler) RegisterRoutes(r *http.ServeMux) {
 }
 
 func (h *ViewHandler) homeView(w http.ResponseWriter, r *http.Request) error {
-	RenderTempl(w, r, core.Home())
+	si, err := h.infoConn.GetInfo(context.Background(), &sysinfo.GetInfoRequest{})
+	if err != nil {
+		log.Fatal("error getting info from `GetInfo` \n", err)
+	}
+
+	RenderTempl(w, r, core.Home(si.GetSisInfo()))
 	return nil
 }
 

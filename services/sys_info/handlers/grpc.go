@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"context"
+
 	sysinfo "github.com/condemo/raspi-htmx-service/services/common/genproto/services/sys_info"
 	"github.com/condemo/raspi-htmx-service/services/sys_info/types"
 	"google.golang.org/grpc"
@@ -18,3 +20,9 @@ func NewSysInfoGrpcHandler(grpc *grpc.Server, is types.SysInfo) {
 }
 
 // TODO:
+func (h *SysInfoGrpcHandler) GetInfo(ctx context.Context, req *sysinfo.GetInfoRequest) (*sysinfo.GetInfoResponse, error) {
+	si := h.sysInfoService.GetInfo(ctx)
+	res := &sysinfo.GetInfoResponse{SisInfo: si}
+
+	return res, nil
+}
