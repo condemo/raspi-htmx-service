@@ -13,7 +13,6 @@ message RegisterServiceRequest {
 }
 
 message RegisterServiceResponse {
-  bool status = 1;
   string message = 2;
 }
 

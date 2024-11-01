@@ -21,16 +21,13 @@ func NewManagerGrpcHandler(grpc *grpc.Server, sm types.ServiceManager) {
 
 func (h *ManagerGrpcHandler) RegisterService(ctx context.Context, req *manager.RegisterServiceRequest) (*manager.RegisterServiceResponse, error) {
 	if err := h.serviceManager.RegisterService(ctx, req); err != nil {
-		// PERF: redundante
 		res := &manager.RegisterServiceResponse{
-			Status:  false,
 			Message: err.Error(),
 		}
 		return res, err
 	}
 
 	res := &manager.RegisterServiceResponse{
-		Status:  true,
 		Message: "success",
 	}
 
