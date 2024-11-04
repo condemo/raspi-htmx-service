@@ -8,12 +8,12 @@ import (
 
 // TODO: Repensar lo que recibe y lo que devueven y volver a implentar
 // cambiar la interfaz en `common` en concordancia
-type WeatherService struct{}
+type WeatherService struct {
+	// injections
+}
 
 func NewWeatherService() *WeatherService {
-	return &WeatherService{
-		// injections
-	}
+	return &WeatherService{}
 }
 
 func (s *WeatherService) Init(ctx context.Context) error {
