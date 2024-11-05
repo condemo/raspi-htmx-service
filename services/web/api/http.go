@@ -56,7 +56,7 @@ func (s *ApiServer) Run() {
 	router.Handle("/services/", http.StripPrefix("/services", basicMiddleware(services)))
 
 	// GRPC CONNS
-	managerGrpc := newGrpcClient(":8080")
+	managerGrpc := newGrpcClient(":8000")
 	sysinfoGrpc := newGrpcClient(":9000")
 
 	// Handlers
@@ -97,6 +97,7 @@ func (s *ApiServer) Run() {
 	server.Shutdown(ctx)
 }
 
+// PERF: Mover esto a `common` e importar en los servicios que hagan falta
 func newGrpcClient(addr string) *grpc.ClientConn {
 	conn, err := grpc.NewClient(addr, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {

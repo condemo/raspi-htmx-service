@@ -78,8 +78,8 @@ templ-watch:
 
 kill-services:
 	@lsof -t -i:8000 | xargs -r kill
+	@lsof -t -i:8010 | xargs -r kill
 	@lsof -t -i:9000 | xargs -r kill
-	@lsof -t -i:8090 | xargs -r kill
 
 kill-htmx:
 	@lsof -t -i:4000 | xargs -r kill
