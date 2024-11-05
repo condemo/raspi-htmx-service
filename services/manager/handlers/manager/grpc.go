@@ -2,8 +2,10 @@ package handlers
 
 import (
 	"context"
+	"log"
 
 	manager "github.com/condemo/raspi-htmx-service/services/common/genproto/services"
+	raspiservices "github.com/condemo/raspi-htmx-service/services/common/genproto/services/raspi_services"
 	"github.com/condemo/raspi-htmx-service/services/manager/types"
 	"google.golang.org/grpc"
 )
@@ -11,24 +13,26 @@ import (
 type ManagerGrpcHandler struct {
 	manager.UnimplementedServiceManagerServer
 	serviceManager types.ServiceManager
+	weatherConn    raspiservices.WeatherServiceClient
 }
 
-func NewManagerGrpcHandler(grpc *grpc.Server, sm types.ServiceManager) {
-	gRPCHandler := &ManagerGrpcHandler{serviceManager: sm}
+func NewManagerGrpcHandler(grpc *grpc.Server, sm types.ServiceManager, wConn raspiservices.WeatherServiceClient) {
+	gRPCHandler := &ManagerGrpcHandler{
+		serviceManager: sm,
+		weatherConn:    wConn,
+	}
 
 	manager.RegisterServiceManagerServer(grpc, gRPCHandler)
 }
 
-func (h *ManagerGrpcHandler) RegisterService(ctx context.Context, req *manager.RegisterServiceRequest) (*manager.RegisterServiceResponse, error) {
-	if err := h.serviceManager.RegisterService(ctx, req); err != nil {
-		res := &manager.RegisterServiceResponse{
-			Message: err.Error(),
-		}
-		return res, err
+func (h *ManagerGrpcHandler) RegisterService(ctx context.Context, req *manager.RegisterServiceRequest) (*manager.ServiceStatusResponse, error) {
+	st, err := h.weatherConn.Init(ctx, &raspiservices.EmptyRequest{})
+	if err != nil {
+		log.Fatal("error init weather service", err)
 	}
 
-	res := &manager.RegisterServiceResponse{
-		Message: "success",
+	res := &manager.ServiceStatusResponse{
+		Message: st.Status,
 	}
 
 	return res, nil
@@ -41,4 +45,16 @@ func (h *ManagerGrpcHandler) GetServices(ctx context.Context, req *manager.GetSe
 		Services: sl,
 	}
 	return res, nil
+}
+
+func (h *ManagerGrpcHandler) GetServiceData(ctx context.Context, req *manager.ServiceIdRequest) (*manager.RaspiService, error) {
+	return nil, nil
+}
+
+func (h *ManagerGrpcHandler) StartService(ctx context.Context, req *manager.ServiceIdRequest) (*manager.ServiceStatusResponse, error) {
+	return nil, nil
+}
+
+func (h *ManagerGrpcHandler) StopService(ctx context.Context, req *manager.ServiceIdRequest) (*manager.ServiceStatusResponse, error) {
+	return nil, nil
 }

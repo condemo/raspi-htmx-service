@@ -34,3 +34,8 @@ func (s *ManagerService) GetServices(ctx context.Context, req *manager.GetServic
 	}
 	return fakeList
 }
+
+// TODO: Todas las funcionalidades
+func (s *ManagerService) GetServiceData(ctx context.Context, req *manager.ServiceIdRequest) {}
+func (s *ManagerService) StartService(ctx context.Context, req *manager.ServiceIdRequest)   {}
+func (s *ManagerService) StopService(ctx context.Context, req *manager.ServiceIdRequest)    {}
