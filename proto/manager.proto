@@ -1,10 +1,15 @@
-syntax = "proto3";
+syntax= "proto3";
 
 option go_package = "github.com/condemo/common/services/manager";
 
 service ServiceManager {
-  rpc RegisterService(RegisterServiceRequest) returns (RegisterServiceResponse) {}
+  //TODO: Eliminar `RegisterService`, no tiene sentido ya que el cargado ocurre alrevés
+  rpc RegisterService(RegisterServiceRequest) returns (ServiceStatusResponse) {}
   rpc GetServices(GetServicesRequest) returns (GetServicesResponse) {}
+  rpc GetServiceData(ServiceIdRequest) returns (RaspiService) {}
+  rpc StartService(ServiceIdRequest) returns (ServiceStatusResponse) {}
+  rpc StopService(ServiceIdRequest) returns (ServiceStatusResponse) {}
+  // TODO: falta `UpdateConfig` y `GetConfig`
 }
 
 message RegisterServiceRequest {
@@ -12,8 +17,12 @@ message RegisterServiceRequest {
   string name = 2;
 }
 
-message RegisterServiceResponse {
+message ServiceStatusResponse {
   string message = 2;
+}
+
+message ServiceIdRequest {
+  int32 id = 1;
 }
 
 message RaspiService {

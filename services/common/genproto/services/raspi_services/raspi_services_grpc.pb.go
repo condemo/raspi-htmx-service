@@ -19,6 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
+	WeatherService_Init_FullMethodName         = "/WeatherService/Init"
 	WeatherService_Start_FullMethodName        = "/WeatherService/Start"
 	WeatherService_Stop_FullMethodName         = "/WeatherService/Stop"
 	WeatherService_GetCardInfo_FullMethodName  = "/WeatherService/GetCardInfo"
@@ -31,6 +32,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type WeatherServiceClient interface {
+	Init(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*StatusResponse, error)
 	Start(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*StatusResponse, error)
 	Stop(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*StatusResponse, error)
 	GetCardInfo(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*CardInfoResponse, error)
@@ -45,6 +47,16 @@ type weatherServiceClient struct {
 
 func NewWeatherServiceClient(cc grpc.ClientConnInterface) WeatherServiceClient {
 	return &weatherServiceClient{cc}
+}
+
+func (c *weatherServiceClient) Init(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*StatusResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StatusResponse)
+	err := c.cc.Invoke(ctx, WeatherService_Init_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *weatherServiceClient) Start(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*StatusResponse, error) {
@@ -111,6 +123,7 @@ func (c *weatherServiceClient) UpdateConfig(ctx context.Context, in *ConfigReque
 // All implementations must embed UnimplementedWeatherServiceServer
 // for forward compatibility.
 type WeatherServiceServer interface {
+	Init(context.Context, *EmptyRequest) (*StatusResponse, error)
 	Start(context.Context, *EmptyRequest) (*StatusResponse, error)
 	Stop(context.Context, *EmptyRequest) (*StatusResponse, error)
 	GetCardInfo(context.Context, *EmptyRequest) (*CardInfoResponse, error)
@@ -127,6 +140,9 @@ type WeatherServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedWeatherServiceServer struct{}
 
+func (UnimplementedWeatherServiceServer) Init(context.Context, *EmptyRequest) (*StatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Init not implemented")
+}
 func (UnimplementedWeatherServiceServer) Start(context.Context, *EmptyRequest) (*StatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Start not implemented")
 }
@@ -164,6 +180,24 @@ func RegisterWeatherServiceServer(s grpc.ServiceRegistrar, srv WeatherServiceSer
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&WeatherService_ServiceDesc, srv)
+}
+
+func _WeatherService_Init_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EmptyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WeatherServiceServer).Init(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WeatherService_Init_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WeatherServiceServer).Init(ctx, req.(*EmptyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _WeatherService_Start_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -281,6 +315,10 @@ var WeatherService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "WeatherService",
 	HandlerType: (*WeatherServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Init",
+			Handler:    _WeatherService_Init_Handler,
+		},
 		{
 			MethodName: "Start",
 			Handler:    _WeatherService_Start_Handler,

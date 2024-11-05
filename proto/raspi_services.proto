@@ -3,6 +3,7 @@ syntax = "proto3";
 option go_package = "github.com/condemo/common/services/raspiservices";
 
 service WeatherService {
+  rpc Init(EmptyRequest) returns (StatusResponse) {}
   rpc Start(EmptyRequest) returns (StatusResponse) {}
   rpc Stop(EmptyRequest) returns (StatusResponse) {}
   rpc GetCardInfo(EmptyRequest) returns (CardInfoResponse) {}
@@ -23,7 +24,33 @@ message CardInfoResponse {
   bool status = 3;
 }
 
-message FullInfoResponse {}
+message FullInfoResponse {
+  int32 id = 1;
+  string name = 2;
+  bool status = 3;
+  Location location = 4;
+  CurrentWeather current = 5;
+}
+
+message Location {
+  string city = 1;
+  string region = 2;
+  CurrentWeather current = 3;
+}
+message CurrentWeather {
+  ConditionWeather condition = 1;
+  string lastUpdated = 2;
+  string windDir = 3;
+  float feelTemp = 4;
+  float temp = 5;
+  float windVel = 6;
+  uint32 isDay = 7;
+}
+
+message ConditionWeather {
+  string text = 1;
+  string icon = 2;
+}
 
 message ConfigRequest {}
 
