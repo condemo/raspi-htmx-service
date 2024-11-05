@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"log"
 
 	raspiservices "github.com/condemo/raspi-htmx-service/services/common/genproto/services/raspi_services"
 	"github.com/condemo/raspi-htmx-service/services/common/types"
@@ -15,13 +16,23 @@ type WeatherGrpcHandler struct {
 
 func NewWeatherGrpcHandler(grpc *grpc.Server, ws types.RaspiService) {
 	gRPCHandler := &WeatherGrpcHandler{wservice: ws}
+	_, err := gRPCHandler.Init(context.Background(), &raspiservices.EmptyRequest{})
+	if err != nil {
+		log.Fatal("error on weather handler init -", err)
+	}
 
 	raspiservices.RegisterWeatherServiceServer(grpc, gRPCHandler)
 }
 
 func (h *WeatherGrpcHandler) Init(ctx context.Context, req *raspiservices.EmptyRequest) (*raspiservices.StatusResponse, error) {
-	// TODO:
-	return nil, nil
+	if err := h.wservice.Init(ctx); err != nil {
+		return nil, err
+	}
+
+	res := &raspiservices.StatusResponse{
+		Status: "success",
+	}
+	return res, nil
 }
 
 func (h *WeatherGrpcHandler) Start(ctx context.Context, req *raspiservices.EmptyRequest) (*raspiservices.StatusResponse, error) {

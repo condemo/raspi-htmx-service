@@ -2,14 +2,17 @@ package service
 
 import (
 	"context"
+	"fmt"
 
 	raspiservices "github.com/condemo/raspi-htmx-service/services/common/genproto/services/raspi_services"
+	"github.com/condemo/raspi-htmx-service/services/raspi_services/weather_service/types"
 )
 
 // TODO: Repensar lo que recibe y lo que devueven y volver a implentar
 // cambiar la interfaz en `common` en concordancia
 type WeatherService struct {
 	// injections
+	Data types.Weather
 }
 
 func NewWeatherService() *WeatherService {
@@ -17,12 +20,20 @@ func NewWeatherService() *WeatherService {
 }
 
 func (s *WeatherService) Init(ctx context.Context) error {
-	// TODO:
+	s.Data = *types.NewWeather()
+	if err := s.Start(ctx); err != nil {
+		return err
+	}
+
 	return nil
 }
 
 func (s *WeatherService) Start(ctx context.Context) error {
-	// TODO:
+	// TODO: Inicia un bucle en una goroutine actualizando la data del tiempo con un ticker
+
+	// ....
+	s.Data.State = true
+	fmt.Println("Weather Service Working")
 	return nil
 }
 
