@@ -33,12 +33,16 @@ func (s *WeatherService) Start(ctx context.Context) error {
 
 	// ....
 	s.Data.State = true
-	fmt.Println("Weather Service Working")
+	fmt.Println("Weather Service Starts")
 	return nil
 }
 
 func (s *WeatherService) Stop(ctx context.Context) error {
 	// TODO:
+
+	// ...
+	s.Data.State = false
+	fmt.Println("Weather Service Stops")
 	return nil
 }
 
