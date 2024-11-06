@@ -3,7 +3,6 @@ syntax = "proto3";
 option go_package = "github.com/condemo/common/services/raspiservices";
 
 service WeatherService {
-  rpc Init(EmptyRequest) returns (StatusResponse) {}
   rpc Start(EmptyRequest) returns (StatusResponse) {}
   rpc Stop(EmptyRequest) returns (StatusResponse) {}
   rpc GetCardInfo(EmptyRequest) returns (CardInfoResponse) {}

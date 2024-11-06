@@ -16,16 +16,16 @@ type WeatherGrpcHandler struct {
 
 func NewWeatherGrpcHandler(grpc *grpc.Server, ws types.RaspiService) {
 	gRPCHandler := &WeatherGrpcHandler{wservice: ws}
-	_, err := gRPCHandler.Init(context.Background(), &raspiservices.EmptyRequest{})
-	if err != nil {
+	if err := gRPCHandler.wservice.Init(context.Background()); err != nil {
 		log.Fatal("error on weather handler init -", err)
 	}
 
 	raspiservices.RegisterWeatherServiceServer(grpc, gRPCHandler)
 }
 
-func (h *WeatherGrpcHandler) Init(ctx context.Context, req *raspiservices.EmptyRequest) (*raspiservices.StatusResponse, error) {
-	if err := h.wservice.Init(ctx); err != nil {
+func (h *WeatherGrpcHandler) Start(ctx context.Context, req *raspiservices.EmptyRequest) (*raspiservices.StatusResponse, error) {
+	// TODO:
+	if err := h.wservice.Start(ctx); err != nil {
 		return nil, err
 	}
 
@@ -33,11 +33,6 @@ func (h *WeatherGrpcHandler) Init(ctx context.Context, req *raspiservices.EmptyR
 		Status: "success",
 	}
 	return res, nil
-}
-
-func (h *WeatherGrpcHandler) Start(ctx context.Context, req *raspiservices.EmptyRequest) (*raspiservices.StatusResponse, error) {
-	// TODO:
-	return nil, nil
 }
 
 func (h *WeatherGrpcHandler) Stop(ctx context.Context, req *raspiservices.EmptyRequest) (*raspiservices.StatusResponse, error) {

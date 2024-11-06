@@ -19,11 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ServiceManager_RegisterService_FullMethodName = "/ServiceManager/RegisterService"
-	ServiceManager_GetServices_FullMethodName     = "/ServiceManager/GetServices"
-	ServiceManager_GetServiceData_FullMethodName  = "/ServiceManager/GetServiceData"
-	ServiceManager_StartService_FullMethodName    = "/ServiceManager/StartService"
-	ServiceManager_StopService_FullMethodName     = "/ServiceManager/StopService"
+	ServiceManager_GetServices_FullMethodName    = "/ServiceManager/GetServices"
+	ServiceManager_GetServiceData_FullMethodName = "/ServiceManager/GetServiceData"
+	ServiceManager_StartService_FullMethodName   = "/ServiceManager/StartService"
+	ServiceManager_StopService_FullMethodName    = "/ServiceManager/StopService"
 )
 
 // ServiceManagerClient is the client API for ServiceManager service.
@@ -31,7 +30,6 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ServiceManagerClient interface {
 	// TODO: Eliminar `RegisterService`, no tiene sentido ya que el cargado ocurre alrevés
-	RegisterService(ctx context.Context, in *RegisterServiceRequest, opts ...grpc.CallOption) (*ServiceStatusResponse, error)
 	GetServices(ctx context.Context, in *GetServicesRequest, opts ...grpc.CallOption) (*GetServicesResponse, error)
 	GetServiceData(ctx context.Context, in *ServiceIdRequest, opts ...grpc.CallOption) (*RaspiService, error)
 	StartService(ctx context.Context, in *ServiceIdRequest, opts ...grpc.CallOption) (*ServiceStatusResponse, error)
@@ -44,16 +42,6 @@ type serviceManagerClient struct {
 
 func NewServiceManagerClient(cc grpc.ClientConnInterface) ServiceManagerClient {
 	return &serviceManagerClient{cc}
-}
-
-func (c *serviceManagerClient) RegisterService(ctx context.Context, in *RegisterServiceRequest, opts ...grpc.CallOption) (*ServiceStatusResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ServiceStatusResponse)
-	err := c.cc.Invoke(ctx, ServiceManager_RegisterService_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *serviceManagerClient) GetServices(ctx context.Context, in *GetServicesRequest, opts ...grpc.CallOption) (*GetServicesResponse, error) {
@@ -101,7 +89,6 @@ func (c *serviceManagerClient) StopService(ctx context.Context, in *ServiceIdReq
 // for forward compatibility.
 type ServiceManagerServer interface {
 	// TODO: Eliminar `RegisterService`, no tiene sentido ya que el cargado ocurre alrevés
-	RegisterService(context.Context, *RegisterServiceRequest) (*ServiceStatusResponse, error)
 	GetServices(context.Context, *GetServicesRequest) (*GetServicesResponse, error)
 	GetServiceData(context.Context, *ServiceIdRequest) (*RaspiService, error)
 	StartService(context.Context, *ServiceIdRequest) (*ServiceStatusResponse, error)
@@ -116,9 +103,6 @@ type ServiceManagerServer interface {
 // pointer dereference when methods are called.
 type UnimplementedServiceManagerServer struct{}
 
-func (UnimplementedServiceManagerServer) RegisterService(context.Context, *RegisterServiceRequest) (*ServiceStatusResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RegisterService not implemented")
-}
 func (UnimplementedServiceManagerServer) GetServices(context.Context, *GetServicesRequest) (*GetServicesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetServices not implemented")
 }
@@ -150,24 +134,6 @@ func RegisterServiceManagerServer(s grpc.ServiceRegistrar, srv ServiceManagerSer
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&ServiceManager_ServiceDesc, srv)
-}
-
-func _ServiceManager_RegisterService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RegisterServiceRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceManagerServer).RegisterService(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ServiceManager_RegisterService_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceManagerServer).RegisterService(ctx, req.(*RegisterServiceRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _ServiceManager_GetServices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -249,10 +215,6 @@ var ServiceManager_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "ServiceManager",
 	HandlerType: (*ServiceManagerServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "RegisterService",
-			Handler:    _ServiceManager_RegisterService_Handler,
-		},
 		{
 			MethodName: "GetServices",
 			Handler:    _ServiceManager_GetServices_Handler,

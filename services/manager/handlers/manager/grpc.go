@@ -26,7 +26,8 @@ func NewManagerGrpcHandler(grpc *grpc.Server, sm types.ServiceManager, wConn ras
 }
 
 func (h *ManagerGrpcHandler) RegisterService(ctx context.Context, req *manager.RegisterServiceRequest) (*manager.ServiceStatusResponse, error) {
-	st, err := h.weatherConn.Init(ctx, &raspiservices.EmptyRequest{})
+	// TODO: Cambiar al reestructurar como inician los servicios
+	st, err := h.weatherConn.Start(ctx, &raspiservices.EmptyRequest{})
 	if err != nil {
 		log.Fatal("error init weather service", err)
 	}

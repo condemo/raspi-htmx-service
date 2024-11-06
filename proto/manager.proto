@@ -4,7 +4,6 @@ option go_package = "github.com/condemo/common/services/manager";
 
 service ServiceManager {
   //TODO: Eliminar `RegisterService`, no tiene sentido ya que el cargado ocurre alrevés
-  rpc RegisterService(RegisterServiceRequest) returns (ServiceStatusResponse) {}
   rpc GetServices(GetServicesRequest) returns (GetServicesResponse) {}
   rpc GetServiceData(ServiceIdRequest) returns (RaspiService) {}
   rpc StartService(ServiceIdRequest) returns (ServiceStatusResponse) {}
