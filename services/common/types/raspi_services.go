@@ -13,8 +13,8 @@ type RaspiService interface {
 	Init(context.Context) error
 	Start(context.Context) error
 	Stop(context.Context) error
+	GetStatus(context.Context) *raspiservices.StatusResponse
 	GetConfig(context.Context) *raspiservices.ConfigResponse
 	UpdateConfig(context.Context, *raspiservices.ConfigRequest) (*raspiservices.ConfigResponse, error)
-	GetCardInfo(context.Context, *raspiservices.EmptyRequest) *raspiservices.CardInfoResponse
 	GetFullInfo(context.Context, *raspiservices.EmptyRequest) *raspiservices.FullInfoResponse
 }
