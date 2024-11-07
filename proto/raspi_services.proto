@@ -5,7 +5,7 @@ option go_package = "github.com/condemo/common/services/raspiservices";
 service WeatherService {
   rpc Start(EmptyRequest) returns (StatusResponse) {}
   rpc Stop(EmptyRequest) returns (StatusResponse) {}
-  rpc GetCardInfo(EmptyRequest) returns (CardInfoResponse) {}
+  rpc GetStatus(EmptyRequest) returns (StatusResponse) {}
   rpc GetFullInfo(EmptyRequest) returns (FullInfoResponse) {}
   rpc GetConfig(EmptyRequest) returns (ConfigResponse) {}
   rpc UpdateConfig(ConfigRequest) returns (ConfigResponse) {}
@@ -14,10 +14,6 @@ service WeatherService {
 message EmptyRequest {}
 
 message StatusResponse {
-  string Status = 1;
-}
-
-message CardInfoResponse {
   int32 id = 1;
   string name = 2;
   bool status = 3;
