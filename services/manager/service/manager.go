@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 
 	manager "github.com/condemo/raspi-htmx-service/services/common/genproto/services"
 )
@@ -21,8 +20,6 @@ func (s *ManagerService) LoadService(ctx context.Context, sl *manager.RaspiServi
 }
 
 func (s *ManagerService) GetServices(ctx context.Context) []*manager.RaspiService {
-	fmt.Printf("services -> %+v\n", s.serviceList)
-
 	return s.serviceList
 }
 
