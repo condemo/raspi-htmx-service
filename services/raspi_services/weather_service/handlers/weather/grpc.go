@@ -29,20 +29,23 @@ func (h *WeatherGrpcHandler) Start(ctx context.Context, req *raspiservices.Empty
 		return nil, err
 	}
 
-	res := &raspiservices.StatusResponse{
-		Status: "success",
-	}
+	res := h.wservice.GetStatus(ctx)
+
 	return res, nil
 }
 
 func (h *WeatherGrpcHandler) Stop(ctx context.Context, req *raspiservices.EmptyRequest) (*raspiservices.StatusResponse, error) {
-	// TODO:
-	return nil, nil
+	if err := h.wservice.Stop(ctx); err != nil {
+		return nil, err
+	}
+
+	res := h.wservice.GetStatus(ctx)
+	return res, nil
 }
 
-func (h *WeatherGrpcHandler) GetCardInfo(ctx context.Context, req *raspiservices.EmptyRequest) (*raspiservices.CardInfoResponse, error) {
-	// TODO:
-	return nil, nil
+func (h *WeatherGrpcHandler) GetStatus(ctx context.Context, req *raspiservices.EmptyRequest) (*raspiservices.StatusResponse, error) {
+	res := h.wservice.GetStatus(ctx)
+	return res, nil
 }
 
 func (h *WeatherGrpcHandler) GetFullInfo(ctx context.Context, req *raspiservices.EmptyRequest) (*raspiservices.FullInfoResponse, error) {
