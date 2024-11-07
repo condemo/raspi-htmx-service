@@ -61,7 +61,7 @@ func (s *ApiServer) Run() {
 
 	// Handlers
 	authHandler := handlers.NewAuthHandler(s.store)
-	viewHandler := handlers.NewViewHandler(sysinfoGrpc)
+	viewHandler := handlers.NewViewHandler(sysinfoGrpc, managerGrpc)
 	wsHandler := handlers.NewWSHandler(sysinfoGrpc)
 	confHandler := handlers.NewConfigHandler()
 	servHandler := handlers.NewServiceHandler(managerGrpc)
