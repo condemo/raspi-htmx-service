@@ -7,11 +7,9 @@ import (
 	"os/signal"
 	"syscall"
 
-	raspiservices "github.com/condemo/raspi-htmx-service/services/common/genproto/services/raspi_services"
 	handlers "github.com/condemo/raspi-htmx-service/services/manager/handlers/manager"
 	"github.com/condemo/raspi-htmx-service/services/manager/service"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 )
 
 type grpcServer struct {
@@ -31,9 +29,7 @@ func (s *grpcServer) Run() {
 	gServer := grpc.NewServer()
 
 	managerService := service.NewManagerService()
-	wGrpcClient := newGrpcClient(":8010")
-	wConn := raspiservices.NewWeatherServiceClient(wGrpcClient)
-	handlers.NewManagerGrpcHandler(gServer, managerService, wConn)
+	handlers.NewManagerGrpcHandler(gServer, managerService)
 
 	go func() {
 		log.Println("Manager grpc on port", s.addr)
@@ -46,14 +42,4 @@ func (s *grpcServer) Run() {
 	<-sigC
 
 	gServer.GracefulStop()
-}
-
-// PERF: Mover esto a `common` e importar en los servicios que hagan falta
-func newGrpcClient(addr string) *grpc.ClientConn {
-	conn, err := grpc.NewClient(addr, grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		log.Fatalln("error creating grcp client", err)
-	}
-
-	return conn
 }

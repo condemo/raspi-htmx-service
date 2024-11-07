@@ -2,37 +2,28 @@ package service
 
 import (
 	"context"
+	"fmt"
 
 	manager "github.com/condemo/raspi-htmx-service/services/common/genproto/services"
 )
 
 type ManagerService struct {
 	// dependency injection: DB, etc...
+	serviceList []*manager.RaspiService
 }
 
 func NewManagerService() *ManagerService {
 	return &ManagerService{}
 }
 
-func (s *ManagerService) RegisterService(ctx context.Context, req *manager.RegisterServiceRequest) error {
-	// TODO:
-	return nil
+func (s *ManagerService) LoadService(ctx context.Context, sl *manager.RaspiService) {
+	s.serviceList = append(s.serviceList, sl)
 }
 
-func (s *ManagerService) GetServices(ctx context.Context, req *manager.GetServicesRequest) []*manager.RaspiService {
-	// TODO:
-	fakeList := []*manager.RaspiService{
-		{
-			Name: "asadas",
-		},
-		{
-			Name: "kscnskaskdn",
-		},
-		{
-			Name: "caxkcnakska",
-		},
-	}
-	return fakeList
+func (s *ManagerService) GetServices(ctx context.Context) []*manager.RaspiService {
+	fmt.Printf("services -> %+v\n", s.serviceList)
+
+	return s.serviceList
 }
 
 // TODO: Todas las funcionalidades

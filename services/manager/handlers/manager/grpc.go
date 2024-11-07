@@ -8,54 +8,63 @@ import (
 	raspiservices "github.com/condemo/raspi-htmx-service/services/common/genproto/services/raspi_services"
 	"github.com/condemo/raspi-htmx-service/services/manager/types"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 type ManagerGrpcHandler struct {
 	manager.UnimplementedServiceManagerServer
 	serviceManager types.ServiceManager
-	weatherConn    raspiservices.WeatherServiceClient
+	weatherService raspiservices.WeatherServiceClient
 }
 
-func NewManagerGrpcHandler(grpc *grpc.Server, sm types.ServiceManager, wConn raspiservices.WeatherServiceClient) {
+func NewManagerGrpcHandler(grpc *grpc.Server, sm types.ServiceManager) {
+	// Load all the conns
+	weatherGrpc := newGrpcClient(":8010")
+	weatherConn := raspiservices.NewWeatherServiceClient(weatherGrpc)
+
 	gRPCHandler := &ManagerGrpcHandler{
 		serviceManager: sm,
-		weatherConn:    wConn,
+		weatherService: weatherConn,
+	}
+
+	// TODO: Load/Read all `RaspiServices`
+	if err := gRPCHandler.LoadServices(context.Background()); err != nil {
+		log.Fatal("error loading services in manager - ", err)
 	}
 
 	manager.RegisterServiceManagerServer(grpc, gRPCHandler)
 }
 
-func (h *ManagerGrpcHandler) RegisterService(ctx context.Context, req *manager.RegisterServiceRequest) (*manager.ServiceStatusResponse, error) {
-	// TODO: Cambiar al reestructurar como inician los servicios
-	st, err := h.weatherConn.Start(ctx, &raspiservices.EmptyRequest{})
+// PERF: `LoadServices` no debería estar dentro del handler sino que debaria llamarse
+// antes de crear `ManagerGrpcHandler`
+func (h *ManagerGrpcHandler) LoadServices(ctx context.Context) error {
+	ws, err := h.weatherService.GetStatus(ctx, &raspiservices.EmptyRequest{})
 	if err != nil {
-		log.Fatal("error init weather service", err)
+		return err
 	}
 
-	res := &manager.ServiceStatusResponse{
-		Message: st.Status,
-	}
+	// TODO: Cambiar `LoadService` por `LoadServices`; ir obteniendo la data de cada servicio
+	// para luego cargarlo de una con una sola llamada a la función
+	h.serviceManager.LoadService(ctx, &manager.RaspiService{Id: ws.Id, Status: ws.Status, Name: ws.Name})
 
-	return res, nil
+	// TODO: BORRAR
+	h.serviceManager.GetServices(ctx)
+
+	return nil
 }
 
 func (h *ManagerGrpcHandler) GetServices(ctx context.Context, req *manager.GetServicesRequest) (*manager.GetServicesResponse, error) {
-	sl := h.serviceManager.GetServices(ctx, req)
-
-	res := &manager.GetServicesResponse{
-		Services: sl,
-	}
+	sl := h.serviceManager.GetServices(ctx)
+	res := &manager.GetServicesResponse{Services: sl}
 	return res, nil
 }
 
-func (h *ManagerGrpcHandler) GetServiceData(ctx context.Context, req *manager.ServiceIdRequest) (*manager.RaspiService, error) {
-	return nil, nil
-}
+// PERF: Mover esto a `common` e importar en los servicios que hagan falta
+func newGrpcClient(addr string) *grpc.ClientConn {
+	conn, err := grpc.NewClient(addr, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		log.Fatalln("error creating grcp client", err)
+	}
 
-func (h *ManagerGrpcHandler) StartService(ctx context.Context, req *manager.ServiceIdRequest) (*manager.ServiceStatusResponse, error) {
-	return nil, nil
-}
-
-func (h *ManagerGrpcHandler) StopService(ctx context.Context, req *manager.ServiceIdRequest) (*manager.ServiceStatusResponse, error) {
-	return nil, nil
+	return conn
 }
