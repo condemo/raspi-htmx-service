@@ -5,7 +5,7 @@ service3-name=weather
 
 full-build: build-manager build-sysinfo build-weather build-htmx
 full-run: kill-all full-build run-manager run-sysinfo run-weather run-htmx
-services-run: kill-all run-manager run-sysinfo run-weather
+services-run: kill-all run-sysinfo run-weather run-manager
 kill-all: kill-services kill-htmx
 
 amd64-build: templ-build
@@ -33,13 +33,13 @@ run-htmx: build-htmx
 	@./bin/${binary-name}-arm64
 
 run-manager: build-manager
-	@./bin/${service1-name}-arm64 &
+	@./bin/${service1-name}-arm64
 
 run-sysinfo: build-sysinfo
 	@./bin/${service2-name}-arm64 &
 
 run-weather: build-weather
-	@./bin/${service3-name}-arm64
+	@./bin/${service3-name}-arm64 &
 
 protogen:
 	@protoc \
