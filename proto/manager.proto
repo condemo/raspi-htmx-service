@@ -3,17 +3,13 @@ syntax= "proto3";
 option go_package = "github.com/condemo/common/services/manager";
 
 service ServiceManager {
-  //TODO: Eliminar `RegisterService`, no tiene sentido ya que el cargado ocurre alrevés
-  rpc GetServices(GetServicesRequest) returns (GetServicesResponse) {}
-  rpc GetServiceData(ServiceIdRequest) returns (RaspiService) {}
-  rpc StartService(ServiceIdRequest) returns (ServiceStatusResponse) {}
-  rpc StopService(ServiceIdRequest) returns (ServiceStatusResponse) {}
-  // TODO: falta `UpdateConfig` y `GetConfig`
-}
+// TODO: `GetServices` debe retornar `RaspiService`, modificar interface y grpc handler
 
-message RegisterServiceRequest {
-  int32 id = 1;
-  string name = 2;
+  rpc GetServices(GetServicesRequest) returns (GetServicesResponse) {}
+  // rpc StartService(ServiceIdRequest) returns (ServiceStatusResponse) {}
+  // rpc StopService(ServiceIdRequest) returns (ServiceStatusResponse) {}
+
+  // TODO: falta `UpdateConfig` y `GetConfig`
 }
 
 message ServiceStatusResponse {
@@ -25,7 +21,9 @@ message ServiceIdRequest {
 }
 
 message RaspiService {
-  string name = 1;
+  int32 id = 1;
+  string name = 2;
+  bool status = 3;
 }
 
 message GetServicesRequest {}
@@ -33,4 +31,3 @@ message GetServicesRequest {}
 message GetServicesResponse {
   repeated RaspiService services = 1;
 }
-
