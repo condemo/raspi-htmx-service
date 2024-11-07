@@ -1,8 +1,6 @@
 package handlers
 
 import (
-	"fmt"
-	"log"
 	"net/http"
 
 	manager "github.com/condemo/raspi-htmx-service/services/common/genproto/services"
@@ -21,12 +19,5 @@ func NewServiceHandler(mConn *grpc.ClientConn) *ServiceHandler {
 }
 
 func (h *ServiceHandler) RegisterRoutes(r *http.ServeMux) {
-	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		res, err := h.managerConn.GetServices(r.Context(), &manager.GetServicesRequest{})
-		if err != nil {
-			log.Fatal("error in get services", err)
-		}
-
-		fmt.Fprint(w, res)
-	})
+	// TODO: Definir las rutas para comunicarse con el `ManagerService`
 }
