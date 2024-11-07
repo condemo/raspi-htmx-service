@@ -2912,6 +2912,15 @@ details.collapse summary::-webkit-details-marker {
   }
 }
 
+.hover\:cursor-pointer:hover {
+  cursor: pointer;
+}
+
+.hover\:bg-base-100:hover {
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)));
+}
+
 @media (min-width: 768px) {
   .md\:mx-3 {
     margin-left: 0.75rem;
