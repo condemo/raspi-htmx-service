@@ -21,7 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	WeatherService_Start_FullMethodName        = "/WeatherService/Start"
 	WeatherService_Stop_FullMethodName         = "/WeatherService/Stop"
-	WeatherService_GetCardInfo_FullMethodName  = "/WeatherService/GetCardInfo"
+	WeatherService_GetStatus_FullMethodName    = "/WeatherService/GetStatus"
 	WeatherService_GetFullInfo_FullMethodName  = "/WeatherService/GetFullInfo"
 	WeatherService_GetConfig_FullMethodName    = "/WeatherService/GetConfig"
 	WeatherService_UpdateConfig_FullMethodName = "/WeatherService/UpdateConfig"
@@ -33,7 +33,7 @@ const (
 type WeatherServiceClient interface {
 	Start(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*StatusResponse, error)
 	Stop(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*StatusResponse, error)
-	GetCardInfo(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*CardInfoResponse, error)
+	GetStatus(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*StatusResponse, error)
 	GetFullInfo(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*FullInfoResponse, error)
 	GetConfig(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*ConfigResponse, error)
 	UpdateConfig(ctx context.Context, in *ConfigRequest, opts ...grpc.CallOption) (*ConfigResponse, error)
@@ -67,10 +67,10 @@ func (c *weatherServiceClient) Stop(ctx context.Context, in *EmptyRequest, opts 
 	return out, nil
 }
 
-func (c *weatherServiceClient) GetCardInfo(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*CardInfoResponse, error) {
+func (c *weatherServiceClient) GetStatus(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*StatusResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CardInfoResponse)
-	err := c.cc.Invoke(ctx, WeatherService_GetCardInfo_FullMethodName, in, out, cOpts...)
+	out := new(StatusResponse)
+	err := c.cc.Invoke(ctx, WeatherService_GetStatus_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -113,7 +113,7 @@ func (c *weatherServiceClient) UpdateConfig(ctx context.Context, in *ConfigReque
 type WeatherServiceServer interface {
 	Start(context.Context, *EmptyRequest) (*StatusResponse, error)
 	Stop(context.Context, *EmptyRequest) (*StatusResponse, error)
-	GetCardInfo(context.Context, *EmptyRequest) (*CardInfoResponse, error)
+	GetStatus(context.Context, *EmptyRequest) (*StatusResponse, error)
 	GetFullInfo(context.Context, *EmptyRequest) (*FullInfoResponse, error)
 	GetConfig(context.Context, *EmptyRequest) (*ConfigResponse, error)
 	UpdateConfig(context.Context, *ConfigRequest) (*ConfigResponse, error)
@@ -133,8 +133,8 @@ func (UnimplementedWeatherServiceServer) Start(context.Context, *EmptyRequest) (
 func (UnimplementedWeatherServiceServer) Stop(context.Context, *EmptyRequest) (*StatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Stop not implemented")
 }
-func (UnimplementedWeatherServiceServer) GetCardInfo(context.Context, *EmptyRequest) (*CardInfoResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetCardInfo not implemented")
+func (UnimplementedWeatherServiceServer) GetStatus(context.Context, *EmptyRequest) (*StatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetStatus not implemented")
 }
 func (UnimplementedWeatherServiceServer) GetFullInfo(context.Context, *EmptyRequest) (*FullInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFullInfo not implemented")
@@ -202,20 +202,20 @@ func _WeatherService_Stop_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WeatherService_GetCardInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _WeatherService_GetStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(EmptyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WeatherServiceServer).GetCardInfo(ctx, in)
+		return srv.(WeatherServiceServer).GetStatus(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: WeatherService_GetCardInfo_FullMethodName,
+		FullMethod: WeatherService_GetStatus_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WeatherServiceServer).GetCardInfo(ctx, req.(*EmptyRequest))
+		return srv.(WeatherServiceServer).GetStatus(ctx, req.(*EmptyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -290,8 +290,8 @@ var WeatherService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _WeatherService_Stop_Handler,
 		},
 		{
-			MethodName: "GetCardInfo",
-			Handler:    _WeatherService_GetCardInfo_Handler,
+			MethodName: "GetStatus",
+			Handler:    _WeatherService_GetStatus_Handler,
 		},
 		{
 			MethodName: "GetFullInfo",
