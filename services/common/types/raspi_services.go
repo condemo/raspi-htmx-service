@@ -18,3 +18,9 @@ type RaspiService interface {
 	UpdateConfig(context.Context, *raspiservices.ConfigRequest) (*raspiservices.ConfigResponse, error)
 	GetFullInfo(context.Context, *raspiservices.EmptyRequest) *raspiservices.FullInfoResponse
 }
+
+// PERF: Estructura simple para iniciar, mejorar
+type InfoCard struct {
+	Icon string
+	Data string
+}

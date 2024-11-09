@@ -49,7 +49,13 @@ func (s *WeatherService) Stop(ctx context.Context) error {
 }
 
 func (s *WeatherService) GetStatus(ctx context.Context) *raspiservices.StatusResponse {
-	return &raspiservices.StatusResponse{Id: s.id, Status: s.Data.State, Name: s.Data.Name}
+	return &raspiservices.StatusResponse{
+		Id: s.id, Status: s.Data.State, Name: s.Data.Name,
+		Data: &raspiservices.WeatherCardData{
+			Icon: s.Data.InfoCard.Icon,
+			Data: s.Data.InfoCard.Data,
+		},
+	}
 }
 
 func (s *WeatherService) GetConfig(ctx context.Context) *raspiservices.ConfigResponse {

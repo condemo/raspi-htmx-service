@@ -45,7 +45,13 @@ func (h *ManagerGrpcHandler) LoadServices(ctx context.Context) error {
 
 	// TODO: Cambiar `LoadService` por `LoadServices`; ir obteniendo la data de cada servicio
 	// para luego cargarlo de una con una sola llamada a la función
-	h.serviceManager.LoadService(ctx, &manager.RaspiService{Id: ws.Id, Status: ws.Status, Name: ws.Name})
+	h.serviceManager.LoadService(ctx, &manager.RaspiService{
+		Id: ws.Id, Status: ws.Status, Name: ws.Name,
+		Data: &manager.ServiceCardData{
+			Icon:     ws.GetData().GetIcon(),
+			DataText: ws.GetData().GetData(),
+		},
+	})
 
 	// TODO: BORRAR
 	h.serviceManager.GetServices(ctx)
@@ -62,14 +68,27 @@ func (h *ManagerGrpcHandler) GetServices(ctx context.Context, req *manager.GetSe
 func (h *ManagerGrpcHandler) StartService(ctx context.Context, req *manager.ServiceIdRequest) (*manager.RaspiService, error) {
 	// TODO: Cambiar mockup e implementar
 	st, err := h.weatherService.Start(ctx, &raspiservices.EmptyRequest{})
-	res := &manager.RaspiService{Id: st.Id, Name: st.Name, Status: st.Status}
+	res := &manager.RaspiService{
+		Id: st.Id, Name: st.Name, Status: st.Status,
+		Data: &manager.ServiceCardData{
+			Icon:     st.Data.Icon,
+			DataText: st.Data.Data,
+		},
+	}
 	return res, err
 }
 
 func (h *ManagerGrpcHandler) StopService(ctx context.Context, req *manager.ServiceIdRequest) (*manager.RaspiService, error) {
 	// TODO: Cambiar mockup e implementar
 	st, err := h.weatherService.Stop(ctx, &raspiservices.EmptyRequest{})
-	res := &manager.RaspiService{Id: st.Id, Name: st.Name, Status: st.Status}
+	res := &manager.RaspiService{
+		Id: st.Id, Name: st.Name, Status: st.Status,
+		Data: &manager.ServiceCardData{
+			Icon:     st.Data.Icon,
+			DataText: st.Data.Data,
+		},
+	}
+
 	return res, err
 }
 

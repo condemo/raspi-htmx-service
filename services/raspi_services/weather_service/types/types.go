@@ -2,16 +2,19 @@ package types
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
 
+	"github.com/condemo/raspi-htmx-service/services/common/types"
 	"github.com/condemo/raspi-htmx-service/services/raspi_services/weather_service/config"
 )
 
 type Weather struct {
 	config   *config.WeatherConfig
 	FullInfo *FullInfo
+	InfoCard types.InfoCard
 	Name     string
 	ID       int64
 	State    bool
@@ -25,11 +28,13 @@ func NewWeather() *Weather {
 	w.ID = 1
 	w.State = false
 	w.FullInfo = newFullInfo(w.config.City)
+	w.InfoCard = types.InfoCard{
+		Icon: w.FullInfo.Current.Condition.Icon,
+		Data: fmt.Sprintf("%.1f °C", w.FullInfo.Current.Temp),
+	}
 
 	return w
 }
-
-type CardInfo struct{}
 
 type FullInfo struct {
 	Location struct {
@@ -54,6 +59,7 @@ func newFullInfo(city string) *FullInfo {
 	// PERF: Debería devolver un error para poder contestar con un status o error
 	// al `ManagerService`
 	fi := new(FullInfo)
+	// PERF: El cliente podría estar injectado en el struct para reutilizarlo
 	client := &http.Client{}
 
 	req, err := http.NewRequest(http.MethodGet, "http://api.weatherapi.com/v1/current.json", nil)
