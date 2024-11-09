@@ -27,12 +27,12 @@ templ ServiceCard(s *manager.RaspiService) {
 					<figure class="h-10 rounded-3xl m-1 bg-success hover:cursor-pointer hover:bg-base-100">
 						<h1 class="z-10 text-black">{ s.GetName() }</h1>
 					</figure>
+					@ServiceInfo(s.GetData())
 				} else {
 					<figure class="h-10 rounded-3xl m-1 bg-base-300 hover:cursor-pointer hover:bg-base-100">
 						<h1 class="z-10 text-white">{ s.GetName() }</h1>
 					</figure>
 				}
-				@ServiceInfo()
 				<div class="card-actions w-full flex justify-evenly">
 					@ServiceSwitchButton(s.Status, s.Id)
 					<button class="btn bg-base-200 w-31">
@@ -58,9 +58,14 @@ templ ServiceCard(s *manager.RaspiService) {
 	</div>
 }
 
-templ ServiceInfo() {
+templ ServiceInfo(data *manager.ServiceCardData) {
 	<div id="card-body">
-		<p>DATA</p>
+		<figure>
+			<img src={ data.GetIcon() } alt="icon"/>
+			<p class="text-2xl my-2">
+				{ data.GetDataText() }
+			</p>
+		</figure>
 	</div>
 }
 
@@ -69,7 +74,7 @@ templ ServiceSwitchButton(state bool, id int32) {
 		if state {
 			<button
 				class="btn bg-base-300 border-base-300 w-36"
-				hx-target="#service-card"
+				hx-target="closest #service-card"
 				hx-post={ string(templ.URL(fmt.Sprintf("/services/stop/%d", id))) }
 				hx-swap="outerHTMX"
 			>
