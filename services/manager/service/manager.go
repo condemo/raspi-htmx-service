@@ -24,6 +24,18 @@ func (s *ManagerService) GetServices(ctx context.Context) []*manager.RaspiServic
 }
 
 // TODO: Todas las funcionalidades
-func (s *ManagerService) GetServiceData(ctx context.Context, req *manager.ServiceIdRequest) {}
-func (s *ManagerService) StartService(ctx context.Context, req *manager.ServiceIdRequest)   {}
-func (s *ManagerService) StopService(ctx context.Context, req *manager.ServiceIdRequest)    {}
+func (s *ManagerService) StartService(ctx context.Context, id int32) {
+	for _, s := range s.serviceList {
+		if s.Id == id {
+			s.Status = true
+		}
+	}
+}
+
+func (s *ManagerService) StopService(ctx context.Context, id int32) {
+	for _, s := range s.serviceList {
+		if s.Id == id {
+			s.Status = false
+		}
+	}
+}
