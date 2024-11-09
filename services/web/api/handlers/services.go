@@ -35,7 +35,6 @@ func (h *ServiceHandler) startService(w http.ResponseWriter, r *http.Request) er
 	if err != nil {
 		return err
 	}
-
 	// TODO: Mockup, conseguir datos reales, quizás startService y stopService deberían
 	// deverían devolver el RaspiService otra vez y renderizar la tarjeta entera
 
