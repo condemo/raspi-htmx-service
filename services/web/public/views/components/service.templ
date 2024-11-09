@@ -21,9 +21,8 @@ templ ServiceCarousel(services []*manager.RaspiService) {
 
 templ ServiceCard(s *manager.RaspiService) {
 	<div id="service-card">
-		<div class="carousel-item shadow-sm shadow-slate-900">
-			<div class="card bg-base-100 w-72 shadow-xl">
-				// TODO: Añadir interaccion con con el server con htmx
+		<div class="carousel-item">
+			<div class="card bg-base-100 w-72">
 				if s.Status {
 					<figure class="h-10 rounded-3xl m-1 bg-success hover:cursor-pointer hover:bg-base-100">
 						<h1 class="z-10 text-black">{ s.GetName() }</h1>
@@ -61,7 +60,7 @@ templ ServiceCard(s *manager.RaspiService) {
 
 templ ServiceInfo() {
 	<div id="card-body">
-		<p>Demo</p>
+		<p>DATA</p>
 	</div>
 }
 
