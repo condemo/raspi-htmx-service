@@ -17,6 +17,12 @@ message StatusResponse {
   int32 id = 1;
   string name = 2;
   bool status = 3;
+  WeatherCardData data = 4;
+}
+
+message WeatherCardData {
+  string icon = 1;
+  string data = 2;
 }
 
 message FullInfoResponse {

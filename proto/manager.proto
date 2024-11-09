@@ -18,6 +18,12 @@ message RaspiService {
   int32 id = 1;
   string name = 2;
   bool status = 3;
+  ServiceCardData data = 4;
+}
+
+message ServiceCardData {
+  string icon = 1;
+  string dataText = 2;
 }
 
 message GetServicesRequest {}
