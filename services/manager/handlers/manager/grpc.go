@@ -59,6 +59,20 @@ func (h *ManagerGrpcHandler) GetServices(ctx context.Context, req *manager.GetSe
 	return res, nil
 }
 
+func (h *ManagerGrpcHandler) StartService(ctx context.Context, req *manager.ServiceIdRequest) (*manager.RaspiService, error) {
+	// TODO: Cambiar mockup e implementar
+	st, err := h.weatherService.Start(ctx, &raspiservices.EmptyRequest{})
+	res := &manager.RaspiService{Id: st.Id, Name: st.Name, Status: st.Status}
+	return res, err
+}
+
+func (h *ManagerGrpcHandler) StopService(ctx context.Context, req *manager.ServiceIdRequest) (*manager.RaspiService, error) {
+	// TODO: Cambiar mockup e implementar
+	st, err := h.weatherService.Stop(ctx, &raspiservices.EmptyRequest{})
+	res := &manager.RaspiService{Id: st.Id, Name: st.Name, Status: st.Status}
+	return res, err
+}
+
 // PERF: Mover esto a `common` e importar en los servicios que hagan falta
 func newGrpcClient(addr string) *grpc.ClientConn {
 	conn, err := grpc.NewClient(addr, grpc.WithTransportCredentials(insecure.NewCredentials()))
