@@ -24,6 +24,7 @@ message RaspiService {
 message ServiceCardData {
   string icon = 1;
   string dataText = 2;
+  string lastUpdated = 3;
 }
 
 message GetServicesRequest {}
