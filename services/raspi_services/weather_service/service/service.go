@@ -44,7 +44,6 @@ func (s *WeatherService) Stop(ctx context.Context) error {
 
 	// ...
 	s.Data.State = false
-	fmt.Println("Weather Service Stops")
 	return nil
 }
 
