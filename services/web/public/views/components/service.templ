@@ -66,6 +66,7 @@ templ ServiceInfo(data *manager.ServiceCardData) {
 				{ data.GetDataText() }
 			</p>
 		</figure>
+		<p class="text-xs text-gray-500 mb-1">last updated: { data.GetLastUpdated() }</p>
 	</div>
 }
 
