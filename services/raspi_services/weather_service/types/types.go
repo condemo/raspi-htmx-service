@@ -28,9 +28,11 @@ func NewWeather() *Weather {
 	w.ID = 1
 	w.State = false
 	w.FullInfo = newFullInfo(w.config.City)
+
 	w.InfoCard = types.InfoCard{
-		Icon: w.FullInfo.Current.Condition.Icon,
-		Data: fmt.Sprintf("%.1f °C", w.FullInfo.Current.Temp),
+		Icon:        w.FullInfo.Current.Condition.Icon,
+		Data:        fmt.Sprintf("%.1f °C", w.FullInfo.Current.Temp),
+		LastUpdated: w.FullInfo.Current.LastUpdated,
 	}
 
 	return w

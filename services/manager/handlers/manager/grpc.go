@@ -48,8 +48,9 @@ func (h *ManagerGrpcHandler) LoadServices(ctx context.Context) error {
 	h.serviceManager.LoadService(ctx, &manager.RaspiService{
 		Id: ws.Id, Status: ws.Status, Name: ws.Name,
 		Data: &manager.ServiceCardData{
-			Icon:     ws.GetData().GetIcon(),
-			DataText: ws.GetData().GetData(),
+			Icon:        ws.GetData().GetIcon(),
+			DataText:    ws.GetData().GetData(),
+			LastUpdated: ws.GetData().GetLastUpdated(),
 		},
 	})
 
@@ -71,8 +72,9 @@ func (h *ManagerGrpcHandler) StartService(ctx context.Context, req *manager.Serv
 	res := &manager.RaspiService{
 		Id: st.Id, Name: st.Name, Status: st.Status,
 		Data: &manager.ServiceCardData{
-			Icon:     st.Data.Icon,
-			DataText: st.Data.Data,
+			Icon:        st.Data.Icon,
+			DataText:    st.Data.Data,
+			LastUpdated: st.GetData().GetLastUpdated(),
 		},
 	}
 	return res, err
@@ -84,8 +86,9 @@ func (h *ManagerGrpcHandler) StopService(ctx context.Context, req *manager.Servi
 	res := &manager.RaspiService{
 		Id: st.Id, Name: st.Name, Status: st.Status,
 		Data: &manager.ServiceCardData{
-			Icon:     st.Data.Icon,
-			DataText: st.Data.Data,
+			Icon:        st.Data.Icon,
+			DataText:    st.Data.Data,
+			LastUpdated: st.GetData().GetLastUpdated(),
 		},
 	}
 

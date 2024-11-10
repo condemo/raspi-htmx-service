@@ -51,8 +51,9 @@ func (s *WeatherService) GetStatus(ctx context.Context) *raspiservices.StatusRes
 	return &raspiservices.StatusResponse{
 		Id: s.id, Status: s.Data.State, Name: s.Data.Name,
 		Data: &raspiservices.WeatherCardData{
-			Icon: s.Data.InfoCard.Icon,
-			Data: s.Data.InfoCard.Data,
+			Icon:        s.Data.InfoCard.Icon,
+			Data:        s.Data.InfoCard.Data,
+			LastUpdated: s.Data.InfoCard.LastUpdated,
 		},
 	}
 }

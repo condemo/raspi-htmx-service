@@ -21,6 +21,7 @@ type RaspiService interface {
 
 // PERF: Estructura simple para iniciar, mejorar
 type InfoCard struct {
-	Icon string
-	Data string
+	Icon        string
+	Data        string
+	LastUpdated string
 }
