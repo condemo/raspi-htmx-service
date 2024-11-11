@@ -10,10 +10,9 @@ import (
 	"time"
 
 	"github.com/condemo/raspi-htmx-service/services/common/store"
+	"github.com/condemo/raspi-htmx-service/services/common/util"
 	"github.com/condemo/raspi-htmx-service/services/web/api/handlers"
 	"github.com/condemo/raspi-htmx-service/services/web/api/middlewares"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 )
 
 type ApiServer struct {
@@ -56,8 +55,8 @@ func (s *ApiServer) Run() {
 	router.Handle("/services/", http.StripPrefix("/services", basicMiddleware(services)))
 
 	// GRPC CONNS
-	managerGrpc := newGrpcClient(":8000")
-	sysinfoGrpc := newGrpcClient(":9000")
+	managerGrpc := util.NewGrpcClient(":8000")
+	sysinfoGrpc := util.NewGrpcClient(":9000")
 
 	// Handlers
 	authHandler := handlers.NewAuthHandler(s.store)
@@ -95,14 +94,4 @@ func (s *ApiServer) Run() {
 	// server.Shutdown ends the execution of the program
 	// after waiting for all active connections to finish or 30 seconds to pass
 	server.Shutdown(ctx)
-}
-
-// PERF: Mover esto a `common` e importar en los servicios que hagan falta
-func newGrpcClient(addr string) *grpc.ClientConn {
-	conn, err := grpc.NewClient(addr, grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		log.Fatalln("error creating grcp client", err)
-	}
-
-	return conn
 }
