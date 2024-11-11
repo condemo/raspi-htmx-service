@@ -14,6 +14,7 @@ import (
 type Weather struct {
 	config   *config.WeatherConfig
 	FullInfo *FullInfo
+	httpCli  *http.Client
 	InfoCard types.InfoCard
 	Name     string
 	ID       int64
@@ -22,12 +23,13 @@ type Weather struct {
 
 func NewWeather() *Weather {
 	w := new(Weather)
+	w.httpCli = &http.Client{}
 
 	w.Name = "WeatherService"
 	w.config = config.NewWeatherConfig()
 	w.ID = 1
 	w.State = false
-	w.FullInfo = newFullInfo(w.config.City)
+	w.FullInfo = w.newFullInfo()
 
 	w.InfoCard = types.InfoCard{
 		Icon:        w.FullInfo.Current.Condition.Icon,
@@ -57,12 +59,10 @@ type FullInfo struct {
 	} `json:"current"`
 }
 
-func newFullInfo(city string) *FullInfo {
-	// PERF: Debería devolver un error para poder contestar con un status o error
-	// al `ManagerService`
+// PERF: Debería devolver un error para poder contestar con un status o error
+// al `ManagerService`
+func (w *Weather) newFullInfo() *FullInfo {
 	fi := new(FullInfo)
-	// PERF: El cliente podría estar injectado en el struct para reutilizarlo
-	client := &http.Client{}
 
 	req, err := http.NewRequest(http.MethodGet, "http://api.weatherapi.com/v1/current.json", nil)
 	if err != nil {
@@ -71,11 +71,11 @@ func newFullInfo(city string) *FullInfo {
 
 	q := req.URL.Query()
 	q.Add("key", os.Getenv("WEATHER_API_KEY"))
-	q.Add("q", city)
+	q.Add("q", w.config.City)
 	q.Add("aqi", "no")
 	req.URL.RawQuery = q.Encode()
 
-	resp, err := client.Do(req)
+	resp, err := w.httpCli.Do(req)
 	if err != nil {
 		log.Fatal("Errored when sending request to the server")
 	}
