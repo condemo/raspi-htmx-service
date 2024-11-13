@@ -2,7 +2,8 @@ package service
 
 import (
 	"context"
-	"fmt"
+	"sync"
+	"time"
 
 	raspiservices "github.com/condemo/raspi-htmx-service/services/common/genproto/services/raspi_services"
 	"github.com/condemo/raspi-htmx-service/services/raspi_services/weather_service/types"
@@ -11,13 +12,17 @@ import (
 // TODO: Repensar lo que recibe y lo que devueven y volver a implentar
 // cambiar la interfaz en `common` en concordancia
 type WeatherService struct {
-	Data types.Weather
-	id   int32
+	mu      *sync.RWMutex
+	canChan chan struct{}
+	Data    types.Weather
+	id      int32
 }
 
 func NewWeatherService() *WeatherService {
 	return &WeatherService{
-		id: 1,
+		id:      1,
+		mu:      new(sync.RWMutex),
+		canChan: make(chan struct{}),
 	}
 }
 
@@ -31,18 +36,28 @@ func (s *WeatherService) Init(ctx context.Context) error {
 }
 
 func (s *WeatherService) Start(ctx context.Context) error {
-	// TODO: Inicia un bucle en una goroutine actualizando la data del tiempo con un ticker
-
+	// TODO: Mover la duración a la config para poder modificarla
+	t := time.NewTicker(time.Minute * 15)
+	go func() {
+		for {
+			select {
+			case <-t.C:
+				s.mu.RLock()
+				s.Data.FullInfo = s.Data.NewFullInfo()
+				s.mu.RUnlock()
+			case <-s.canChan:
+				// PERF: Enviar mensaje al `LogService` cuando exista
+				return
+			}
+		}
+	}()
 	// ....
 	s.Data.State = true
-	fmt.Println("Weather Service Starts")
 	return nil
 }
 
 func (s *WeatherService) Stop(ctx context.Context) error {
-	// TODO:
-
-	// ...
+	s.canChan <- struct{}{}
 	s.Data.State = false
 	return nil
 }
@@ -51,9 +66,9 @@ func (s *WeatherService) GetStatus(ctx context.Context) *raspiservices.StatusRes
 	return &raspiservices.StatusResponse{
 		Id: s.id, Status: s.Data.State, Name: s.Data.Name,
 		Data: &raspiservices.WeatherCardData{
-			Icon:        s.Data.InfoCard.Icon,
-			Data:        s.Data.InfoCard.Data,
-			LastUpdated: s.Data.InfoCard.LastUpdated,
+			Icon:        s.Data.GetCardInfo().Icon,
+			Data:        s.Data.GetCardInfo().Data,
+			LastUpdated: s.Data.GetCardInfo().LastUpdated,
 		},
 	}
 }

@@ -15,7 +15,6 @@ type Weather struct {
 	config   *config.WeatherConfig
 	FullInfo *FullInfo
 	httpCli  *http.Client
-	InfoCard types.InfoCard
 	Name     string
 	ID       int64
 	State    bool
@@ -29,15 +28,17 @@ func NewWeather() *Weather {
 	w.config = config.NewWeatherConfig()
 	w.ID = 1
 	w.State = false
-	w.FullInfo = w.newFullInfo()
+	w.FullInfo = w.NewFullInfo()
 
-	w.InfoCard = types.InfoCard{
+	return w
+}
+
+func (w *Weather) GetCardInfo() types.InfoCard {
+	return types.InfoCard{
 		Icon:        w.FullInfo.Current.Condition.Icon,
 		Data:        fmt.Sprintf("%.1f °C", w.FullInfo.Current.Temp),
 		LastUpdated: w.FullInfo.Current.LastUpdated,
 	}
-
-	return w
 }
 
 type FullInfo struct {
@@ -61,7 +62,7 @@ type FullInfo struct {
 
 // PERF: Debería devolver un error para poder contestar con un status o error
 // al `ManagerService`
-func (w *Weather) newFullInfo() *FullInfo {
+func (w *Weather) NewFullInfo() *FullInfo {
 	fi := new(FullInfo)
 
 	req, err := http.NewRequest(http.MethodGet, "http://api.weatherapi.com/v1/current.json", nil)
