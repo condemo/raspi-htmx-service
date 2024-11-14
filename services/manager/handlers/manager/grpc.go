@@ -11,6 +11,7 @@ import (
 	"google.golang.org/grpc"
 )
 
+// PERF: Mejorar toda la implementación del handler y del servico/interface, es un lío
 type ManagerGrpcHandler struct {
 	manager.UnimplementedServiceManagerServer
 	serviceManager types.ServiceManager
@@ -54,20 +55,21 @@ func (h *ManagerGrpcHandler) LoadServices(ctx context.Context) error {
 		},
 	})
 
-	// TODO: BORRAR
-	h.serviceManager.GetServices(ctx)
-
 	return nil
 }
 
 func (h *ManagerGrpcHandler) GetServices(ctx context.Context, req *manager.GetServicesRequest) (*manager.GetServicesResponse, error) {
+	err := h.LoadServices(ctx)
+	if err != nil {
+		return nil, err
+	}
+
 	sl := h.serviceManager.GetServices(ctx)
 	res := &manager.GetServicesResponse{Services: sl}
 	return res, nil
 }
 
 func (h *ManagerGrpcHandler) StartService(ctx context.Context, req *manager.ServiceIdRequest) (*manager.RaspiService, error) {
-	// TODO: Cambiar mockup e implementar
 	st, err := h.weatherService.Start(ctx, &raspiservices.EmptyRequest{})
 	res := &manager.RaspiService{
 		Id: st.Id, Name: st.Name, Status: st.Status,
@@ -81,7 +83,6 @@ func (h *ManagerGrpcHandler) StartService(ctx context.Context, req *manager.Serv
 }
 
 func (h *ManagerGrpcHandler) StopService(ctx context.Context, req *manager.ServiceIdRequest) (*manager.RaspiService, error) {
-	// TODO: Cambiar mockup e implementar
 	st, err := h.weatherService.Stop(ctx, &raspiservices.EmptyRequest{})
 	res := &manager.RaspiService{
 		Id: st.Id, Name: st.Name, Status: st.Status,
