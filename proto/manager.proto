@@ -1,6 +1,6 @@
 syntax= "proto3";
 
-option go_package = "github.com/condemo/common/services/manager";
+option go_package = "github.com/condemo/raspi-htmx-service/common/services/manager";
 
 service ServiceManager {
   rpc GetServices(GetServicesRequest) returns (GetServicesResponse) {}

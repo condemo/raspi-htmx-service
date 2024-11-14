@@ -2,9 +2,10 @@ binary-name=raspi-htmx
 service1-name=manager
 service2-name=sysinfo
 service3-name=weather
+service4-name=logger
 
-full-build: build-manager build-sysinfo build-weather build-htmx
-full-run: kill-all full-build run-manager run-sysinfo run-weather run-htmx
+full-build: build-manager build-sysinfo build-weather build-logger build-htmx
+full-run: kill-all run-manager run-sysinfo run-weather run-htmx
 services-run: kill-all run-sysinfo run-weather run-manager
 kill-all: kill-services kill-htmx
 
@@ -29,17 +30,23 @@ build-sysinfo:
 build-weather:
 	@GOOS=linux GOARCH=arm64 go build -o ./bin/${service3-name}-arm64 ./cmd/raspi_services/weather_service/main.go
 
+build-logger:
+	@GOOS=linux GOARCH=arm64 go build -o ./bin/${service4-name}-arm64 ./cmd/logger/main.go
+
 run-htmx: build-htmx
 	@./bin/${binary-name}-arm64
 
 run-manager: build-manager
-	@./bin/${service1-name}-arm64
+	@./bin/${service1-name}-arm64 &
 
 run-sysinfo: build-sysinfo
 	@./bin/${service2-name}-arm64 &
 
 run-weather: build-weather
 	@./bin/${service3-name}-arm64 &
+
+run-logger: build-logger
+	@./bin/${service4-name}-arm64
 
 protogen:
 	@protoc \
@@ -60,6 +67,12 @@ protogen:
 		--go-grpc_out=services/common/genproto/services/raspi_services \
 		--go-grpc_opt=paths=source_relative
 
+	@protoc \
+		--proto_path=proto "proto/logger.proto" \
+		--go_out=services/common/genproto/services/logger --go_opt=paths=source_relative \
+		--go-grpc_out=services/common/genproto/services/logger \
+		--go-grpc_opt=paths=source_relative
+
 clean:
 	@rm -rf ./bin/*
 	@go clean
@@ -77,6 +90,7 @@ templ-watch:
 	@templ generate --watch
 
 kill-services:
+	@lsof -t -i:7000 | xargs -r kill
 	@lsof -t -i:8000 | xargs -r kill
 	@lsof -t -i:8010 | xargs -r kill
 	@lsof -t -i:9000 | xargs -r kill

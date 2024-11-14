@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option go_package = "github.com/condemo/raspi-htmx-service/common/services/logger";
+
+service LoggerService {
+  rpc LogMessage(LogRequest) returns (LogResponse) {}
+}
+
+enum ServiceName {
+  SERVICE_MANAGER = 0;
+  WEATHER_SERVICE = 1;
+  WEB_API = 2;
+}
+
+enum MessageType {
+  INFO = 0;
+  SUCCESS = 1;
+  WARNING = 2;
+  ERROR = 3;
+}
+
+message LogRequest {
+  ServiceName serviceName = 1;
+  MessageType type = 2;
+  string msg = 3;
+}
+
+message LogResponse {}
