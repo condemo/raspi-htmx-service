@@ -32,7 +32,6 @@ func (s *grpcServer) Run() {
 	handlers.NewManagerGrpcHandler(gServer, managerService)
 
 	go func() {
-		log.Println("Manager grpc on port", s.addr)
 		log.Fatal(gServer.Serve(lis))
 	}()
 
