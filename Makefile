@@ -34,7 +34,7 @@ build-logger:
 	@GOOS=linux GOARCH=arm64 go build -o ./bin/${service4-name}-arm64 ./cmd/logger/main.go
 
 run-htmx: build-htmx
-	@./bin/${binary-name}-arm64
+	@./bin/${binary-name}-arm64 &
 
 run-manager: build-manager
 	@./bin/${service1-name}-arm64 &
