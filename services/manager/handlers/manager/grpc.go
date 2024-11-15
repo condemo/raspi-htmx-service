@@ -36,7 +36,7 @@ func NewManagerGrpcHandler(grpc *grpc.Server, sm types.ServiceManager) {
 	}
 
 	_, err := gRPCHandler.logService.LogMessage(context.Background(), logs.MakeLog(
-		logger.MessageType_INFO, "Manager Handler Starts"))
+		logger.MessageType_SUCCESS, "Manager Handler Starts"))
 	if err != nil {
 		log.Fatal("error in logger", err)
 	}

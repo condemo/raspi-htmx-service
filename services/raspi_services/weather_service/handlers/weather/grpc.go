@@ -31,7 +31,7 @@ func NewWeatherGrpcHandler(grpc *grpc.Server, ws types.RaspiService) {
 	}
 
 	_, err := gRPCHandler.logService.LogMessage(context.Background(), logs.MakeLog(
-		logger.MessageType_INFO, "Weather Handler Starts"))
+		logger.MessageType_SUCCESS, "Weather Handler Starts"))
 	if err != nil {
 		log.Fatal("error sending log to LogService -", err)
 	}
