@@ -9,7 +9,7 @@ service LoggerService {
 enum ServiceName {
   SERVICE_MANAGER = 0;
   WEATHER_SERVICE = 1;
-  WEB_API = 2;
+  SYS_INFO_SERVICE = 3;
 }
 
 enum MessageType {
