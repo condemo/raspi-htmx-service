@@ -7,6 +7,8 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/condemo/raspi-htmx-service/services/logger/handlers"
+	"github.com/condemo/raspi-htmx-service/services/logger/service"
 	"google.golang.org/grpc"
 )
 
@@ -25,7 +27,9 @@ func (s *grpcServer) Run() {
 	}
 
 	gServer := grpc.NewServer()
-	// TODO: Cargar servicio y handlers
+
+	logService := service.NewLoggerService()
+	handlers.NewLoggerGrpcHandler(gServer, logService)
 
 	go func() {
 		log.Println("Logger grpc on port", s.addr)
