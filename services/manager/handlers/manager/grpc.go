@@ -5,8 +5,10 @@ import (
 	"log"
 
 	manager "github.com/condemo/raspi-htmx-service/services/common/genproto/services"
+	"github.com/condemo/raspi-htmx-service/services/common/genproto/services/logger"
 	raspiservices "github.com/condemo/raspi-htmx-service/services/common/genproto/services/raspi_services"
 	"github.com/condemo/raspi-htmx-service/services/common/util"
+	"github.com/condemo/raspi-htmx-service/services/manager/logs"
 	"github.com/condemo/raspi-htmx-service/services/manager/types"
 	"google.golang.org/grpc"
 )
@@ -16,6 +18,7 @@ type ManagerGrpcHandler struct {
 	manager.UnimplementedServiceManagerServer
 	serviceManager types.ServiceManager
 	weatherService raspiservices.WeatherServiceClient
+	logService     logger.LoggerServiceClient
 }
 
 func NewManagerGrpcHandler(grpc *grpc.Server, sm types.ServiceManager) {
@@ -23,12 +26,22 @@ func NewManagerGrpcHandler(grpc *grpc.Server, sm types.ServiceManager) {
 	weatherGrpc := util.NewGrpcClient(":8010")
 	weatherConn := raspiservices.NewWeatherServiceClient(weatherGrpc)
 
+	logGrpc := util.NewGrpcClient(":7000")
+	logConn := logger.NewLoggerServiceClient(logGrpc)
+
 	gRPCHandler := &ManagerGrpcHandler{
 		serviceManager: sm,
 		weatherService: weatherConn,
+		logService:     logConn,
 	}
 
-	// TODO: Load/Read all `RaspiServices`
+	_, err := gRPCHandler.logService.LogMessage(context.Background(), logs.MakeLog(
+		logger.MessageType_INFO, "Manager Handler Starts"))
+	if err != nil {
+		log.Fatal("error in logger", err)
+	}
+
+	// TODO: Load/Read all `RaspiServices` - Cutre
 	if err := gRPCHandler.LoadServices(context.Background()); err != nil {
 		log.Fatal("error loading services in manager - ", err)
 	}
