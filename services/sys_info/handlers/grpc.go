@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 
+	"github.com/condemo/raspi-htmx-service/services/common/config"
 	"github.com/condemo/raspi-htmx-service/services/common/genproto/services/logger"
 	sysinfo "github.com/condemo/raspi-htmx-service/services/common/genproto/services/sys_info"
 	"github.com/condemo/raspi-htmx-service/services/common/util"
@@ -19,7 +20,7 @@ type SysInfoGrpcHandler struct {
 }
 
 func NewSysInfoGrpcHandler(grpc *grpc.Server, is types.SysInfo) {
-	logGrpc := util.NewGrpcClient(":7000")
+	logGrpc := util.NewGrpcClient(config.ServicesConfig.LoggerServPort)
 	logConn := logger.NewLoggerServiceClient(logGrpc)
 
 	gRPCHandler := &SysInfoGrpcHandler{

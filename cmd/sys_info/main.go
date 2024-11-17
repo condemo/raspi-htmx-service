@@ -1,8 +1,11 @@
 package main
 
-import sysinfo "github.com/condemo/raspi-htmx-service/services/sys_info"
+import (
+	"github.com/condemo/raspi-htmx-service/services/common/config"
+	sysinfo "github.com/condemo/raspi-htmx-service/services/sys_info"
+)
 
 func main() {
-	grpcServer := sysinfo.NewGrpcServer(":9000")
+	grpcServer := sysinfo.NewGrpcServer(config.ServicesConfig.SysInfoServPort)
 	grpcServer.Run()
 }

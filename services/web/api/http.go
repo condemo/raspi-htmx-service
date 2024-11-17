@@ -9,6 +9,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/condemo/raspi-htmx-service/services/common/config"
 	"github.com/condemo/raspi-htmx-service/services/common/store"
 	"github.com/condemo/raspi-htmx-service/services/common/util"
 	"github.com/condemo/raspi-htmx-service/services/web/api/handlers"
@@ -55,8 +56,8 @@ func (s *ApiServer) Run() {
 	router.Handle("/services/", http.StripPrefix("/services", basicMiddleware(services)))
 
 	// GRPC CONNS
-	managerGrpc := util.NewGrpcClient(":8000")
-	sysinfoGrpc := util.NewGrpcClient(":9000")
+	managerGrpc := util.NewGrpcClient(config.ServicesConfig.ManagerServPort)
+	sysinfoGrpc := util.NewGrpcClient(config.ServicesConfig.SysInfoServPort)
 
 	// Handlers
 	authHandler := handlers.NewAuthHandler(s.store)

@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 
+	"github.com/condemo/raspi-htmx-service/services/common/config"
 	"github.com/condemo/raspi-htmx-service/services/common/genproto/services/logger"
 	raspiservices "github.com/condemo/raspi-htmx-service/services/common/genproto/services/raspi_services"
 	"github.com/condemo/raspi-htmx-service/services/common/types"
@@ -19,7 +20,7 @@ type WeatherGrpcHandler struct {
 }
 
 func NewWeatherGrpcHandler(grpc *grpc.Server, ws types.RaspiService) {
-	logGrpc := util.NewGrpcClient(":7000")
+	logGrpc := util.NewGrpcClient(config.ServicesConfig.LoggerServPort)
 	logConn := logger.NewLoggerServiceClient(logGrpc)
 
 	gRPCHandler := &WeatherGrpcHandler{

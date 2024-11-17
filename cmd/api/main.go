@@ -5,12 +5,13 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/condemo/raspi-htmx-service/services/web/api"
+	"github.com/condemo/raspi-htmx-service/services/common/config"
 	"github.com/condemo/raspi-htmx-service/services/common/store"
+	"github.com/condemo/raspi-htmx-service/services/web/api"
 )
 
 func main() {
-	addr := flag.String("p", ":4000", "service port")
+	addr := flag.String("p", config.ServicesConfig.WebServPort, "service port")
 	flag.Parse()
 
 	sqlStorage := store.NewPostgresStore()
