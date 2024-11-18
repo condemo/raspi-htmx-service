@@ -19,12 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	WeatherService_Start_FullMethodName        = "/WeatherService/Start"
-	WeatherService_Stop_FullMethodName         = "/WeatherService/Stop"
-	WeatherService_GetStatus_FullMethodName    = "/WeatherService/GetStatus"
-	WeatherService_GetFullInfo_FullMethodName  = "/WeatherService/GetFullInfo"
-	WeatherService_GetConfig_FullMethodName    = "/WeatherService/GetConfig"
-	WeatherService_UpdateConfig_FullMethodName = "/WeatherService/UpdateConfig"
+	WeatherService_Start_FullMethodName        = "/raspiservices.WeatherService/Start"
+	WeatherService_Stop_FullMethodName         = "/raspiservices.WeatherService/Stop"
+	WeatherService_GetStatus_FullMethodName    = "/raspiservices.WeatherService/GetStatus"
+	WeatherService_GetFullInfo_FullMethodName  = "/raspiservices.WeatherService/GetFullInfo"
+	WeatherService_GetConfig_FullMethodName    = "/raspiservices.WeatherService/GetConfig"
+	WeatherService_UpdateConfig_FullMethodName = "/raspiservices.WeatherService/UpdateConfig"
 )
 
 // WeatherServiceClient is the client API for WeatherService service.
@@ -278,7 +278,7 @@ func _WeatherService_UpdateConfig_Handler(srv interface{}, ctx context.Context, 
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var WeatherService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "WeatherService",
+	ServiceName: "raspiservices.WeatherService",
 	HandlerType: (*WeatherServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

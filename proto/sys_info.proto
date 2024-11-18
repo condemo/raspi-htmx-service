@@ -1,5 +1,5 @@
 syntax= "proto3";
-
+package sysinfo;
 option go_package = "github.com/condemo/raspi-htmx-service/common/services/sysinfo";
 
 service SysInfoService {

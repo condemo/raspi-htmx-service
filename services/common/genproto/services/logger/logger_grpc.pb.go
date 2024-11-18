@@ -19,7 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	LoggerService_LogMessage_FullMethodName = "/LoggerService/LogMessage"
+	LoggerService_LogMessage_FullMethodName = "/logger.LoggerService/LogMessage"
 )
 
 // LoggerServiceClient is the client API for LoggerService service.
@@ -108,7 +108,7 @@ func _LoggerService_LogMessage_Handler(srv interface{}, ctx context.Context, dec
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var LoggerService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "LoggerService",
+	ServiceName: "logger.LoggerService",
 	HandlerType: (*LoggerServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

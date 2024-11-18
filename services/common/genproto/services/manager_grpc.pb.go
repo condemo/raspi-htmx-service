@@ -19,9 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ServiceManager_GetServices_FullMethodName  = "/ServiceManager/GetServices"
-	ServiceManager_StartService_FullMethodName = "/ServiceManager/StartService"
-	ServiceManager_StopService_FullMethodName  = "/ServiceManager/StopService"
+	ServiceManager_GetServices_FullMethodName  = "/manager.ServiceManager/GetServices"
+	ServiceManager_StartService_FullMethodName = "/manager.ServiceManager/StartService"
+	ServiceManager_StopService_FullMethodName  = "/manager.ServiceManager/StopService"
 )
 
 // ServiceManagerClient is the client API for ServiceManager service.
@@ -176,7 +176,7 @@ func _ServiceManager_StopService_Handler(srv interface{}, ctx context.Context, d
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ServiceManager_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "ServiceManager",
+	ServiceName: "manager.ServiceManager",
 	HandlerType: (*ServiceManagerServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

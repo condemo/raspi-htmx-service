@@ -19,7 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	SysInfoService_GetInfo_FullMethodName = "/SysInfoService/GetInfo"
+	SysInfoService_GetInfo_FullMethodName = "/sysinfo.SysInfoService/GetInfo"
 )
 
 // SysInfoServiceClient is the client API for SysInfoService service.
@@ -108,7 +108,7 @@ func _SysInfoService_GetInfo_Handler(srv interface{}, ctx context.Context, dec f
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var SysInfoService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "SysInfoService",
+	ServiceName: "sysinfo.SysInfoService",
 	HandlerType: (*SysInfoServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

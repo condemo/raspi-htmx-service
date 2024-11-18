@@ -1,5 +1,5 @@
 syntax = "proto3";
-
+package logger;
 option go_package = "github.com/condemo/raspi-htmx-service/common/services/logger";
 
 service LoggerService {

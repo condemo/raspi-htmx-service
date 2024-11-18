@@ -1,5 +1,5 @@
 syntax= "proto3";
-
+package manager;
 option go_package = "github.com/condemo/raspi-htmx-service/common/services/manager";
 
 service ServiceManager {
