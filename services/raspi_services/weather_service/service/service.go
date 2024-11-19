@@ -37,7 +37,7 @@ func (s *WeatherService) Init(ctx context.Context) error {
 
 func (s *WeatherService) Start(ctx context.Context) error {
 	// TODO: Mover la duración a la config para poder modificarla
-	t := time.NewTicker(time.Minute * 15)
+	t := time.NewTicker(time.Minute * 5)
 	go func() {
 		for {
 			select {
