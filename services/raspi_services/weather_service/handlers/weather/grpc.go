@@ -9,7 +9,6 @@ import (
 	raspiservices "github.com/condemo/raspi-htmx-service/services/common/genproto/services/raspi_services"
 	"github.com/condemo/raspi-htmx-service/services/common/types"
 	"github.com/condemo/raspi-htmx-service/services/common/util"
-	"github.com/condemo/raspi-htmx-service/services/raspi_services/weather_service/logs"
 	"google.golang.org/grpc"
 )
 
@@ -27,14 +26,10 @@ func NewWeatherGrpcHandler(grpc *grpc.Server, ws types.RaspiService) {
 		wservice:   ws,
 		logService: logConn,
 	}
+	gRPCHandler.wservice.SetLogger(logConn)
+
 	if err := gRPCHandler.wservice.Init(context.Background()); err != nil {
 		log.Fatal("error on weather handler init -", err)
-	}
-
-	_, err := gRPCHandler.logService.LogMessage(context.Background(), logs.MakeLog(
-		logger.MessageType_SUCCESS, "Weather Handler Starts"))
-	if err != nil {
-		log.Fatal("error sending log to LogService -", err)
 	}
 
 	raspiservices.RegisterWeatherServiceServer(grpc, gRPCHandler)

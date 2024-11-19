@@ -5,13 +5,16 @@ import (
 	"sync"
 	"time"
 
+	"github.com/condemo/raspi-htmx-service/services/common/genproto/services/logger"
 	raspiservices "github.com/condemo/raspi-htmx-service/services/common/genproto/services/raspi_services"
+	"github.com/condemo/raspi-htmx-service/services/raspi_services/weather_service/logs"
 	"github.com/condemo/raspi-htmx-service/services/raspi_services/weather_service/types"
 )
 
 // TODO: Repensar lo que recibe y lo que devueven y volver a implentar
 // cambiar la interfaz en `common` en concordancia
 type WeatherService struct {
+	log     logger.LoggerServiceClient
 	mu      *sync.RWMutex
 	canChan chan struct{}
 	Data    types.Weather
@@ -26,13 +29,18 @@ func NewWeatherService() *WeatherService {
 	}
 }
 
+func (s *WeatherService) SetLogger(l logger.LoggerServiceClient) {
+	s.log = l
+}
+
 func (s *WeatherService) Init(ctx context.Context) error {
 	s.Data = *types.NewWeather()
 	if err := s.Start(ctx); err != nil {
 		return err
 	}
 
-	return nil
+	_, err := s.log.LogMessage(ctx, logs.MakeLog(logger.MessageType_SUCCESS, "Service Init"))
+	return err
 }
 
 func (s *WeatherService) Start(ctx context.Context) error {
@@ -47,12 +55,14 @@ func (s *WeatherService) Start(ctx context.Context) error {
 				s.mu.RUnlock()
 			case <-s.canChan:
 				// PERF: Enviar mensaje al `LogService` cuando exista
+				s.log.LogMessage(ctx, logs.MakeLog(logger.MessageType_WARNING, "Service OFF"))
 				return
 			}
 		}
 	}()
 	// ....
 	s.Data.State = true
+	s.log.LogMessage(ctx, logs.MakeLog(logger.MessageType_SUCCESS, "Service ON"))
 	return nil
 }
 

@@ -3,6 +3,7 @@ package types
 import (
 	"context"
 
+	"github.com/condemo/raspi-htmx-service/services/common/genproto/services/logger"
 	raspiservices "github.com/condemo/raspi-htmx-service/services/common/genproto/services/raspi_services"
 )
 
@@ -10,6 +11,7 @@ type RaspiService interface {
 	// PERF: Cambiar por completo este implementación haciendola más ajustada a mis necesitades
 	// en los handlers se pueden hacer las conversiones necesarias antes de retornar data
 	// a otros servicios
+	SetLogger(logger.LoggerServiceClient)
 	Init(context.Context) error
 	Start(context.Context) error
 	Stop(context.Context) error
