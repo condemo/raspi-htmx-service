@@ -46,21 +46,18 @@ func (s *WeatherService) Init(ctx context.Context) error {
 func (s *WeatherService) Start(ctx context.Context) error {
 	// TODO: Mover la duración a la config para poder modificarla
 	t := time.NewTicker(time.Minute * 5)
+
 	go func() {
-		for {
-			select {
-			case <-t.C:
-				s.mu.RLock()
-				s.Data.FullInfo = s.Data.NewFullInfo()
-				s.mu.RUnlock()
-			case <-s.canChan:
-				// PERF: Enviar mensaje al `LogService` cuando exista
-				s.log.LogMessage(ctx, logs.MakeLog(logger.MessageType_WARNING, "Service OFF"))
-				return
-			}
+		select {
+		case <-t.C:
+			s.mu.RLock()
+			s.Data.FullInfo = s.Data.NewFullInfo()
+			s.mu.RUnlock()
+		case <-s.canChan:
+			break
 		}
 	}()
-	// ....
+
 	s.Data.State = true
 	s.log.LogMessage(ctx, logs.MakeLog(logger.MessageType_SUCCESS, "Service ON"))
 	return nil
@@ -69,6 +66,7 @@ func (s *WeatherService) Start(ctx context.Context) error {
 func (s *WeatherService) Stop(ctx context.Context) error {
 	s.canChan <- struct{}{}
 	s.Data.State = false
+	s.log.LogMessage(ctx, logs.MakeLog(logger.MessageType_WARNING, "Service OFF"))
 	return nil
 }
 
