@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 
@@ -58,16 +57,15 @@ func (h *AuthHandler) login(w http.ResponseWriter, r *http.Request) error {
 	}
 
 	http.SetCookie(w, &c)
-	w.Header().Set("HX-Redirect", "/app")
+
+	w.Header().Add("HX-Redirect", "/app/")
+	w.WriteHeader(http.StatusOK)
 	return nil
 }
 
 func (h *AuthHandler) signup(w http.ResponseWriter, r *http.Request) error {
 	un := r.FormValue("username")
 	pass, err := utils.EncryptPass(r.FormValue("password"))
-
-	fmt.Println(un)
-	fmt.Println(pass)
 	if err != nil {
 		return err
 	}
