@@ -78,11 +78,11 @@ func (w *Weather) NewFullInfo() *FullInfo {
 
 	resp, err := w.httpCli.Do(req)
 	if err != nil {
-		log.Fatal("Errored when sending request to the server")
+		log.Println("Errored when sending request to the server - ", err.Error())
+	} else {
+		json.NewDecoder(resp.Body).Decode(fi)
+		defer resp.Body.Close()
 	}
-
-	json.NewDecoder(resp.Body).Decode(fi)
-	defer resp.Body.Close()
 
 	return fi
 }
