@@ -24,8 +24,8 @@ templ ServiceCard(s *manager.RaspiService) {
 		<div class="carousel-item">
 			<div class="card bg-base-100 w-72">
 				if s.Status {
-					<figure class="h-10 rounded-3xl m-1 bg-success hover:cursor-pointer hover:bg-base-100">
-						<h1 class="z-10 text-black">{ s.GetName() }</h1>
+					<figure class="group h-10 rounded-3xl m-1 bg-success hover:cursor-pointer hover:bg-base-100">
+						<h1 class="z-10 text-black group-hover:text-white">{ s.GetName() }</h1>
 					</figure>
 					@ServiceInfo(s.GetData())
 				} else {

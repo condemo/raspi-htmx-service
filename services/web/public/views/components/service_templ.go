@@ -78,14 +78,14 @@ func ServiceCard(s *manager.RaspiService) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		if s.Status {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<figure class=\"h-10 rounded-3xl m-1 bg-success hover:cursor-pointer hover:bg-base-100\"><h1 class=\"z-10 text-black\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<figure class=\"group h-10 rounded-3xl m-1 bg-success hover:cursor-pointer hover:bg-base-100\"><h1 class=\"z-10 text-black group-hover:text-white\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(s.GetName())
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/components/service.templ`, Line: 28, Col: 47}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/components/service.templ`, Line: 28, Col: 70}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
