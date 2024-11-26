@@ -22,7 +22,7 @@ func NewWeatherService() *WeatherService {
 	return &WeatherService{
 		id:      1,
 		mu:      new(sync.RWMutex),
-		canChan: make(chan struct{}),
+		canChan: make(chan struct{}, 1),
 	}
 }
 
@@ -36,16 +36,15 @@ func (s *WeatherService) Init(ctx context.Context) error {
 
 func (s *WeatherService) Start(ctx context.Context) error {
 	// TODO: Mover la duración a la config para poder modificarla
-	t := time.NewTicker(time.Minute * 5)
-
 	go func() {
+		t := time.NewTicker(time.Minute * 5)
 		select {
 		case <-t.C:
 			s.mu.RLock()
 			s.Data.FullInfo = s.Data.NewFullInfo()
 			s.mu.RUnlock()
 		case <-s.canChan:
-			break
+			return
 		}
 	}()
 

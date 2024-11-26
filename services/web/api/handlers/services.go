@@ -1,8 +1,10 @@
 package handlers
 
 import (
+	"context"
 	"net/http"
 	"strconv"
+	"time"
 
 	manager "github.com/condemo/raspi-htmx-service/services/common/genproto/services"
 	"github.com/condemo/raspi-htmx-service/services/web/public/views/components"
@@ -47,7 +49,10 @@ func (h *ServiceHandler) stopService(w http.ResponseWriter, r *http.Request) err
 		return err
 	}
 
-	serv, err := h.managerConn.StopService(r.Context(), &manager.ServiceIdRequest{Id: int32(id)})
+	ctx, cancel := context.WithTimeout(r.Context(), time.Second*2)
+	defer cancel()
+
+	serv, err := h.managerConn.StopService(ctx, &manager.ServiceIdRequest{Id: int32(id)})
 	if err != nil {
 		return err
 	}
