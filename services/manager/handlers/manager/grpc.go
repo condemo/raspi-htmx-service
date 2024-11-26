@@ -37,7 +37,9 @@ func NewManagerGrpcHandler(grpc *grpc.Server, sm types.ServiceManager) {
 		logService:     logConn,
 	}
 
-	_, err := gRPCHandler.logService.LogMessage(context.Background(), logs.MakeLog(
+	ctx := context.Background()
+
+	_, err := gRPCHandler.logService.LogMessage(ctx, logs.MakeLog(
 		logger.MessageType_SUCCESS, "Manager Handler Starts"))
 	if err != nil {
 		log.Fatal("error in logger", err)
@@ -45,6 +47,11 @@ func NewManagerGrpcHandler(grpc *grpc.Server, sm types.ServiceManager) {
 
 	// TODO: Load/Read all `RaspiServices` - Cutre
 	if err := gRPCHandler.LoadServices(context.Background()); err != nil {
+		_, err := gRPCHandler.logService.LogMessage(ctx, logs.MakeLog(
+			logger.MessageType_ERROR, "error loading services -"+err.Error()))
+		if err != nil {
+			log.Fatal("error sending log from manager -", err)
+		}
 		log.Fatal("error loading services in manager - ", err)
 	}
 
@@ -56,6 +63,8 @@ func NewManagerGrpcHandler(grpc *grpc.Server, sm types.ServiceManager) {
 func (h *ManagerGrpcHandler) LoadServices(ctx context.Context) error {
 	ws, err := h.weatherService.GetStatus(ctx, &raspiservices.EmptyRequest{})
 	if err != nil {
+		h.logService.LogMessage(ctx, logs.MakeLog(
+			logger.MessageType_ERROR, "error receiving weather data"+err.Error()))
 		return err
 	}
 
@@ -79,12 +88,26 @@ func (h *ManagerGrpcHandler) GetServices(ctx context.Context, req *manager.GetSe
 
 func (h *ManagerGrpcHandler) StartService(ctx context.Context, req *manager.ServiceIdRequest) (*manager.RaspiService, error) {
 	st, err := h.weatherService.Start(ctx, &raspiservices.EmptyRequest{})
+	if err != nil {
+		_, err := h.logService.LogMessage(ctx,
+			logs.MakeLog(logger.MessageType_ERROR, "error starting weather service -"+err.Error()))
+		if err != nil {
+			return nil, err
+		}
+	}
 	res := inutil.RaspiToManager(st)
 	return res, err
 }
 
 func (h *ManagerGrpcHandler) StopService(ctx context.Context, req *manager.ServiceIdRequest) (*manager.RaspiService, error) {
 	st, err := h.weatherService.Stop(ctx, &raspiservices.EmptyRequest{})
+	if err != nil {
+		_, err := h.logService.LogMessage(ctx,
+			logs.MakeLog(logger.MessageType_ERROR, "error starting stoping service -"+err.Error()))
+		if err != nil {
+			return nil, err
+		}
+	}
 	res := inutil.RaspiToManager(st)
 	return res, err
 }
