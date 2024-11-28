@@ -4,6 +4,7 @@ templ Navbar() {
 	<div class="navbar bg-base-100">
 		<div class="navbar-start">
 			<a class="btn btn-ghost text-2xl" href="/app">GusRaspi</a>
+			@UptimeLabel("unknown")
 		</div>
 		<div class="navbar-end">
 			<div class="dropdown dropdown-hover dropdown-left">
@@ -77,4 +78,8 @@ templ Navbar() {
 			</div>
 		</div>
 	</div>
+}
+
+templ UptimeLabel(upt string) {
+	<span id="uptime-label" class="text-gray-500 text-xs">{ upt }</span>
 }

@@ -75,10 +75,18 @@ func (h *WSHandler) writeLoop(c *websocket.Conn, s chan struct{}) {
 
 			tmpl, err := templ.ToGoHTML(context.Background(), components.Infobar(si.GetSisInfo()))
 			if err != nil {
-				fmt.Println("error converting component to html:", err)
+				fmt.Println("error converting Infobar to html:", err)
 				return
 			}
+
+			uptimeHTML, err := templ.ToGoHTML(context.Background(), components.UptimeLabel(si.GetSisInfo().GetUptime()))
+			if err != nil {
+				fmt.Println("error converting UptimeLabel to html:", err)
+				return
+			}
+
 			c.WriteMessage(websocket.TextMessage, []byte(tmpl))
+			c.WriteMessage(websocket.TextMessage, []byte(uptimeHTML))
 
 		case <-s:
 			h.mu.Lock()

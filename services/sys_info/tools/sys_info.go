@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"os/exec"
 	"strconv"
 	"strings"
 
@@ -151,8 +152,21 @@ func newNetInfo() *sysinfo.NetInfo {
 	}
 }
 
+func newUptimeData() string {
+	var str string
+	out, err := exec.Command("uptime", "-p").Output()
+	if err != nil {
+		str = "unknown"
+	}
+
+	str = string(out[:])
+
+	return str
+}
+
 func NewSysInfo() *sysinfo.SysInfo {
 	return &sysinfo.SysInfo{
+		Uptime:   newUptimeData(),
 		DiskInfo: newDiskInfo(),
 		MemInfo:  newMemInfo(),
 		CpuInfo:  newCpuInfo(),

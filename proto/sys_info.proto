@@ -18,6 +18,7 @@ message SysInfo {
   FanInfo fanInfo = 3;
   MemInfo memInfo = 4;
   CpuInfo cpuInfo = 5;
+  string uptime = 6;
 }
 
 message NetInfo {
