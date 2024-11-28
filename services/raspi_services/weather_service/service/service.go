@@ -36,15 +36,17 @@ func (s *WeatherService) Init(ctx context.Context) error {
 
 func (s *WeatherService) Start(ctx context.Context) error {
 	// TODO: Mover la duración a la config para poder modificarla
+	t := time.NewTicker(time.Minute * 5)
 	go func() {
-		t := time.NewTicker(time.Minute * 5)
-		select {
-		case <-t.C:
-			s.mu.RLock()
-			s.Data.FullInfo = s.Data.NewFullInfo()
-			s.mu.RUnlock()
-		case <-s.canChan:
-			return
+		for {
+			select {
+			case <-t.C:
+				s.mu.RLock()
+				s.Data.FullInfo = s.Data.NewFullInfo()
+				s.mu.RUnlock()
+			case <-s.canChan:
+				return
+			}
 		}
 	}()
 
