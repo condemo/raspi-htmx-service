@@ -34,16 +34,16 @@ build-logger:
 	@GOOS=linux GOARCH=arm64 go build -o ./bin/${service4-name}-arm64 ./cmd/logger/main.go
 
 run-htmx: build-htmx
-	@./bin/${binary-name}-arm64 &
+	@./bin/${binary-name}-arm64
 
 run-manager: build-manager
-	@./bin/${service1-name}-arm64 &
+	@./bin/${service1-name}-arm64
 
 run-sysinfo: build-sysinfo
-	@./bin/${service2-name}-arm64 &
+	@./bin/${service2-name}-arm64
 
 run-weather: build-weather
-	@./bin/${service3-name}-arm64 &
+	@./bin/${service3-name}-arm64
 
 run-logger: build-logger
 	@./bin/${service4-name}-arm64
