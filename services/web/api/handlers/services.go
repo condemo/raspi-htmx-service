@@ -33,12 +33,13 @@ func (h *ServiceHandler) startService(w http.ResponseWriter, r *http.Request) er
 		return err
 	}
 
-	serv, err := h.managerConn.StartService(r.Context(), &manager.ServiceIdRequest{Id: int32(id)})
+	ctx, cancel := context.WithTimeout(r.Context(), time.Second*2)
+	defer cancel()
+
+	serv, err := h.managerConn.StartService(ctx, &manager.ServiceIdRequest{Id: int32(id)})
 	if err != nil {
 		return err
 	}
-	// TODO: Mockup, conseguir datos reales, quizás startService y stopService deberían
-	// deverían devolver el RaspiService otra vez y renderizar la tarjeta entera
 
 	return RenderTempl(w, r, components.ServiceCard(serv))
 }
@@ -57,7 +58,5 @@ func (h *ServiceHandler) stopService(w http.ResponseWriter, r *http.Request) err
 		return err
 	}
 
-	// TODO: Mockup, conseguir datos reales, quizás startService y stopService deberían
-	// deverían devolver el RaspiService otra vez y renderizar la tarjeta entera
 	return RenderTempl(w, r, components.ServiceCard(serv))
 }
