@@ -3,6 +3,7 @@ package handlers
 import (
 	"context"
 	"log"
+	"time"
 
 	"github.com/condemo/raspi-htmx-service/services/common/config"
 	manager "github.com/condemo/raspi-htmx-service/services/common/genproto/services"
@@ -38,6 +39,8 @@ func NewManagerGrpcHandler(grpc *grpc.Server, sm types.ServiceManager) {
 	}
 
 	ctx := context.Background()
+	ctx, cancel := context.WithTimeout(ctx, time.Second*5)
+	defer cancel()
 
 	_, err := gRPCHandler.logService.LogMessage(ctx, logs.MakeLog(
 		logger.MessageType_SUCCESS, "Manager Handler Starts"))
@@ -46,7 +49,7 @@ func NewManagerGrpcHandler(grpc *grpc.Server, sm types.ServiceManager) {
 	}
 
 	// TODO: Load/Read all `RaspiServices` - Cutre
-	if err := gRPCHandler.LoadServices(context.Background()); err != nil {
+	if err := gRPCHandler.LoadServices(ctx); err != nil {
 		_, err := gRPCHandler.logService.LogMessage(ctx, logs.MakeLog(
 			logger.MessageType_ERROR, "error loading services -"+err.Error()))
 		if err != nil {
@@ -87,6 +90,9 @@ func (h *ManagerGrpcHandler) GetServices(ctx context.Context, req *manager.GetSe
 }
 
 func (h *ManagerGrpcHandler) StartService(ctx context.Context, req *manager.ServiceIdRequest) (*manager.RaspiService, error) {
+	ctx, cancel := context.WithTimeout(ctx, time.Second*2)
+	defer cancel()
+
 	st, err := h.weatherService.Start(ctx, &raspiservices.EmptyRequest{})
 	if err != nil {
 		_, err := h.logService.LogMessage(ctx,
@@ -100,6 +106,9 @@ func (h *ManagerGrpcHandler) StartService(ctx context.Context, req *manager.Serv
 }
 
 func (h *ManagerGrpcHandler) StopService(ctx context.Context, req *manager.ServiceIdRequest) (*manager.RaspiService, error) {
+	ctx, cancel := context.WithTimeout(ctx, time.Second*2)
+	defer cancel()
+
 	st, err := h.weatherService.Stop(ctx, &raspiservices.EmptyRequest{})
 	if err != nil {
 		_, err := h.logService.LogMessage(ctx,
