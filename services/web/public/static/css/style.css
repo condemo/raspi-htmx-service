@@ -2679,6 +2679,14 @@ details.collapse summary::-webkit-details-marker {
   width: 100%;
 }
 
+.w-4\/5 {
+  width: 80%;
+}
+
+.w-96 {
+  width: 24rem;
+}
+
 .max-w-xs {
   max-width: 20rem;
 }
@@ -2695,8 +2703,16 @@ details.collapse summary::-webkit-details-marker {
   flex-direction: column;
 }
 
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+
 .items-center {
   align-items: center;
+}
+
+.justify-end {
+  justify-content: flex-end;
 }
 
 .justify-evenly {
@@ -2771,6 +2787,11 @@ details.collapse summary::-webkit-details-marker {
   background-color: var(--fallback-su,oklch(var(--su)/var(--tw-bg-opacity)));
 }
 
+.bg-red-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
+}
+
 .stroke-current {
   stroke: currentColor;
 }
@@ -2790,6 +2811,11 @@ details.collapse summary::-webkit-details-marker {
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+}
+
+.px-1 {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
 }
 
 .text-center {
@@ -2829,11 +2855,6 @@ details.collapse summary::-webkit-details-marker {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
-}
-
-.text-sm {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
 }
 
 .font-bold {
@@ -2881,6 +2902,14 @@ details.collapse summary::-webkit-details-marker {
 
 .opacity-70 {
   opacity: 0.7;
+}
+
+.opacity-25 {
+  opacity: 0.25;
+}
+
+.opacity-50 {
+  opacity: 0.5;
 }
 
 .shadow {
@@ -2942,5 +2971,19 @@ details.collapse summary::-webkit-details-marker {
 
   .md\:w-1\/6 {
     width: 16.666667%;
+  }
+
+  .md\:w-1\/5 {
+    width: 20%;
+  }
+
+  .md\:text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .md\:text-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
   }
 }
