@@ -16,16 +16,16 @@ import (
 type WeatherGrpcHandler struct {
 	raspiservices.UnimplementedWeatherServiceServer
 	wservice   types.RaspiService
-	logService logger.LoggerServiceClient
+	LogService logger.LoggerServiceClient
 }
 
-func NewWeatherGrpcHandler(grpc *grpc.Server, ws types.RaspiService) {
+func NewWeatherGrpcHandler(grpc *grpc.Server, ws types.RaspiService) *WeatherGrpcHandler {
 	logGrpc := util.NewGrpcClient(config.ServicesConfig.LoggerServPort)
 	logConn := logger.NewLoggerServiceClient(logGrpc)
 
 	gRPCHandler := &WeatherGrpcHandler{
 		wservice:   ws,
-		logService: logConn,
+		LogService: logConn,
 	}
 
 	ctx := context.Background()
@@ -34,12 +34,13 @@ func NewWeatherGrpcHandler(grpc *grpc.Server, ws types.RaspiService) {
 		log.Fatal("error on weather handler init -", err)
 	}
 
-	_, err := gRPCHandler.logService.LogMessage(ctx, logs.MakeLog(logger.MessageType_SUCCESS, "Service Init"))
+	_, err := gRPCHandler.LogService.LogMessage(ctx, logs.MakeLog(logger.MessageType_SUCCESS, "Service Init"))
 	if err != nil {
 		log.Fatal("error sending initial weather log")
 	}
 
 	raspiservices.RegisterWeatherServiceServer(grpc, gRPCHandler)
+	return gRPCHandler
 }
 
 func (h *WeatherGrpcHandler) Start(ctx context.Context, req *raspiservices.EmptyRequest) (*raspiservices.StatusResponse, error) {
@@ -47,7 +48,7 @@ func (h *WeatherGrpcHandler) Start(ctx context.Context, req *raspiservices.Empty
 	if err := h.wservice.Start(ctx); err != nil {
 		return nil, err
 	}
-	_, err := h.logService.LogMessage(ctx, logs.MakeLog(logger.MessageType_SUCCESS, "Service ON"))
+	_, err := h.LogService.LogMessage(ctx, logs.MakeLog(logger.MessageType_SUCCESS, "Service ON"))
 	if err != nil {
 		return nil, err
 	}
@@ -61,7 +62,7 @@ func (h *WeatherGrpcHandler) Stop(ctx context.Context, req *raspiservices.EmptyR
 	if err := h.wservice.Stop(ctx); err != nil {
 		return nil, err
 	}
-	_, err := h.logService.LogMessage(ctx, logs.MakeLog(logger.MessageType_WARNING, "Service OFF"))
+	_, err := h.LogService.LogMessage(ctx, logs.MakeLog(logger.MessageType_WARNING, "Service OFF"))
 	if err != nil {
 		return nil, err
 	}

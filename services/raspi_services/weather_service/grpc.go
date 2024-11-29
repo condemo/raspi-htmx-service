@@ -1,13 +1,16 @@
 package weatherservice
 
 import (
+	"context"
 	"log"
 	"net"
 	"os"
 	"os/signal"
 	"syscall"
 
+	"github.com/condemo/raspi-htmx-service/services/common/genproto/services/logger"
 	handlers "github.com/condemo/raspi-htmx-service/services/raspi_services/weather_service/handlers/weather"
+	"github.com/condemo/raspi-htmx-service/services/raspi_services/weather_service/logs"
 	"github.com/condemo/raspi-htmx-service/services/raspi_services/weather_service/service"
 	"google.golang.org/grpc"
 )
@@ -29,7 +32,7 @@ func (s *grpcServer) Run() {
 	gServer := grpc.NewServer()
 
 	weatherservice := service.NewWeatherService()
-	handlers.NewWeatherGrpcHandler(gServer, weatherservice)
+	gHandler := handlers.NewWeatherGrpcHandler(gServer, weatherservice)
 
 	go func() {
 		log.Println("WeatherService grpc on port", s.addr)
@@ -41,5 +44,7 @@ func (s *grpcServer) Run() {
 
 	<-sigC
 
+	gHandler.LogService.LogMessage(context.Background(),
+		logs.MakeLog(logger.MessageType_ERROR, "Weather Service Shutdown"))
 	gServer.GracefulStop()
 }
