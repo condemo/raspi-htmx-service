@@ -22,7 +22,7 @@ func NewWeatherService() *WeatherService {
 	return &WeatherService{
 		id:      1,
 		mu:      new(sync.RWMutex),
-		canChan: make(chan struct{}, 1),
+		canChan: make(chan struct{}),
 	}
 }
 
