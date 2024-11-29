@@ -7,11 +7,12 @@ templ Base(title string) {
 		// PERF: Decidir si las propiedades de ws van aquí en el body o en el componente
 		<body hx-boost="true" hx-ext="ws" ws-connect="/ws/info">
 			<div id="main-container" class="flex flex-col mx-auto text-center h-screen">
+				// PERF: Cambiar la estructura para poder enviar `uptime` al entrar en home y otra vistas
 				@components.Navbar()
 				{ children... }
 			</div>
 			// TODO: Implementar el Footer
-			<!-- @components.Footer() -->
+			//@components.Footer()
 		</body>
 	}
 }
