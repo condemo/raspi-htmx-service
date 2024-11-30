@@ -1,0 +1,9 @@
+package components
+
+import manager "github.com/condemo/raspi-htmx-service/services/common/genproto/services"
+
+templ FullInfoView(info *manager.ServiceFullInfo) {
+<div class="text-2xl">
+  <h1>{ info.GetName() }</h1>
+</div>
+}
