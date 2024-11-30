@@ -48,6 +48,10 @@ run-weather: build-weather
 run-logger: build-logger
 	@./bin/${service4-name}-arm64
 
+run-all:
+	@make run-weather & make run-sysinfo & \
+		make run-manager & make run-htmx
+
 protogen:
 	@protoc \
 		--proto_path=proto "proto/manager.proto" \
