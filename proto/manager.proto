@@ -6,12 +6,41 @@ service ServiceManager {
   rpc GetServices(GetServicesRequest) returns (GetServicesResponse) {}
   rpc StartService(ServiceIdRequest) returns (RaspiService) {}
   rpc StopService(ServiceIdRequest) returns (RaspiService) {}
+  rpc GetFullInfo(ServiceIdRequest) returns (ServiceFullInfo) {}
 
   // TODO: falta `UpdateConfig` y `GetConfig`
 }
 
 message ServiceIdRequest {
   int32 id = 1;
+}
+
+message ServiceFullInfo {
+  int32 id = 1;
+  string name = 2;
+  bool status = 3;
+  ServiceLocation location = 4;
+  ServiceCurrentWeather current = 5;
+}
+
+message ServiceLocation {
+  string city = 1;
+  string region = 2;
+  ServiceCurrentWeather current = 3;
+}
+message ServiceCurrentWeather {
+  ServiceConditionWeather condition = 1;
+  string lastUpdated = 2;
+  string windDir = 3;
+  float feelTemp = 4;
+  float temp = 5;
+  float windVel = 6;
+  uint32 isDay = 7;
+}
+
+message ServiceConditionWeather {
+  string text = 1;
+  string icon = 2;
 }
 
 message RaspiService {

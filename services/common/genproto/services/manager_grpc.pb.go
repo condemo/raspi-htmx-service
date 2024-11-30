@@ -22,6 +22,7 @@ const (
 	ServiceManager_GetServices_FullMethodName  = "/manager.ServiceManager/GetServices"
 	ServiceManager_StartService_FullMethodName = "/manager.ServiceManager/StartService"
 	ServiceManager_StopService_FullMethodName  = "/manager.ServiceManager/StopService"
+	ServiceManager_GetFullInfo_FullMethodName  = "/manager.ServiceManager/GetFullInfo"
 )
 
 // ServiceManagerClient is the client API for ServiceManager service.
@@ -31,6 +32,7 @@ type ServiceManagerClient interface {
 	GetServices(ctx context.Context, in *GetServicesRequest, opts ...grpc.CallOption) (*GetServicesResponse, error)
 	StartService(ctx context.Context, in *ServiceIdRequest, opts ...grpc.CallOption) (*RaspiService, error)
 	StopService(ctx context.Context, in *ServiceIdRequest, opts ...grpc.CallOption) (*RaspiService, error)
+	GetFullInfo(ctx context.Context, in *ServiceIdRequest, opts ...grpc.CallOption) (*ServiceFullInfo, error)
 }
 
 type serviceManagerClient struct {
@@ -71,6 +73,16 @@ func (c *serviceManagerClient) StopService(ctx context.Context, in *ServiceIdReq
 	return out, nil
 }
 
+func (c *serviceManagerClient) GetFullInfo(ctx context.Context, in *ServiceIdRequest, opts ...grpc.CallOption) (*ServiceFullInfo, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ServiceFullInfo)
+	err := c.cc.Invoke(ctx, ServiceManager_GetFullInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ServiceManagerServer is the server API for ServiceManager service.
 // All implementations must embed UnimplementedServiceManagerServer
 // for forward compatibility.
@@ -78,6 +90,7 @@ type ServiceManagerServer interface {
 	GetServices(context.Context, *GetServicesRequest) (*GetServicesResponse, error)
 	StartService(context.Context, *ServiceIdRequest) (*RaspiService, error)
 	StopService(context.Context, *ServiceIdRequest) (*RaspiService, error)
+	GetFullInfo(context.Context, *ServiceIdRequest) (*ServiceFullInfo, error)
 	mustEmbedUnimplementedServiceManagerServer()
 }
 
@@ -96,6 +109,9 @@ func (UnimplementedServiceManagerServer) StartService(context.Context, *ServiceI
 }
 func (UnimplementedServiceManagerServer) StopService(context.Context, *ServiceIdRequest) (*RaspiService, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StopService not implemented")
+}
+func (UnimplementedServiceManagerServer) GetFullInfo(context.Context, *ServiceIdRequest) (*ServiceFullInfo, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFullInfo not implemented")
 }
 func (UnimplementedServiceManagerServer) mustEmbedUnimplementedServiceManagerServer() {}
 func (UnimplementedServiceManagerServer) testEmbeddedByValue()                        {}
@@ -172,6 +188,24 @@ func _ServiceManager_StopService_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ServiceManager_GetFullInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ServiceIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceManagerServer).GetFullInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ServiceManager_GetFullInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceManagerServer).GetFullInfo(ctx, req.(*ServiceIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ServiceManager_ServiceDesc is the grpc.ServiceDesc for ServiceManager service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -190,6 +224,10 @@ var ServiceManager_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StopService",
 			Handler:    _ServiceManager_StopService_Handler,
+		},
+		{
+			MethodName: "GetFullInfo",
+			Handler:    _ServiceManager_GetFullInfo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
