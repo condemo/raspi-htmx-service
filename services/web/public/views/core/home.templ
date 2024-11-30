@@ -13,6 +13,7 @@ templ Home(i *sysinfo.SysInfo, services []*manager.RaspiService) {
 			@components.Infobar(i)
 			<div id="view-container" class="p-2">
 				@components.ServiceCarousel(services)
+				<div id="service-full-info"></div>
 			</div>
 		</div>
 	}
