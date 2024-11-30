@@ -83,6 +83,24 @@ func (s *WeatherService) UpdateConfig(ctx context.Context, req *raspiservices.Co
 }
 
 func (s *WeatherService) GetFullInfo(ctx context.Context, req *raspiservices.EmptyRequest) *raspiservices.FullInfoResponse {
-	// TODO:
-	return nil
+	res := &raspiservices.FullInfoResponse{
+		Id: s.id, Name: s.Data.Name, Status: s.Data.State,
+		Location: &raspiservices.Location{
+			City:   s.Data.FullInfo.Location.City,
+			Region: s.Data.FullInfo.Location.Region,
+			Current: &raspiservices.CurrentWeather{
+				Condition: &raspiservices.ConditionWeather{
+					Text: s.Data.FullInfo.Current.Condition.Text,
+					Icon: s.Data.FullInfo.Current.Condition.Icon,
+				},
+				LastUpdated: s.Data.FullInfo.Current.LastUpdated,
+				WindDir:     s.Data.FullInfo.Current.WindDir,
+				FeelTemp:    s.Data.FullInfo.Current.FeelTemp,
+				Temp:        s.Data.FullInfo.Current.Temp,
+				WindVel:     s.Data.FullInfo.Current.WindVel,
+				IsDay:       s.Data.FullInfo.Current.IsDay,
+			},
+		},
+	}
+	return res
 }

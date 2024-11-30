@@ -77,8 +77,8 @@ func (h *WeatherGrpcHandler) GetStatus(ctx context.Context, req *raspiservices.E
 }
 
 func (h *WeatherGrpcHandler) GetFullInfo(ctx context.Context, req *raspiservices.EmptyRequest) (*raspiservices.FullInfoResponse, error) {
-	// TODO:
-	return nil, nil
+	res := h.wservice.GetFullInfo(ctx, req)
+	return res, nil
 }
 
 func (h *WeatherGrpcHandler) GetConfig(ctx context.Context, req *raspiservices.EmptyRequest) (*raspiservices.ConfigResponse, error) {
