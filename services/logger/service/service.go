@@ -32,7 +32,7 @@ func (s *LoggerService) LogMessage(ctx context.Context, req *logger.LogRequest) 
 	}
 
 	currentTime := time.Now().Format("01/02/2006 15:04:05")
-	fmt.Printf("%s[%s%s%s] %s %s%s\n", color, COLOR_NONE, req.GetServiceName(), color, currentTime, req.GetMsg(), COLOR_NONE)
+	fmt.Printf("%s%s [%s%s%s] %s%s\n", color, currentTime, COLOR_NONE, req.GetServiceName(), color, req.GetMsg(), COLOR_NONE)
 
 	return nil
 }
