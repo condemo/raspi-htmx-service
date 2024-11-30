@@ -15,3 +15,25 @@ func RaspiToManager(in *raspiservices.StatusResponse) *manager.RaspiService {
 		},
 	}
 }
+
+func RaspiFullToManager(in *raspiservices.FullInfoResponse) *manager.ServiceFullInfo {
+	return &manager.ServiceFullInfo{
+		Id: in.GetId(), Name: in.GetName(), Status: in.GetStatus(),
+		Location: &manager.ServiceLocation{
+			City:   in.GetLocation().GetCity(),
+			Region: in.GetLocation().GetRegion(),
+		},
+		Current: &manager.ServiceCurrentWeather{
+			Condition: &manager.ServiceConditionWeather{
+				Text: in.GetCurrent().GetCondition().GetText(),
+				Icon: in.GetCurrent().GetCondition().GetIcon(),
+			},
+			LastUpdated: in.GetCurrent().GetLastUpdated(),
+			WindDir:     in.GetCurrent().GetWindDir(),
+			WindVel:     in.GetCurrent().GetWindVel(),
+			FeelTemp:    in.GetCurrent().GetFeelTemp(),
+			Temp:        in.GetCurrent().GetTemp(),
+			IsDay:       in.GetCurrent().GetIsDay(),
+		},
+	}
+}
