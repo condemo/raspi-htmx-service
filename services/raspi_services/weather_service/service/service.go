@@ -61,12 +61,13 @@ func (s *WeatherService) Stop(ctx context.Context) error {
 }
 
 func (s *WeatherService) GetStatus(ctx context.Context) *raspiservices.StatusResponse {
+	ci := s.Data.GetCardInfo()
 	return &raspiservices.StatusResponse{
 		Id: s.id, Status: s.Data.State, Name: s.Data.Name,
 		Data: &raspiservices.WeatherCardData{
-			Icon:        s.Data.GetCardInfo().Icon,
-			Data:        s.Data.GetCardInfo().Data,
-			LastUpdated: s.Data.GetCardInfo().LastUpdated,
+			Icon:        ci.Icon,
+			Data:        ci.Data,
+			LastUpdated: ci.LastUpdated,
 		},
 	}
 }
