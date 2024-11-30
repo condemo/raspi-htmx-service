@@ -16,7 +16,7 @@ type Weather struct {
 	FullInfo *FullInfo
 	httpCli  *http.Client
 	Name     string
-	ID       int64
+	ID       uint32
 	State    bool
 }
 
@@ -56,7 +56,7 @@ type FullInfo struct {
 		FeelTemp    float32 `json:"feelslike_c"`
 		Temp        float32 `json:"temp_c"`
 		WindVel     float32 `json:"wind_kph"`
-		IsDay       uint8   `json:"is_day"`
+		IsDay       uint32  `json:"is_day"`
 	} `json:"current"`
 }
 
