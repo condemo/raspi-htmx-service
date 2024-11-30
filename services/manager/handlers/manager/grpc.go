@@ -120,3 +120,12 @@ func (h *ManagerGrpcHandler) StopService(ctx context.Context, req *manager.Servi
 	res := inutil.RaspiToManager(st)
 	return res, err
 }
+
+func (h *ManagerGrpcHandler) GetFullInfo(ctx context.Context, req *manager.ServiceIdRequest) (*manager.ServiceFullInfo, error) {
+	info, err := h.weatherService.GetFullInfo(ctx, &raspiservices.EmptyRequest{})
+	if err != nil {
+		return nil, err
+	}
+	res := inutil.RaspiFullToManager(info)
+	return res, nil
+}
