@@ -5,8 +5,6 @@ service3-name=weather
 service4-name=logger
 
 full-build: build-manager build-sysinfo build-weather build-logger build-htmx
-full-run: kill-all run-manager run-sysinfo run-weather run-htmx
-services-run: kill-all run-sysinfo run-weather run-manager
 kill-all: kill-services kill-htmx
 
 amd64-build: templ-build
@@ -50,7 +48,11 @@ run-logger: build-logger
 
 run-all:
 	@make run-weather & make run-sysinfo & \
-		make run-manager & make run-htmx
+		sleep 1 && make run-manager & make run-htmx
+
+run-services:
+	@make run-weather & make run-sysinfo & \
+			sleep 1 && make run-manager &
 
 protogen:
 	@protoc \
