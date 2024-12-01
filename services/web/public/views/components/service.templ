@@ -12,7 +12,7 @@ templ ServiceCarousel(services []*manager.RaspiService) {
 				@ServiceCard(s)
 			}
 			// TODO: Borrar llegado el momento
-			for range 7 {
+			for range 8 - len(services) {
 				@ServiceCard(&manager.RaspiService{Name: "Demo", Status: false})
 			}
 		</div>
@@ -28,6 +28,7 @@ templ ServiceCard(s *manager.RaspiService) {
 						class="group h-10 rounded-3xl m-1 bg-success hover:cursor-pointer hover:bg-base-100"
 						hx-get={ string(templ.URL(fmt.Sprintf("/services/full/%d", s.GetId()))) }
 						hx-target="#service-full-info"
+						hx-swap="innerHTML show:top"
 					>
 						<h1 class="z-10 text-black group-hover:text-white">{ s.GetName() }</h1>
 					</figure>
