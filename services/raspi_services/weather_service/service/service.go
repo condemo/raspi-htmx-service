@@ -88,18 +88,18 @@ func (s *WeatherService) GetFullInfo(ctx context.Context, req *pb.EmptyRequest) 
 		Location: &pb.ServiceLocation{
 			City:   s.Data.FullInfo.Location.City,
 			Region: s.Data.FullInfo.Location.Region,
-			Current: &pb.ServiceCurrentWeather{
-				Condition: &pb.ServiceConditionWeather{
-					Text: s.Data.FullInfo.Current.Condition.Text,
-					Icon: s.Data.FullInfo.Current.Condition.Icon,
-				},
-				LastUpdated: s.Data.FullInfo.Current.LastUpdated,
-				WindDir:     s.Data.FullInfo.Current.WindDir,
-				FeelTemp:    s.Data.FullInfo.Current.FeelTemp,
-				Temp:        s.Data.FullInfo.Current.Temp,
-				WindVel:     s.Data.FullInfo.Current.WindVel,
-				IsDay:       s.Data.FullInfo.Current.IsDay,
+		},
+		Current: &pb.ServiceCurrentWeather{
+			Condition: &pb.ServiceConditionWeather{
+				Text: s.Data.FullInfo.Current.Condition.Text,
+				Icon: s.Data.FullInfo.Current.Condition.Icon,
 			},
+			LastUpdated: s.Data.FullInfo.Current.LastUpdated,
+			WindDir:     s.Data.FullInfo.Current.WindDir,
+			FeelTemp:    s.Data.FullInfo.Current.FeelTemp,
+			Temp:        s.Data.FullInfo.Current.Temp,
+			WindVel:     s.Data.FullInfo.Current.WindVel,
+			IsDay:       s.Data.FullInfo.Current.IsDay,
 		},
 	}
 	return res
