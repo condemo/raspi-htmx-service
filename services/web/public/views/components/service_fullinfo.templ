@@ -3,10 +3,16 @@ package components
 import manager "github.com/condemo/raspi-htmx-service/services/common/genproto/services"
 
 templ FullInfoView(info *manager.ServiceFullInfo) {
-	<div class="text-2xl">
-		<h1>{ info.GetName() }</h1>
-		for range 100 {
-			<p>loredasdasdasjkdnaskhndasjndasjkhdasjkdasjdask</p>
-		}
+	<div id="full-info-view">
+		<h1 class="text-2xl">{ info.GetName() }</h1>
+		<div class="flex md:flex-row py-4 px-10 justify-center space-x-4">
+			@WeatherTime(info.GetCurrent().GetCondition().GetIcon(), info.GetCurrent().GetIsDay())
+			@WeatherTemps(info.GetCurrent().GetTemp(), info.GetCurrent().GetFeelTemp())
+			@WeatherWind(info.GetCurrent().GetWindVel(), info.GetCurrent().GetWindDir())
+		</div>
+		<p>{ info.GetLocation().GetCity() }, { info.GetLocation().GetRegion() }</p>
+		<p>
+			last updated: { info.GetCurrent().GetLastUpdated() }
+		</p>
 	</div>
 }

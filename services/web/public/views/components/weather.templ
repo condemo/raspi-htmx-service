@@ -1,0 +1,48 @@
+package components
+
+import "strconv"
+
+templ WeatherTime(icon string, isDay uint32) {
+	<div id="weather-time">
+		<div class="stats bg-primary text-primary-content">
+			<div class="stat">
+				<div class="stat-title">{ icon }</div>
+				<div class="stat-value">${ strconv.FormatUint(uint64(isDay), 10) }</div>
+			</div>
+			<div class="stat">
+				<div class="stat-title">Current balance</div>
+				<div class="stat-value">$89,400</div>
+			</div>
+		</div>
+	</div>
+}
+
+templ WeatherTemps(temp, feelTemp float32) {
+	<div id="weather-temps">
+		<div class="stats bg-primary text-primary-content">
+			<div class="stat">
+				<div class="stat-title text-black">Temp</div>
+				<div class="stat-value">{ strconv.FormatFloat(float64(temp), 'f', -1, 64) }</div>
+			</div>
+			<div class="stat">
+				<div class="stat-title">Current balance</div>
+				<div class="stat-value">$89,400</div>
+			</div>
+		</div>
+	</div>
+}
+
+templ WeatherWind(wVel float32, wDir string) {
+	<div id="weather-wind">
+		<div class="stats bg-primary text-primary-content">
+			<div class="stat">
+				<div class="stat-title">Account balance</div>
+				<div class="stat-value">$89,400</div>
+			</div>
+			<div class="stat">
+				<div class="stat-title">Current balance</div>
+				<div class="stat-value">$89,400</div>
+			</div>
+		</div>
+	</div>
+}
