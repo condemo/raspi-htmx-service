@@ -6,17 +6,17 @@ import (
 	"strconv"
 	"time"
 
-	manager "github.com/condemo/raspi-htmx-service/services/common/genproto/services"
+	"github.com/condemo/raspi-htmx-service/services/common/genproto/pb"
 	"github.com/condemo/raspi-htmx-service/services/web/public/views/components"
 	"google.golang.org/grpc"
 )
 
 type ServiceHandler struct {
-	managerConn manager.ServiceManagerClient
+	managerConn pb.ServiceManagerClient
 }
 
 func NewServiceHandler(mConn *grpc.ClientConn) *ServiceHandler {
-	mc := manager.NewServiceManagerClient(mConn)
+	mc := pb.NewServiceManagerClient(mConn)
 	return &ServiceHandler{
 		managerConn: mc,
 	}
@@ -37,7 +37,7 @@ func (h *ServiceHandler) startService(w http.ResponseWriter, r *http.Request) er
 	ctx, cancel := context.WithTimeout(r.Context(), time.Second*2)
 	defer cancel()
 
-	serv, err := h.managerConn.StartService(ctx, &manager.ServiceIdRequest{Id: int32(id)})
+	serv, err := h.managerConn.StartService(ctx, &pb.ServiceIdRequest{Id: int32(id)})
 	if err != nil {
 		return err
 	}
@@ -54,7 +54,7 @@ func (h *ServiceHandler) stopService(w http.ResponseWriter, r *http.Request) err
 	ctx, cancel := context.WithTimeout(r.Context(), time.Second*2)
 	defer cancel()
 
-	serv, err := h.managerConn.StopService(ctx, &manager.ServiceIdRequest{Id: int32(id)})
+	serv, err := h.managerConn.StopService(ctx, &pb.ServiceIdRequest{Id: int32(id)})
 	if err != nil {
 		return err
 	}
@@ -71,7 +71,7 @@ func (h *ServiceHandler) getFullInfo(w http.ResponseWriter, r *http.Request) err
 	ctx, cancel := context.WithTimeout(r.Context(), time.Second*2)
 	defer cancel()
 
-	res, err := h.managerConn.GetFullInfo(ctx, &manager.ServiceIdRequest{Id: int32(id)})
+	res, err := h.managerConn.GetFullInfo(ctx, &pb.ServiceIdRequest{Id: int32(id)})
 	if err != nil {
 		return err
 	}

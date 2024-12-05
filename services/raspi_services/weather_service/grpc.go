@@ -8,7 +8,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/condemo/raspi-htmx-service/services/common/genproto/services/logger"
+	"github.com/condemo/raspi-htmx-service/services/common/genproto/pb"
 	handlers "github.com/condemo/raspi-htmx-service/services/raspi_services/weather_service/handlers/weather"
 	"github.com/condemo/raspi-htmx-service/services/raspi_services/weather_service/logs"
 	"github.com/condemo/raspi-htmx-service/services/raspi_services/weather_service/service"
@@ -45,6 +45,6 @@ func (s *grpcServer) Run() {
 	<-sigC
 
 	gHandler.LogService.LogMessage(context.Background(),
-		logs.MakeLog(logger.MessageType_ERROR, "Weather Service Shutdown"))
+		logs.MakeLog(pb.MessageType_ERROR, "Weather Service Shutdown"))
 	gServer.GracefulStop()
 }

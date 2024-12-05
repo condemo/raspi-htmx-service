@@ -6,20 +6,19 @@ import (
 	"net/http"
 
 	"github.com/condemo/raspi-htmx-service/services/common/config"
-	manager "github.com/condemo/raspi-htmx-service/services/common/genproto/services"
-	sysinfo "github.com/condemo/raspi-htmx-service/services/common/genproto/services/sys_info"
+	"github.com/condemo/raspi-htmx-service/services/common/genproto/pb"
 	"github.com/condemo/raspi-htmx-service/services/web/public/views/core"
 	"google.golang.org/grpc"
 )
 
 type ViewHandler struct {
-	infoConn    sysinfo.SysInfoServiceClient
-	managerConn manager.ServiceManagerClient
+	infoConn    pb.SysInfoServiceClient
+	managerConn pb.ServiceManagerClient
 }
 
 func NewViewHandler(ic *grpc.ClientConn, mc *grpc.ClientConn) *ViewHandler {
-	inConn := sysinfo.NewSysInfoServiceClient(ic)
-	mConn := manager.NewServiceManagerClient(mc)
+	inConn := pb.NewSysInfoServiceClient(ic)
+	mConn := pb.NewServiceManagerClient(mc)
 	return &ViewHandler{
 		infoConn:    inConn,
 		managerConn: mConn,
@@ -32,12 +31,12 @@ func (h *ViewHandler) RegisterRoutes(r *http.ServeMux) {
 }
 
 func (h *ViewHandler) homeView(w http.ResponseWriter, r *http.Request) error {
-	si, err := h.infoConn.GetInfo(context.Background(), &sysinfo.GetInfoRequest{})
+	si, err := h.infoConn.GetInfo(context.Background(), &pb.GetInfoRequest{})
 	if err != nil {
 		log.Fatal("error getting info from `GetInfo` \n", err)
 	}
 
-	sl, err := h.managerConn.GetServices(r.Context(), &manager.GetServicesRequest{})
+	sl, err := h.managerConn.GetServices(r.Context(), &pb.GetServicesRequest{})
 	if err != nil {
 		return err
 	}

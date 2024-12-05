@@ -1,6 +1,6 @@
 syntax= "proto3";
 package sysinfo;
-option go_package = "github.com/condemo/raspi-htmx-service/common/services/sysinfo";
+option go_package = "github.com/condemo/raspi-htmx-service/common/services/pb";
 
 service SysInfoService {
   rpc GetInfo(GetInfoRequest) returns (GetInfoResponse) {}

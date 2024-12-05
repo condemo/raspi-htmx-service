@@ -10,20 +10,20 @@ import (
 
 	"github.com/a-h/templ"
 	"github.com/condemo/raspi-htmx-service/services/common/config"
-	sysinfo "github.com/condemo/raspi-htmx-service/services/common/genproto/services/sys_info"
+	"github.com/condemo/raspi-htmx-service/services/common/genproto/pb"
 	"github.com/condemo/raspi-htmx-service/services/web/public/views/components"
 	"github.com/gorilla/websocket"
 	"google.golang.org/grpc"
 )
 
 type WSHandler struct {
-	sysInfoConn sysinfo.SysInfoServiceClient
+	sysInfoConn pb.SysInfoServiceClient
 	mu          *sync.RWMutex
 	conns       map[*websocket.Conn]struct{}
 }
 
 func NewWSHandler(siConn *grpc.ClientConn) *WSHandler {
-	si := sysinfo.NewSysInfoServiceClient(siConn)
+	si := pb.NewSysInfoServiceClient(siConn)
 	return &WSHandler{
 		sysInfoConn: si,
 		mu:          new(sync.RWMutex),
@@ -68,7 +68,7 @@ func (h *WSHandler) writeLoop(c *websocket.Conn, s chan struct{}) {
 	for {
 		select {
 		case <-t.C:
-			si, err := h.sysInfoConn.GetInfo(context.Background(), &sysinfo.GetInfoRequest{})
+			si, err := h.sysInfoConn.GetInfo(context.Background(), &pb.GetInfoRequest{})
 			if err != nil {
 				log.Fatalf("something wrong with GetInfo %v \n", err)
 			}

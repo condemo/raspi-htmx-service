@@ -4,7 +4,7 @@
 // - protoc             v5.28.2
 // source: logger.proto
 
-package logger
+package pb
 
 import (
 	context "context"

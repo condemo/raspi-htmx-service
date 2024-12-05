@@ -57,26 +57,26 @@ run-services:
 protogen:
 	@protoc \
 		--proto_path=proto "proto/manager.proto" \
-		--go_out=services/common/genproto/services --go_opt=paths=source_relative \
-		--go-grpc_out=services/common/genproto/services \
+		--go_out=services/common/genproto/pb --go_opt=paths=source_relative \
+		--go-grpc_out=services/common/genproto/pb \
 		--go-grpc_opt=paths=source_relative
 
 	@protoc \
 		--proto_path=proto "proto/sys_info.proto" \
-		--go_out=services/common/genproto/services/sys_info --go_opt=paths=source_relative \
-		--go-grpc_out=services/common/genproto/services/sys_info \
+		--go_out=services/common/genproto/pb --go_opt=paths=source_relative \
+		--go-grpc_out=services/common/genproto/pb \
 		--go-grpc_opt=paths=source_relative
 
 	@protoc \
 		--proto_path=proto "proto/raspi_services.proto" \
-		--go_out=services/common/genproto/services/raspi_services --go_opt=paths=source_relative \
-		--go-grpc_out=services/common/genproto/services/raspi_services \
+		--go_out=services/common/genproto/pb --go_opt=paths=source_relative \
+		--go-grpc_out=services/common/genproto/pb \
 		--go-grpc_opt=paths=source_relative
 
 	@protoc \
 		--proto_path=proto "proto/logger.proto" \
-		--go_out=services/common/genproto/services/logger --go_opt=paths=source_relative \
-		--go-grpc_out=services/common/genproto/services/logger \
+		--go_out=services/common/genproto/pb --go_opt=paths=source_relative \
+		--go-grpc_out=services/common/genproto/pb \
 		--go-grpc_opt=paths=source_relative
 
 clean:

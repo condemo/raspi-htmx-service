@@ -1,55 +1,55 @@
 package components
 
-import sysinfo "github.com/condemo/raspi-htmx-service/services/common/genproto/services/sys_info"
+import "github.com/condemo/raspi-htmx-service/services/common/genproto/pb"
 
-templ Infobar(i *sysinfo.SysInfo) {
-<div class="stats stats-vertical lg:stats-horizontal shadow" id="info_bar">
-  <div class="stat">
-    <div class="stat-title">SD CARD</div>
-    <div class="stat-value text-2xl">{ i.DiskInfo.RootUsed }/{ i.DiskInfo.RootTotal }</div>
-  </div>
-  <div class="stat">
-    for _, u := range i.DiskInfo.USBDrives {
-    if len(i.DiskInfo.USBDrives) > 2 {
-    <div class="stat-title">{ u.Name }</div>
-    <div class="stat-value text-xl">{ u.Used }/{ u.Total }</div>
-    } else if len(i.DiskInfo.USBDrives) > 4 {
-    <div class="stat-title">{ u.Name }</div>
-    <div class="stat-value text-lg">{ u.Used }/{ u.Total }</div>
-    } else {
-    <div class="stat-title">{ u.Name }</div>
-    <div class="stat-value text-2xl">{ u.Used }/{ u.Total }</div>
-    }
-    }
-  </div>
-  <div class="stat">
-    <div class="stat-title">Ram Usage</div>
-    <div class="stat-value text-2xl">
-      { i.MemInfo.MemUsed }/{ i.MemInfo.MemTotal }
-      ({ i.MemInfo.MemPercent })
-    </div>
-    <div class="stat-title">Net Speed</div>
-    <div class="stat-value text-2xl">&#8593; { i.NetInfo.NetUp } &#8595; { i.NetInfo.NetDown }</div>
-  </div>
-  <div class="stat">
-    <div class="stat-title">Cpu Usage</div>
-    <div class="stat-value text-2xl">
-      { i.CpuInfo.CoreInfoList[0] } { i.CpuInfo.CoreInfoList[1] } { i.CpuInfo.CoreInfoList[2] } {
+templ Infobar(i *pb.SysInfo) {
+	<div class="stats stats-vertical lg:stats-horizontal shadow" id="info_bar">
+		<div class="stat">
+			<div class="stat-title">SD CARD</div>
+			<div class="stat-value text-2xl">{ i.DiskInfo.RootUsed }/{ i.DiskInfo.RootTotal }</div>
+		</div>
+		<div class="stat">
+			for _, u := range i.DiskInfo.USBDrives {
+				if len(i.DiskInfo.USBDrives) > 2 {
+					<div class="stat-title">{ u.Name }</div>
+					<div class="stat-value text-xl">{ u.Used }/{ u.Total }</div>
+				} else if len(i.DiskInfo.USBDrives) > 4 {
+					<div class="stat-title">{ u.Name }</div>
+					<div class="stat-value text-lg">{ u.Used }/{ u.Total }</div>
+				} else {
+					<div class="stat-title">{ u.Name }</div>
+					<div class="stat-value text-2xl">{ u.Used }/{ u.Total }</div>
+				}
+			}
+		</div>
+		<div class="stat">
+			<div class="stat-title">Ram Usage</div>
+			<div class="stat-value text-2xl">
+				{ i.MemInfo.MemUsed }/{ i.MemInfo.MemTotal }
+				({ i.MemInfo.MemPercent })
+			</div>
+			<div class="stat-title">Net Speed</div>
+			<div class="stat-value text-2xl">&#8593; { i.NetInfo.NetUp } &#8595; { i.NetInfo.NetDown }</div>
+		</div>
+		<div class="stat">
+			<div class="stat-title">Cpu Usage</div>
+			<div class="stat-value text-2xl">
+				{ i.CpuInfo.CoreInfoList[0] } { i.CpuInfo.CoreInfoList[1] } { i.CpuInfo.CoreInfoList[2] } { 
       i.CpuInfo.CoreInfoList[3] }
-    </div>
-    <div class="stat-title">Cpu Temp</div>
-    <div class="stat-value text-2xl">{ i.CpuInfo.CpuTemp }</div>
-  </div>
-  <div class="stat">
-    if i.FanInfo.FanStatus {
-    <div class="stat-title">Vent Status</div>
-    <div class="stat-value text-success text-2xl">[on]</div>
-    <div class="stat-title">Vent Speed</div>
-    <div class="stat-value text-2xl">{ i.FanInfo.FanSpeed }rpm</div>
-    } else {
-    <div class="stat-title">Vent Status</div>
-    <div class="stat-value text-error text-3xl">[off]</div>
-    }
-  </div>
-</div>
+			</div>
+			<div class="stat-title">Cpu Temp</div>
+			<div class="stat-value text-2xl">{ i.CpuInfo.CpuTemp }</div>
+		</div>
+		<div class="stat">
+			if i.FanInfo.FanStatus {
+				<div class="stat-title">Vent Status</div>
+				<div class="stat-value text-success text-2xl">[on]</div>
+				<div class="stat-title">Vent Speed</div>
+				<div class="stat-value text-2xl">{ i.FanInfo.FanSpeed }rpm</div>
+			} else {
+				<div class="stat-title">Vent Status</div>
+				<div class="stat-value text-error text-3xl">[off]</div>
+			}
+		</div>
+	</div>
 }

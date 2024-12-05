@@ -3,9 +3,9 @@ package types
 import (
 	"context"
 
-	sysinfo "github.com/condemo/raspi-htmx-service/services/common/genproto/services/sys_info"
+	"github.com/condemo/raspi-htmx-service/services/common/genproto/pb"
 )
 
 type SysInfo interface {
-	GetInfo(context.Context) *sysinfo.SysInfo
+	GetInfo(context.Context) *pb.SysInfo
 }

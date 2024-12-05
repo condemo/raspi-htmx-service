@@ -5,7 +5,7 @@ import (
 	"sync"
 	"time"
 
-	raspiservices "github.com/condemo/raspi-htmx-service/services/common/genproto/services/raspi_services"
+	"github.com/condemo/raspi-htmx-service/services/common/genproto/pb"
 	"github.com/condemo/raspi-htmx-service/services/raspi_services/weather_service/types"
 )
 
@@ -60,36 +60,36 @@ func (s *WeatherService) Stop(ctx context.Context) error {
 	return nil
 }
 
-func (s *WeatherService) GetStatus(ctx context.Context) *raspiservices.StatusResponse {
+func (s *WeatherService) GetStatus(ctx context.Context) *pb.RaspiService {
 	ci := s.Data.GetCardInfo()
-	return &raspiservices.StatusResponse{
+	return &pb.RaspiService{
 		Id: s.id, Status: s.Data.State, Name: s.Data.Name,
-		Data: &raspiservices.WeatherCardData{
+		Data: &pb.ServiceCardData{
 			Icon:        ci.Icon,
-			Data:        ci.Data,
+			DataText:    ci.Data,
 			LastUpdated: ci.LastUpdated,
 		},
 	}
 }
 
-func (s *WeatherService) GetConfig(ctx context.Context) *raspiservices.ConfigResponse {
+func (s *WeatherService) GetConfig(ctx context.Context) *pb.ConfigResponse {
 	// TODO:
 	return nil
 }
 
-func (s *WeatherService) UpdateConfig(ctx context.Context, req *raspiservices.ConfigRequest) (*raspiservices.ConfigResponse, error) {
+func (s *WeatherService) UpdateConfig(ctx context.Context, req *pb.ConfigRequest) (*pb.ConfigResponse, error) {
 	// TODO:
 	return nil, nil
 }
 
-func (s *WeatherService) GetFullInfo(ctx context.Context, req *raspiservices.EmptyRequest) *raspiservices.FullInfoResponse {
-	res := &raspiservices.FullInfoResponse{
+func (s *WeatherService) GetFullInfo(ctx context.Context, req *pb.EmptyRequest) *pb.ServiceFullInfo {
+	res := &pb.ServiceFullInfo{
 		Id: s.id, Name: s.Data.Name, Status: s.Data.State,
-		Location: &raspiservices.Location{
+		Location: &pb.ServiceLocation{
 			City:   s.Data.FullInfo.Location.City,
 			Region: s.Data.FullInfo.Location.Region,
-			Current: &raspiservices.CurrentWeather{
-				Condition: &raspiservices.ConditionWeather{
+			Current: &pb.ServiceCurrentWeather{
+				Condition: &pb.ServiceConditionWeather{
 					Text: s.Data.FullInfo.Current.Condition.Text,
 					Icon: s.Data.FullInfo.Current.Condition.Icon,
 				},

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/condemo/raspi-htmx-service/services/common/genproto/services/logger"
+	"github.com/condemo/raspi-htmx-service/services/common/genproto/pb"
 )
 
 type LoggerService struct {
@@ -16,18 +16,18 @@ func NewLoggerService() *LoggerService {
 	return &LoggerService{}
 }
 
-func (s *LoggerService) LogMessage(ctx context.Context, req *logger.LogRequest) error {
+func (s *LoggerService) LogMessage(ctx context.Context, req *pb.LogRequest) error {
 	// PERF: Podría user un `strings.Builder` para ser mas eficiente
 	var color string
 
 	switch req.GetType() {
-	case logger.MessageType_INFO:
+	case pb.MessageType_INFO:
 		color = COLOR_INFO
-	case logger.MessageType_ERROR:
+	case pb.MessageType_ERROR:
 		color = COLOR_ERROR
-	case logger.MessageType_SUCCESS:
+	case pb.MessageType_SUCCESS:
 		color = COLOR_SUCCESS
-	case logger.MessageType_WARNING:
+	case pb.MessageType_WARNING:
 		color = COLOR_WARNING
 	}
 

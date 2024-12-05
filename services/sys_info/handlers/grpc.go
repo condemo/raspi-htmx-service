@@ -5,8 +5,7 @@ import (
 	"log"
 
 	"github.com/condemo/raspi-htmx-service/services/common/config"
-	"github.com/condemo/raspi-htmx-service/services/common/genproto/services/logger"
-	sysinfo "github.com/condemo/raspi-htmx-service/services/common/genproto/services/sys_info"
+	"github.com/condemo/raspi-htmx-service/services/common/genproto/pb"
 	"github.com/condemo/raspi-htmx-service/services/common/util"
 	"github.com/condemo/raspi-htmx-service/services/sys_info/logs"
 	"github.com/condemo/raspi-htmx-service/services/sys_info/types"
@@ -14,14 +13,14 @@ import (
 )
 
 type SysInfoGrpcHandler struct {
-	sysinfo.UnimplementedSysInfoServiceServer
+	pb.UnimplementedSysInfoServiceServer
 	sysInfoService types.SysInfo
-	logService     logger.LoggerServiceClient
+	logService     pb.LoggerServiceClient
 }
 
 func NewSysInfoGrpcHandler(grpc *grpc.Server, is types.SysInfo) {
 	logGrpc := util.NewGrpcClient(config.ServicesConfig.LoggerServPort)
-	logConn := logger.NewLoggerServiceClient(logGrpc)
+	logConn := pb.NewLoggerServiceClient(logGrpc)
 
 	gRPCHandler := &SysInfoGrpcHandler{
 		sysInfoService: is,
@@ -30,18 +29,18 @@ func NewSysInfoGrpcHandler(grpc *grpc.Server, is types.SysInfo) {
 
 	_, err := gRPCHandler.logService.LogMessage(context.TODO(),
 		logs.MakeLog(
-			logger.MessageType_SUCCESS, "SysInfo Handler Starts"))
+			pb.MessageType_SUCCESS, "SysInfo Handler Starts"))
 	if err != nil {
 		log.Fatal("error sending msg to Logger -", err)
 	}
 
-	sysinfo.RegisterSysInfoServiceServer(grpc, gRPCHandler)
+	pb.RegisterSysInfoServiceServer(grpc, gRPCHandler)
 }
 
 // TODO:
-func (h *SysInfoGrpcHandler) GetInfo(ctx context.Context, req *sysinfo.GetInfoRequest) (*sysinfo.GetInfoResponse, error) {
+func (h *SysInfoGrpcHandler) GetInfo(ctx context.Context, req *pb.GetInfoRequest) (*pb.GetInfoResponse, error) {
 	si := h.sysInfoService.GetInfo(ctx)
-	res := &sysinfo.GetInfoResponse{SisInfo: si}
+	res := &pb.GetInfoResponse{SisInfo: si}
 
 	return res, nil
 }

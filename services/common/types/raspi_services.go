@@ -3,7 +3,7 @@ package types
 import (
 	"context"
 
-	raspiservices "github.com/condemo/raspi-htmx-service/services/common/genproto/services/raspi_services"
+	"github.com/condemo/raspi-htmx-service/services/common/genproto/pb"
 )
 
 type RaspiService interface {
@@ -13,10 +13,10 @@ type RaspiService interface {
 	Init(context.Context) error
 	Start(context.Context) error
 	Stop(context.Context) error
-	GetStatus(context.Context) *raspiservices.StatusResponse
-	GetConfig(context.Context) *raspiservices.ConfigResponse
-	UpdateConfig(context.Context, *raspiservices.ConfigRequest) (*raspiservices.ConfigResponse, error)
-	GetFullInfo(context.Context, *raspiservices.EmptyRequest) *raspiservices.FullInfoResponse
+	GetStatus(context.Context) *pb.RaspiService
+	GetConfig(context.Context) *pb.ConfigResponse
+	UpdateConfig(context.Context, *pb.ConfigRequest) (*pb.ConfigResponse, error)
+	GetFullInfo(context.Context, *pb.EmptyRequest) *pb.ServiceFullInfo
 }
 
 // PERF: Estructura simple para iniciar, mejorar

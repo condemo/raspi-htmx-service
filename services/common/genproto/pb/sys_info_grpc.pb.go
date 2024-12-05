@@ -4,7 +4,7 @@
 // - protoc             v5.28.2
 // source: sys_info.proto
 
-package sysinfo
+package pb
 
 import (
 	context "context"

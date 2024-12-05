@@ -1,12 +1,14 @@
 syntax = "proto3";
 package raspiservices;
-option go_package = "github.com/condemo/raspi-htmx-service/common/services/raspiservices";
+option go_package = "github.com/condemo/raspi-htmx-service/common/services/pb";
+
+import "manager.proto";
 
 service WeatherService {
-  rpc Start(EmptyRequest) returns (StatusResponse) {}
-  rpc Stop(EmptyRequest) returns (StatusResponse) {}
-  rpc GetStatus(EmptyRequest) returns (StatusResponse) {}
-  rpc GetFullInfo(EmptyRequest) returns (FullInfoResponse) {}
+  rpc Start(EmptyRequest) returns (manager.RaspiService) {}
+  rpc Stop(EmptyRequest) returns (manager.RaspiService) {}
+  rpc GetStatus(EmptyRequest) returns (manager.RaspiService) {}
+  rpc GetFullInfo(EmptyRequest) returns (manager.ServiceFullInfo) {}
   rpc GetConfig(EmptyRequest) returns (ConfigResponse) {}
   rpc UpdateConfig(ConfigRequest) returns (ConfigResponse) {}
 }

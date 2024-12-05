@@ -4,7 +4,7 @@
 // - protoc             v5.28.2
 // source: raspi_services.proto
 
-package raspiservices
+package pb
 
 import (
 	context "context"
@@ -31,10 +31,10 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type WeatherServiceClient interface {
-	Start(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*StatusResponse, error)
-	Stop(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*StatusResponse, error)
-	GetStatus(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*StatusResponse, error)
-	GetFullInfo(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*FullInfoResponse, error)
+	Start(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*RaspiService, error)
+	Stop(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*RaspiService, error)
+	GetStatus(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*RaspiService, error)
+	GetFullInfo(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*ServiceFullInfo, error)
 	GetConfig(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*ConfigResponse, error)
 	UpdateConfig(ctx context.Context, in *ConfigRequest, opts ...grpc.CallOption) (*ConfigResponse, error)
 }
@@ -47,9 +47,9 @@ func NewWeatherServiceClient(cc grpc.ClientConnInterface) WeatherServiceClient {
 	return &weatherServiceClient{cc}
 }
 
-func (c *weatherServiceClient) Start(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*StatusResponse, error) {
+func (c *weatherServiceClient) Start(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*RaspiService, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(StatusResponse)
+	out := new(RaspiService)
 	err := c.cc.Invoke(ctx, WeatherService_Start_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -57,9 +57,9 @@ func (c *weatherServiceClient) Start(ctx context.Context, in *EmptyRequest, opts
 	return out, nil
 }
 
-func (c *weatherServiceClient) Stop(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*StatusResponse, error) {
+func (c *weatherServiceClient) Stop(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*RaspiService, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(StatusResponse)
+	out := new(RaspiService)
 	err := c.cc.Invoke(ctx, WeatherService_Stop_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -67,9 +67,9 @@ func (c *weatherServiceClient) Stop(ctx context.Context, in *EmptyRequest, opts 
 	return out, nil
 }
 
-func (c *weatherServiceClient) GetStatus(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*StatusResponse, error) {
+func (c *weatherServiceClient) GetStatus(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*RaspiService, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(StatusResponse)
+	out := new(RaspiService)
 	err := c.cc.Invoke(ctx, WeatherService_GetStatus_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -77,9 +77,9 @@ func (c *weatherServiceClient) GetStatus(ctx context.Context, in *EmptyRequest, 
 	return out, nil
 }
 
-func (c *weatherServiceClient) GetFullInfo(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*FullInfoResponse, error) {
+func (c *weatherServiceClient) GetFullInfo(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*ServiceFullInfo, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(FullInfoResponse)
+	out := new(ServiceFullInfo)
 	err := c.cc.Invoke(ctx, WeatherService_GetFullInfo_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -111,10 +111,10 @@ func (c *weatherServiceClient) UpdateConfig(ctx context.Context, in *ConfigReque
 // All implementations must embed UnimplementedWeatherServiceServer
 // for forward compatibility.
 type WeatherServiceServer interface {
-	Start(context.Context, *EmptyRequest) (*StatusResponse, error)
-	Stop(context.Context, *EmptyRequest) (*StatusResponse, error)
-	GetStatus(context.Context, *EmptyRequest) (*StatusResponse, error)
-	GetFullInfo(context.Context, *EmptyRequest) (*FullInfoResponse, error)
+	Start(context.Context, *EmptyRequest) (*RaspiService, error)
+	Stop(context.Context, *EmptyRequest) (*RaspiService, error)
+	GetStatus(context.Context, *EmptyRequest) (*RaspiService, error)
+	GetFullInfo(context.Context, *EmptyRequest) (*ServiceFullInfo, error)
 	GetConfig(context.Context, *EmptyRequest) (*ConfigResponse, error)
 	UpdateConfig(context.Context, *ConfigRequest) (*ConfigResponse, error)
 	mustEmbedUnimplementedWeatherServiceServer()
@@ -127,16 +127,16 @@ type WeatherServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedWeatherServiceServer struct{}
 
-func (UnimplementedWeatherServiceServer) Start(context.Context, *EmptyRequest) (*StatusResponse, error) {
+func (UnimplementedWeatherServiceServer) Start(context.Context, *EmptyRequest) (*RaspiService, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Start not implemented")
 }
-func (UnimplementedWeatherServiceServer) Stop(context.Context, *EmptyRequest) (*StatusResponse, error) {
+func (UnimplementedWeatherServiceServer) Stop(context.Context, *EmptyRequest) (*RaspiService, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Stop not implemented")
 }
-func (UnimplementedWeatherServiceServer) GetStatus(context.Context, *EmptyRequest) (*StatusResponse, error) {
+func (UnimplementedWeatherServiceServer) GetStatus(context.Context, *EmptyRequest) (*RaspiService, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetStatus not implemented")
 }
-func (UnimplementedWeatherServiceServer) GetFullInfo(context.Context, *EmptyRequest) (*FullInfoResponse, error) {
+func (UnimplementedWeatherServiceServer) GetFullInfo(context.Context, *EmptyRequest) (*ServiceFullInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFullInfo not implemented")
 }
 func (UnimplementedWeatherServiceServer) GetConfig(context.Context, *EmptyRequest) (*ConfigResponse, error) {

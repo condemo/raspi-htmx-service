@@ -4,7 +4,7 @@
 // - protoc             v5.28.2
 // source: manager.proto
 
-package manager
+package pb
 
 import (
 	context "context"

@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"strings"
 
-	sysinfo "github.com/condemo/raspi-htmx-service/services/common/genproto/services/sys_info"
+	"github.com/condemo/raspi-htmx-service/services/common/genproto/pb"
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/disk"
 	"github.com/shirou/gopsutil/mem"
@@ -17,21 +17,21 @@ import (
 
 var fanFilePath string
 
-func newMemInfo() *sysinfo.MemInfo {
+func newMemInfo() *pb.MemInfo {
 	m, err := mem.VirtualMemory()
 	checkErr(err)
 
-	return &sysinfo.MemInfo{
+	return &pb.MemInfo{
 		MemPercent: fmt.Sprint(strconv.FormatFloat(m.UsedPercent, 'f', 2, 64), "%"),
 		MemUsed:    fmt.Sprint(strconv.FormatUint(m.Used/1024/1024, 10), "mb"),
 		MemTotal:   fmt.Sprint(strconv.FormatUint(m.Total/1024/1024, 10), "mb"),
 	}
 }
 
-func newDiskInfo() *sysinfo.DiskInfo {
-	var dl []*sysinfo.USBDrive
+func newDiskInfo() *pb.DiskInfo {
+	var dl []*pb.USBDrive
 
-	di := &sysinfo.DiskInfo{}
+	di := &pb.DiskInfo{}
 
 	parts, err := disk.Partitions(false)
 
@@ -47,7 +47,7 @@ func newDiskInfo() *sysinfo.DiskInfo {
 				strconv.FormatUint(u.Total/1024/1024/1024, 10), "GB")
 		} else if strings.HasPrefix(u.Path, "/mnt/") {
 			n := strings.ToTitle(strings.TrimPrefix(u.Path, "/mnt/"))
-			uDrive := &sysinfo.USBDrive{
+			uDrive := &pb.USBDrive{
 				Name:  n,
 				Used:  fmt.Sprint(strconv.FormatUint(u.Used/1024/1024/1024, 10), "GB"),
 				Total: fmt.Sprint(strconv.FormatUint(u.Total/1024/1024/1024, 10), "GB"),
@@ -56,7 +56,7 @@ func newDiskInfo() *sysinfo.DiskInfo {
 		} else if strings.HasPrefix(u.Path, "/media/condemopi/") {
 			n := fmt.Sprint(
 				"USB ", strings.ToTitle(strings.TrimPrefix(u.Path, "/media/condemopi/")))
-			uDrive := &sysinfo.USBDrive{
+			uDrive := &pb.USBDrive{
 				Name:  n,
 				Used:  fmt.Sprint(strconv.FormatUint(u.Used/1024/1024/1024, 10), "GB"),
 				Total: fmt.Sprint(strconv.FormatUint(u.Total/1024/1024/1024, 10), "GB"),
@@ -72,11 +72,11 @@ func newDiskInfo() *sysinfo.DiskInfo {
 	return di
 }
 
-func newCpuInfo() *sysinfo.CpuInfo {
+func newCpuInfo() *pb.CpuInfo {
 	cpuPer, err := cpu.Percent(0, true)
 	checkErr(err)
 
-	c := &sysinfo.CpuInfo{}
+	c := &pb.CpuInfo{}
 
 	for _, cpu := range cpuPer {
 		c.CoreInfoList = append(
@@ -101,8 +101,8 @@ func newCpuInfo() *sysinfo.CpuInfo {
 	return c
 }
 
-func newFanInfo() *sysinfo.FanInfo {
-	f := &sysinfo.FanInfo{}
+func newFanInfo() *pb.FanInfo {
+	f := &pb.FanInfo{}
 
 	stateF, err := os.Open("/sys/devices/virtual/thermal/cooling_device0/cur_state")
 	checkErr(err)
@@ -131,7 +131,7 @@ func newFanInfo() *sysinfo.FanInfo {
 	return f
 }
 
-func newNetInfo() *sysinfo.NetInfo {
+func newNetInfo() *pb.NetInfo {
 	nf, err := os.Open("/home/condemopi/scripts/custom_output/net_speed")
 	checkErr(err)
 
@@ -146,7 +146,7 @@ func newNetInfo() *sysinfo.NetInfo {
 		speedSlice = []string{"0,0 kb", "0,0 kb"}
 	}
 
-	return &sysinfo.NetInfo{
+	return &pb.NetInfo{
 		NetUp:   speedSlice[0],
 		NetDown: speedSlice[1],
 	}
@@ -164,8 +164,8 @@ func newUptimeData() string {
 	return str
 }
 
-func NewSysInfo() *sysinfo.SysInfo {
-	return &sysinfo.SysInfo{
+func NewSysInfo() *pb.SysInfo {
+	return &pb.SysInfo{
 		Uptime:   newUptimeData(),
 		DiskInfo: newDiskInfo(),
 		MemInfo:  newMemInfo(),

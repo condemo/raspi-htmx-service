@@ -3,13 +3,13 @@ package handlers
 import (
 	"context"
 
-	"github.com/condemo/raspi-htmx-service/services/common/genproto/services/logger"
+	"github.com/condemo/raspi-htmx-service/services/common/genproto/pb"
 	"github.com/condemo/raspi-htmx-service/services/logger/types"
 	"google.golang.org/grpc"
 )
 
 type LoggerGrpcHandler struct {
-	logger.UnimplementedLoggerServiceServer
+	pb.UnimplementedLoggerServiceServer
 	loggerService types.Logger
 }
 
@@ -18,15 +18,15 @@ func NewLoggerGrpcHandler(grpc *grpc.Server, ls types.Logger) {
 		loggerService: ls,
 	}
 
-	logger.RegisterLoggerServiceServer(grpc, grpcHandler)
+	pb.RegisterLoggerServiceServer(grpc, grpcHandler)
 }
 
-func (h *LoggerGrpcHandler) LogMessage(ctx context.Context, req *logger.LogRequest) (*logger.LogResponse, error) {
+func (h *LoggerGrpcHandler) LogMessage(ctx context.Context, req *pb.LogRequest) (*pb.LogResponse, error) {
 	err := h.loggerService.LogMessage(ctx, req)
 	if err != nil {
 		return nil, err
 	}
 
-	res := &logger.LogResponse{}
+	res := &pb.LogResponse{}
 	return res, nil
 }
