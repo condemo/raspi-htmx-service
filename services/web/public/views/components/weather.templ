@@ -1,48 +1,50 @@
 package components
 
-import "strconv"
+import "fmt"
 
 templ WeatherTime(icon string, isDay uint32) {
-	<div id="weather-time">
-		<div class="stats bg-primary text-primary-content">
-			<div class="stat">
-				<div class="stat-title">{ icon }</div>
-				<div class="stat-value">${ strconv.FormatUint(uint64(isDay), 10) }</div>
-			</div>
-			<div class="stat">
-				<div class="stat-title">Current balance</div>
-				<div class="stat-value">$89,400</div>
-			</div>
-		</div>
-	</div>
+<div id="weather-time">
+  <div class="stats bg-primary text-primary-content">
+    <div class="stat">
+      <div class="stat-title">
+        <img src={ icon } alt="icon" />
+      </div>
+      if isDay == 0 {
+      <div class="stat-value">Night</div>
+      } else {
+      <div class="stat-value">Day</div>
+      }
+    </div>
+  </div>
+</div>
 }
 
 templ WeatherTemps(temp, feelTemp float32) {
-	<div id="weather-temps">
-		<div class="stats bg-primary text-primary-content">
-			<div class="stat">
-				<div class="stat-title text-black">Temp</div>
-				<div class="stat-value">{ strconv.FormatFloat(float64(temp), 'f', -1, 64) }</div>
-			</div>
-			<div class="stat">
-				<div class="stat-title">Current balance</div>
-				<div class="stat-value">$89,400</div>
-			</div>
-		</div>
-	</div>
+<div id="weather-temps">
+  <div class="stats bg-primary text-primary-content">
+    <div class="stat">
+      <div class="stat-title text-black">Temp</div>
+      <div class="stat-value">{ fmt.Sprintf("%.1f", temp) }°C</div>
+    </div>
+    <div class="stat">
+      <div class="stat-title text-black">Feel Temp</div>
+      <div class="stat-value">{ fmt.Sprintf("%.1f", feelTemp) }°C</div>
+    </div>
+  </div>
+</div>
 }
 
 templ WeatherWind(wVel float32, wDir string) {
-	<div id="weather-wind">
-		<div class="stats bg-primary text-primary-content">
-			<div class="stat">
-				<div class="stat-title">Account balance</div>
-				<div class="stat-value">$89,400</div>
-			</div>
-			<div class="stat">
-				<div class="stat-title">Current balance</div>
-				<div class="stat-value">$89,400</div>
-			</div>
-		</div>
-	</div>
+<div id="weather-wind">
+  <div class="stats bg-primary text-primary-content">
+    <div class="stat">
+      <div class="stat-title text-black">Wind Dir</div>
+      <div class="stat-value">{ wDir }</div>
+    </div>
+    <div class="stat">
+      <div class="stat-title text-black">WindVel</div>
+      <div class="stat-value">{ fmt.Sprintf("%.2f", wVel) } k/h</div>
+    </div>
+  </div>
+</div>
 }

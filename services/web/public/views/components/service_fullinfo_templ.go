@@ -28,7 +28,7 @@ func FullInfoView(info *pb.ServiceFullInfo) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"full-info-view\"><h1 class=\"text-2xl\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"full-info-view\"><h1 class=\"text-4xl\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -41,7 +41,7 @@ func FullInfoView(info *pb.ServiceFullInfo) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</h1><div class=\"flex md:flex-row py-4 px-10 justify-center space-x-4\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</h1><div class=\"flex flex-col space-y-4 py-4 px-10 justify-center md:flex-row md:space-x-4\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -57,14 +57,14 @@ func FullInfoView(info *pb.ServiceFullInfo) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><p>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><p class=\"text-2xl text-base-content\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(info.GetLocation().GetCity())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/components/service_fullinfo.templ`, Line: 13, Col: 35}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/components/service_fullinfo.templ`, Line: 13, Col: 70}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -77,20 +77,20 @@ func FullInfoView(info *pb.ServiceFullInfo) templ.Component {
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(info.GetLocation().GetRegion())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/components/service_fullinfo.templ`, Line: 13, Col: 71}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/components/service_fullinfo.templ`, Line: 13, Col: 106}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p><p>last updated: ")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p><p class=\"py-2 text-sm text-gray-500\">last updated: ")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(info.GetCurrent().GetLastUpdated())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/components/service_fullinfo.templ`, Line: 15, Col: 53}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/components/service_fullinfo.templ`, Line: 15, Col: 54}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
