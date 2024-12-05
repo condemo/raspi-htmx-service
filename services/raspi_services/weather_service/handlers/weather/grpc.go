@@ -33,7 +33,7 @@ func NewWeatherGrpcHandler(grpc *grpc.Server, ws types.RaspiService) *WeatherGrp
 		log.Fatal("error on weather handler init -", err)
 	}
 
-	_, err := gRPCHandler.LogService.LogMessage(ctx, logs.MakeLog(pb.MessageType_SUCCESS, "Service Init"))
+	_, err := gRPCHandler.LogService.LogMessage(ctx, logs.MakeLog(pb.LogMessageType_SUCCESS, "Service Init"))
 	if err != nil {
 		log.Fatal("error sending initial weather log")
 	}
@@ -47,7 +47,7 @@ func (h *WeatherGrpcHandler) Start(ctx context.Context, req *pb.EmptyRequest) (*
 	if err := h.wservice.Start(ctx); err != nil {
 		return nil, err
 	}
-	_, err := h.LogService.LogMessage(ctx, logs.MakeLog(pb.MessageType_SUCCESS, "Service ON"))
+	_, err := h.LogService.LogMessage(ctx, logs.MakeLog(pb.LogMessageType_SUCCESS, "Service ON"))
 	if err != nil {
 		return nil, err
 	}
@@ -61,7 +61,7 @@ func (h *WeatherGrpcHandler) Stop(ctx context.Context, req *pb.EmptyRequest) (*p
 	if err := h.wservice.Stop(ctx); err != nil {
 		return nil, err
 	}
-	_, err := h.LogService.LogMessage(ctx, logs.MakeLog(pb.MessageType_WARNING, "Service OFF"))
+	_, err := h.LogService.LogMessage(ctx, logs.MakeLog(pb.LogMessageType_WARNING, "Service OFF"))
 	if err != nil {
 		return nil, err
 	}

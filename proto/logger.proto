@@ -13,7 +13,7 @@ enum ServiceName {
   SYS_INFO_SERVICE = 3;
 }
 
-enum MessageType {
+enum LogMessageType {
   INFO = 0;
   SUCCESS = 1;
   WARNING = 2;
@@ -22,7 +22,7 @@ enum MessageType {
 
 message LogRequest {
   ServiceName serviceName = 1;
-  MessageType type = 2;
+  LogMessageType type = 2;
   string msg = 3;
 }
 

@@ -15,47 +15,6 @@ service WeatherService {
 
 message EmptyRequest {}
 
-message StatusResponse {
-  int32 id = 1;
-  string name = 2;
-  bool status = 3;
-  WeatherCardData data = 4;
-}
-
-message WeatherCardData {
-  string icon = 1;
-  string data = 2;
-  string lastUpdated = 3;
-}
-
-message FullInfoResponse {
-  int32 id = 1;
-  string name = 2;
-  bool status = 3;
-  Location location = 4;
-  CurrentWeather current = 5;
-}
-
-message Location {
-  string city = 1;
-  string region = 2;
-  CurrentWeather current = 3;
-}
-message CurrentWeather {
-  ConditionWeather condition = 1;
-  string lastUpdated = 2;
-  string windDir = 3;
-  float feelTemp = 4;
-  float temp = 5;
-  float windVel = 6;
-  uint32 isDay = 7;
-}
-
-message ConditionWeather {
-  string text = 1;
-  string icon = 2;
-}
-
 message ConfigRequest {}
 
 message ConfigResponse {}

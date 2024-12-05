@@ -40,7 +40,7 @@ func NewManagerGrpcHandler(grpc *grpc.Server, sm types.ServiceManager) {
 	defer cancel()
 
 	_, err := gRPCHandler.logService.LogMessage(ctx, logs.MakeLog(
-		pb.MessageType_SUCCESS, "Manager Handler Starts"))
+		pb.LogMessageType_SUCCESS, "Manager Handler Starts"))
 	if err != nil {
 		log.Fatal("error in logger", err)
 	}
@@ -48,7 +48,7 @@ func NewManagerGrpcHandler(grpc *grpc.Server, sm types.ServiceManager) {
 	// TODO: Load/Read all `RaspiServices` - Cutre
 	if err := gRPCHandler.LoadServices(ctx); err != nil {
 		_, err := gRPCHandler.logService.LogMessage(ctx, logs.MakeLog(
-			pb.MessageType_ERROR, "error loading services -"+err.Error()))
+			pb.LogMessageType_ERROR, "error loading services -"+err.Error()))
 		if err != nil {
 			log.Fatal("error sending log from manager -", err)
 		}
@@ -64,7 +64,7 @@ func (h *ManagerGrpcHandler) LoadServices(ctx context.Context) error {
 	ws, err := h.weatherService.GetStatus(ctx, &pb.EmptyRequest{})
 	if err != nil {
 		h.logService.LogMessage(ctx, logs.MakeLog(
-			pb.MessageType_ERROR, "error receiving weather data"+err.Error()))
+			pb.LogMessageType_ERROR, "error receiving weather data"+err.Error()))
 		return err
 	}
 
@@ -93,7 +93,7 @@ func (h *ManagerGrpcHandler) StartService(ctx context.Context, req *pb.ServiceId
 	st, err := h.weatherService.Start(ctx, &pb.EmptyRequest{})
 	if err != nil {
 		_, err := h.logService.LogMessage(ctx,
-			logs.MakeLog(pb.MessageType_ERROR, "error starting weather service -"+err.Error()))
+			logs.MakeLog(pb.LogMessageType_ERROR, "error starting weather service -"+err.Error()))
 		if err != nil {
 			return nil, err
 		}
@@ -108,7 +108,7 @@ func (h *ManagerGrpcHandler) StopService(ctx context.Context, req *pb.ServiceIdR
 	st, err := h.weatherService.Stop(ctx, &pb.EmptyRequest{})
 	if err != nil {
 		_, err := h.logService.LogMessage(ctx,
-			logs.MakeLog(pb.MessageType_ERROR, "error starting stoping service -"+err.Error()))
+			logs.MakeLog(pb.LogMessageType_ERROR, "error starting stoping service -"+err.Error()))
 		if err != nil {
 			return nil, err
 		}

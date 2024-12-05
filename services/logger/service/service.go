@@ -21,13 +21,13 @@ func (s *LoggerService) LogMessage(ctx context.Context, req *pb.LogRequest) erro
 	var color string
 
 	switch req.GetType() {
-	case pb.MessageType_INFO:
+	case pb.LogMessageType_INFO:
 		color = COLOR_INFO
-	case pb.MessageType_ERROR:
+	case pb.LogMessageType_ERROR:
 		color = COLOR_ERROR
-	case pb.MessageType_SUCCESS:
+	case pb.LogMessageType_SUCCESS:
 		color = COLOR_SUCCESS
-	case pb.MessageType_WARNING:
+	case pb.LogMessageType_WARNING:
 		color = COLOR_WARNING
 	}
 

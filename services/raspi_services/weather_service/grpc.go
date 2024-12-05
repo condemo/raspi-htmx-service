@@ -45,6 +45,6 @@ func (s *grpcServer) Run() {
 	<-sigC
 
 	gHandler.LogService.LogMessage(context.Background(),
-		logs.MakeLog(pb.MessageType_ERROR, "Weather Service Shutdown"))
+		logs.MakeLog(pb.LogMessageType_ERROR, "Weather Service Shutdown"))
 	gServer.GracefulStop()
 }

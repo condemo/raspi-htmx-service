@@ -29,7 +29,7 @@ func NewSysInfoGrpcHandler(grpc *grpc.Server, is types.SysInfo) {
 
 	_, err := gRPCHandler.logService.LogMessage(context.TODO(),
 		logs.MakeLog(
-			pb.MessageType_SUCCESS, "SysInfo Handler Starts"))
+			pb.LogMessageType_SUCCESS, "SysInfo Handler Starts"))
 	if err != nil {
 		log.Fatal("error sending msg to Logger -", err)
 	}
