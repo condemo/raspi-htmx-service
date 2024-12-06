@@ -58,11 +58,12 @@ func (s *ApiServer) Run() {
 	// GRPC CONNS
 	managerGrpc := util.NewGrpcClient(config.ServicesConfig.ManagerServPort)
 	sysinfoGrpc := util.NewGrpcClient(config.ServicesConfig.SysInfoServPort)
+	loggerGrpc := util.NewGrpcClient(config.ServicesConfig.LoggerServPort)
 
 	// Handlers
 	authHandler := handlers.NewAuthHandler(s.store)
 	viewHandler := handlers.NewViewHandler(sysinfoGrpc, managerGrpc)
-	wsHandler := handlers.NewWSHandler(sysinfoGrpc)
+	wsHandler := handlers.NewWSHandler(sysinfoGrpc, loggerGrpc)
 	confHandler := handlers.NewConfigHandler()
 	servHandler := handlers.NewServiceHandler(managerGrpc)
 

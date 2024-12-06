@@ -3,7 +3,6 @@ package handlers
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/http"
 	"sync"
 	"time"
@@ -11,6 +10,7 @@ import (
 	"github.com/a-h/templ"
 	"github.com/condemo/raspi-htmx-service/services/common/config"
 	"github.com/condemo/raspi-htmx-service/services/common/genproto/pb"
+	"github.com/condemo/raspi-htmx-service/services/web/api/utils"
 	"github.com/condemo/raspi-htmx-service/services/web/public/views/components"
 	"github.com/gorilla/websocket"
 	"google.golang.org/grpc"
@@ -20,14 +20,17 @@ type WSHandler struct {
 	sysInfoConn pb.SysInfoServiceClient
 	mu          *sync.RWMutex
 	conns       map[*websocket.Conn]struct{}
+	logConn     pb.LoggerServiceClient
 }
 
-func NewWSHandler(siConn *grpc.ClientConn) *WSHandler {
+func NewWSHandler(siConn *grpc.ClientConn, logC *grpc.ClientConn) *WSHandler {
 	si := pb.NewSysInfoServiceClient(siConn)
+	lc := pb.NewLoggerServiceClient(logC)
 	return &WSHandler{
 		sysInfoConn: si,
 		mu:          new(sync.RWMutex),
 		conns:       make(map[*websocket.Conn]struct{}),
+		logConn:     lc,
 	}
 }
 
@@ -51,7 +54,9 @@ func (h *WSHandler) getConn(w http.ResponseWriter, r *http.Request) error {
 }
 
 func (h *WSHandler) handleWS(c *websocket.Conn) {
-	fmt.Println("New Connection:", c.RemoteAddr())
+	m := fmt.Sprint("New Connection: ", c.RemoteAddr())
+	h.logConn.LogMessage(context.Background(), utils.MakeLog(
+		pb.LogMessageType_INFO, m))
 
 	h.mu.Lock()
 	h.conns[c] = struct{}{}
@@ -70,18 +75,24 @@ func (h *WSHandler) writeLoop(c *websocket.Conn, s chan struct{}) {
 		case <-t.C:
 			si, err := h.sysInfoConn.GetInfo(context.Background(), &pb.GetInfoRequest{})
 			if err != nil {
-				log.Fatalf("something wrong with GetInfo %v \n", err)
+				m := fmt.Sprintf("something wrong with GetInfo %v \n", err)
+				h.logConn.LogMessage(context.Background(), utils.MakeLog(
+					pb.LogMessageType_ERROR, m))
 			}
 
 			tmpl, err := templ.ToGoHTML(context.Background(), components.Infobar(si.GetSisInfo()))
 			if err != nil {
-				fmt.Println("error converting Infobar to html:", err)
+				m := fmt.Sprint("error converting Infobar to html:", err)
+				h.logConn.LogMessage(context.Background(), utils.MakeLog(
+					pb.LogMessageType_ERROR, m))
 				return
 			}
 
 			uptimeHTML, err := templ.ToGoHTML(context.Background(), components.UptimeLabel(si.GetSisInfo().GetUptime()))
 			if err != nil {
-				fmt.Println("error converting UptimeLabel to html:", err)
+				m := fmt.Sprint("error converting UptimeLabel to html:", err)
+				h.logConn.LogMessage(context.Background(), utils.MakeLog(
+					pb.LogMessageType_ERROR, m))
 				return
 			}
 
@@ -92,7 +103,10 @@ func (h *WSHandler) writeLoop(c *websocket.Conn, s chan struct{}) {
 			h.mu.Lock()
 			delete(h.conns, c)
 			h.mu.Unlock()
-			fmt.Printf("Connection with %s closed\n", c.RemoteAddr())
+
+			lm := fmt.Sprintf("Connection with %s closed", c.RemoteAddr())
+			h.logConn.LogMessage(context.Background(), utils.MakeLog(
+				pb.LogMessageType_WARNING, lm))
 			return
 		}
 	}
