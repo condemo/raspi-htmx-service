@@ -11,6 +11,7 @@ enum ServiceName {
   SERVICE_MANAGER = 0;
   WEATHER_SERVICE = 1;
   SYS_INFO_SERVICE = 3;
+  WEB_SERVICE = 4;
 }
 
 enum LogMessageType {
