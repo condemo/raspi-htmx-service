@@ -28,14 +28,14 @@ func WeatherTime(icon string, isDay uint32) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"weather-time\"><div class=\"stats bg-primary text-primary-content\"><div class=\"stat\"><div class=\"stat-title\"><img src=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"weather-time\"><div class=\"stats bg-secondary text-secondary-content\"><div class=\"stat\"><div class=\"stat-title items-center mx-auto\"><img src=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(icon)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/components/weather.templ`, Line: 10, Col: 23}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/components/weather.templ`, Line: 10, Col: 20}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -82,14 +82,14 @@ func WeatherTemps(temp, feelTemp float32) templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"weather-temps\"><div class=\"stats bg-primary text-primary-content\"><div class=\"stat\"><div class=\"stat-title text-black\">Temp</div><div class=\"stat-value\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"weather-temps\"><div class=\"stats bg-secondary text-secondary-content\"><div class=\"stat\"><div class=\"stat-title text-black\">Temp</div><div class=\"stat-value\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%.1f", temp))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/components/weather.templ`, Line: 27, Col: 57}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/components/weather.templ`, Line: 27, Col: 55}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
@@ -102,7 +102,7 @@ func WeatherTemps(temp, feelTemp float32) templ.Component {
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%.1f", feelTemp))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/components/weather.templ`, Line: 31, Col: 61}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/components/weather.templ`, Line: 31, Col: 59}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
@@ -134,14 +134,14 @@ func WeatherWind(wVel float32, wDir string) templ.Component {
 			templ_7745c5c3_Var6 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"weather-wind\"><div class=\"stats bg-primary text-primary-content\"><div class=\"stat\"><div class=\"stat-title text-black\">Wind Dir</div><div class=\"stat-value\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"weather-wind\"><div class=\"stats bg-secondary text-secondary-content\"><div class=\"stat\"><div class=\"stat-title text-black\">Wind Dir</div><div class=\"stat-value\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var7 string
 		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(wDir)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/components/weather.templ`, Line: 42, Col: 36}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/components/weather.templ`, Line: 42, Col: 34}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 		if templ_7745c5c3_Err != nil {
@@ -154,13 +154,13 @@ func WeatherWind(wVel float32, wDir string) templ.Component {
 		var templ_7745c5c3_Var8 string
 		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%.2f", wVel))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/components/weather.templ`, Line: 46, Col: 57}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/components/weather.templ`, Line: 46, Col: 55}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" k/h</div></div></div></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" km/h</div></div></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

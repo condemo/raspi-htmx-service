@@ -28,7 +28,7 @@ func FullInfoView(info *pb.ServiceFullInfo) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"full-info-view\"><h1 class=\"text-4xl\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"full-info-view\" class=\"py-4\"><h1 class=\"text-4xl\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -41,15 +41,15 @@ func FullInfoView(info *pb.ServiceFullInfo) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</h1><div class=\"flex flex-col space-y-4 py-4 px-10 justify-center md:flex-row md:space-x-4\">")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = WeatherTime(info.GetCurrent().GetCondition().GetIcon(), info.GetCurrent().GetIsDay()).Render(ctx, templ_7745c5c3_Buffer)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</h1><div class=\"flex flex-col items-center space-y-4 py-4 px-10 justify-center md:flex-row md:space-x-4 md:space-y-0\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = WeatherTemps(info.GetCurrent().GetTemp(), info.GetCurrent().GetFeelTemp()).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = WeatherTime(info.GetCurrent().GetCondition().GetIcon(), info.GetCurrent().GetIsDay()).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -83,14 +83,14 @@ func FullInfoView(info *pb.ServiceFullInfo) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p><p class=\"py-2 text-sm text-gray-500\">last updated: ")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p><p class=\"py-2 text-sm text-gray-500 mx-auto\">last updated: ")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(info.GetCurrent().GetLastUpdated())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/components/service_fullinfo.templ`, Line: 15, Col: 54}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/components/service_fullinfo.templ`, Line: 15, Col: 53}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
