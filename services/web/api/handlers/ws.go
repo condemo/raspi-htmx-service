@@ -54,10 +54,6 @@ func (h *WSHandler) getConn(w http.ResponseWriter, r *http.Request) error {
 }
 
 func (h *WSHandler) handleWS(c *websocket.Conn) {
-	m := fmt.Sprint("New Connection: ", c.RemoteAddr())
-	h.logConn.LogMessage(context.Background(), utils.MakeLog(
-		pb.LogMessageType_INFO, m))
-
 	h.mu.Lock()
 	h.conns[c] = struct{}{}
 	h.mu.Unlock()
@@ -104,9 +100,6 @@ func (h *WSHandler) writeLoop(c *websocket.Conn, s chan struct{}) {
 			delete(h.conns, c)
 			h.mu.Unlock()
 
-			lm := fmt.Sprintf("Connection with %s closed", c.RemoteAddr())
-			h.logConn.LogMessage(context.Background(), utils.MakeLog(
-				pb.LogMessageType_WARNING, lm))
 			return
 		}
 	}
