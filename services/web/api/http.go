@@ -61,10 +61,10 @@ func (s *ApiServer) Run() {
 	loggerGrpc := util.NewGrpcClient(config.ServicesConfig.LoggerServPort)
 
 	// Handlers
-	authHandler := handlers.NewAuthHandler(s.store)
+	authHandler := handlers.NewAuthHandler(s.store, loggerGrpc)
 	viewHandler := handlers.NewViewHandler(sysinfoGrpc, managerGrpc)
 	wsHandler := handlers.NewWSHandler(sysinfoGrpc, loggerGrpc)
-	confHandler := handlers.NewConfigHandler()
+	confHandler := handlers.NewConfigHandler(loggerGrpc)
 	servHandler := handlers.NewServiceHandler(managerGrpc)
 
 	// Routes Load
