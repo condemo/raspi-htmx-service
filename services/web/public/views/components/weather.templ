@@ -21,7 +21,7 @@ templ WeatherTime(icon string, isDay uint32) {
 
 templ WeatherTemps(temp, feelTemp float32) {
 	<div id="weather-temps">
-		<div class="stats bg-secondary text-secondary-content">
+		<div class="stats bg-secondary text-secondary-content w-96">
 			<div class="stat">
 				<div class="stat-title text-black">Temp</div>
 				<div class="stat-value">{ fmt.Sprintf("%.1f", temp) }°C</div>
@@ -36,7 +36,7 @@ templ WeatherTemps(temp, feelTemp float32) {
 
 templ WeatherWind(wVel float32, wDir string) {
 	<div id="weather-wind">
-		<div class="stats bg-secondary text-secondary-content">
+		<div class="stats bg-secondary text-secondary-content w-96">
 			<div class="stat">
 				<div class="stat-title text-black">Wind Dir</div>
 				<div class="stat-value">{ wDir }</div>

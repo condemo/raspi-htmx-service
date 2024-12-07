@@ -41,7 +41,7 @@ func FullInfoView(info *pb.ServiceFullInfo) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</h1><div class=\"flex flex-col items-center space-y-4 py-4 px-10 justify-center md:flex-row md:space-x-4 md:space-y-0\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</h1><div class=\"flex flex-col items-center space-y-4 py-4 px-10 justify-center md:space-x-4 md:flex-row md:space-y-0\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

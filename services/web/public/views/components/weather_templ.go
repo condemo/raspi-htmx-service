@@ -82,7 +82,7 @@ func WeatherTemps(temp, feelTemp float32) templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"weather-temps\"><div class=\"stats bg-secondary text-secondary-content\"><div class=\"stat\"><div class=\"stat-title text-black\">Temp</div><div class=\"stat-value\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"weather-temps\"><div class=\"stats bg-secondary text-secondary-content w-96\"><div class=\"stat\"><div class=\"stat-title text-black\">Temp</div><div class=\"stat-value\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -134,7 +134,7 @@ func WeatherWind(wVel float32, wDir string) templ.Component {
 			templ_7745c5c3_Var6 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"weather-wind\"><div class=\"stats bg-secondary text-secondary-content\"><div class=\"stat\"><div class=\"stat-title text-black\">Wind Dir</div><div class=\"stat-value\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"weather-wind\"><div class=\"stats bg-secondary text-secondary-content w-96\"><div class=\"stat\"><div class=\"stat-title text-black\">Wind Dir</div><div class=\"stat-value\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
