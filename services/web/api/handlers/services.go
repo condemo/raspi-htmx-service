@@ -29,7 +29,7 @@ func (h *ServiceHandler) RegisterRoutes(r *http.ServeMux) {
 }
 
 func (h *ServiceHandler) startService(w http.ResponseWriter, r *http.Request) error {
-	id, err := strconv.ParseInt(r.PathValue("id"), 10, 32)
+	id, err := strconv.ParseUint(r.PathValue("id"), 10, 32)
 	if err != nil {
 		return err
 	}
@@ -37,7 +37,7 @@ func (h *ServiceHandler) startService(w http.ResponseWriter, r *http.Request) er
 	ctx, cancel := context.WithTimeout(r.Context(), time.Second*2)
 	defer cancel()
 
-	serv, err := h.managerConn.StartService(ctx, &pb.ServiceIdRequest{Id: int32(id)})
+	serv, err := h.managerConn.StartService(ctx, &pb.ServiceIdRequest{Id: uint32(id)})
 	if err != nil {
 		return err
 	}
@@ -46,7 +46,7 @@ func (h *ServiceHandler) startService(w http.ResponseWriter, r *http.Request) er
 }
 
 func (h *ServiceHandler) stopService(w http.ResponseWriter, r *http.Request) error {
-	id, err := strconv.ParseInt(r.PathValue("id"), 10, 32)
+	id, err := strconv.ParseUint(r.PathValue("id"), 10, 32)
 	if err != nil {
 		return err
 	}
@@ -54,7 +54,7 @@ func (h *ServiceHandler) stopService(w http.ResponseWriter, r *http.Request) err
 	ctx, cancel := context.WithTimeout(r.Context(), time.Second*2)
 	defer cancel()
 
-	serv, err := h.managerConn.StopService(ctx, &pb.ServiceIdRequest{Id: int32(id)})
+	serv, err := h.managerConn.StopService(ctx, &pb.ServiceIdRequest{Id: uint32(id)})
 	if err != nil {
 		return err
 	}
@@ -71,7 +71,7 @@ func (h *ServiceHandler) getFullInfo(w http.ResponseWriter, r *http.Request) err
 	ctx, cancel := context.WithTimeout(r.Context(), time.Second*2)
 	defer cancel()
 
-	res, err := h.managerConn.GetFullInfo(ctx, &pb.ServiceIdRequest{Id: int32(id)})
+	res, err := h.managerConn.GetFullInfo(ctx, &pb.ServiceIdRequest{Id: uint32(id)})
 	if err != nil {
 		return err
 	}
