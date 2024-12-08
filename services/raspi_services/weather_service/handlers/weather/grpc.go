@@ -13,7 +13,7 @@ import (
 )
 
 type WeatherGrpcHandler struct {
-	pb.UnimplementedWeatherServiceServer
+	pb.UnimplementedRaspiServiceServer
 	wservice   types.RaspiService
 	LogService pb.LoggerServiceClient
 }
@@ -38,7 +38,7 @@ func NewWeatherGrpcHandler(grpc *grpc.Server, ws types.RaspiService) *WeatherGrp
 		log.Fatal("error sending initial weather log")
 	}
 
-	pb.RegisterWeatherServiceServer(grpc, gRPCHandler)
+	pb.RegisterRaspiServiceServer(grpc, gRPCHandler)
 	return gRPCHandler
 }
 

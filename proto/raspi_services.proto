@@ -4,7 +4,7 @@ option go_package = "github.com/condemo/raspi-htmx-service/common/services/pb";
 
 import "manager.proto";
 
-service WeatherService {
+service RaspiService {
   rpc Start(EmptyRequest) returns (manager.RaspiService) {}
   rpc Stop(EmptyRequest) returns (manager.RaspiService) {}
   rpc GetStatus(EmptyRequest) returns (manager.RaspiService) {}
