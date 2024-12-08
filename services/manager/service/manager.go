@@ -24,7 +24,7 @@ func (s *ManagerService) LoadService(ctx context.Context, sl *pb.RaspiService) {
 func (s *ManagerService) GetServices(ctx context.Context) []*pb.RaspiService {
 	sl := make([]*pb.RaspiService, len(s.serviceList))
 	for i, service := range s.serviceList {
-		sl[i-1] = service
+		sl[i] = service
 	}
 	return sl
 }
