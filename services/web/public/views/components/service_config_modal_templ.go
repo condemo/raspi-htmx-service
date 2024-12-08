@@ -26,7 +26,7 @@ func ServiceConfigModal() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"config-modal\"><dialog id=\"my_modal_5\" class=\"modal modal-bottom sm:modal-middle\"><div class=\"modal-box\"><h3 class=\"text-lg font-bold\">Hello!</h3><p class=\"py-4\">Press ESC key or click the button below to close</p><div class=\"modal-action\"><form method=\"dialog\" hx-disable><!-- if there is a button in form, it will close the modal --><button class=\"btn\">Close</button></form></div></div></dialog></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"config-modal\"><dialog id=\"my_modal_5\" class=\"modal modal-bottom sm:modal-middle\"><div class=\"modal-box\"><h3 class=\"text-lg font-bold\">Hello!</h3><p class=\"py-4\">Press ESC key or click the button below to close</p><div class=\"modal-action\"><form class=\"fixed top-4 right-4\" method=\"dialog\" hx-disable><button class=\"btn\">X</button></form></div></div></dialog></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
