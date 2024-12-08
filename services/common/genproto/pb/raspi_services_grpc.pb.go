@@ -19,18 +19,18 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	WeatherService_Start_FullMethodName        = "/raspiservices.WeatherService/Start"
-	WeatherService_Stop_FullMethodName         = "/raspiservices.WeatherService/Stop"
-	WeatherService_GetStatus_FullMethodName    = "/raspiservices.WeatherService/GetStatus"
-	WeatherService_GetFullInfo_FullMethodName  = "/raspiservices.WeatherService/GetFullInfo"
-	WeatherService_GetConfig_FullMethodName    = "/raspiservices.WeatherService/GetConfig"
-	WeatherService_UpdateConfig_FullMethodName = "/raspiservices.WeatherService/UpdateConfig"
+	RaspiService_Start_FullMethodName        = "/raspiservices.RaspiService/Start"
+	RaspiService_Stop_FullMethodName         = "/raspiservices.RaspiService/Stop"
+	RaspiService_GetStatus_FullMethodName    = "/raspiservices.RaspiService/GetStatus"
+	RaspiService_GetFullInfo_FullMethodName  = "/raspiservices.RaspiService/GetFullInfo"
+	RaspiService_GetConfig_FullMethodName    = "/raspiservices.RaspiService/GetConfig"
+	RaspiService_UpdateConfig_FullMethodName = "/raspiservices.RaspiService/UpdateConfig"
 )
 
-// WeatherServiceClient is the client API for WeatherService service.
+// RaspiServiceClient is the client API for RaspiService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type WeatherServiceClient interface {
+type RaspiServiceClient interface {
 	Start(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*RaspiService, error)
 	Stop(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*RaspiService, error)
 	GetStatus(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*RaspiService, error)
@@ -39,271 +39,271 @@ type WeatherServiceClient interface {
 	UpdateConfig(ctx context.Context, in *ConfigRequest, opts ...grpc.CallOption) (*ConfigResponse, error)
 }
 
-type weatherServiceClient struct {
+type raspiServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewWeatherServiceClient(cc grpc.ClientConnInterface) WeatherServiceClient {
-	return &weatherServiceClient{cc}
+func NewRaspiServiceClient(cc grpc.ClientConnInterface) RaspiServiceClient {
+	return &raspiServiceClient{cc}
 }
 
-func (c *weatherServiceClient) Start(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*RaspiService, error) {
+func (c *raspiServiceClient) Start(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*RaspiService, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(RaspiService)
-	err := c.cc.Invoke(ctx, WeatherService_Start_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, RaspiService_Start_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *weatherServiceClient) Stop(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*RaspiService, error) {
+func (c *raspiServiceClient) Stop(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*RaspiService, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(RaspiService)
-	err := c.cc.Invoke(ctx, WeatherService_Stop_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, RaspiService_Stop_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *weatherServiceClient) GetStatus(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*RaspiService, error) {
+func (c *raspiServiceClient) GetStatus(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*RaspiService, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(RaspiService)
-	err := c.cc.Invoke(ctx, WeatherService_GetStatus_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, RaspiService_GetStatus_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *weatherServiceClient) GetFullInfo(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*ServiceFullInfo, error) {
+func (c *raspiServiceClient) GetFullInfo(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*ServiceFullInfo, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ServiceFullInfo)
-	err := c.cc.Invoke(ctx, WeatherService_GetFullInfo_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, RaspiService_GetFullInfo_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *weatherServiceClient) GetConfig(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*ConfigResponse, error) {
+func (c *raspiServiceClient) GetConfig(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*ConfigResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ConfigResponse)
-	err := c.cc.Invoke(ctx, WeatherService_GetConfig_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, RaspiService_GetConfig_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *weatherServiceClient) UpdateConfig(ctx context.Context, in *ConfigRequest, opts ...grpc.CallOption) (*ConfigResponse, error) {
+func (c *raspiServiceClient) UpdateConfig(ctx context.Context, in *ConfigRequest, opts ...grpc.CallOption) (*ConfigResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ConfigResponse)
-	err := c.cc.Invoke(ctx, WeatherService_UpdateConfig_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, RaspiService_UpdateConfig_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// WeatherServiceServer is the server API for WeatherService service.
-// All implementations must embed UnimplementedWeatherServiceServer
+// RaspiServiceServer is the server API for RaspiService service.
+// All implementations must embed UnimplementedRaspiServiceServer
 // for forward compatibility.
-type WeatherServiceServer interface {
+type RaspiServiceServer interface {
 	Start(context.Context, *EmptyRequest) (*RaspiService, error)
 	Stop(context.Context, *EmptyRequest) (*RaspiService, error)
 	GetStatus(context.Context, *EmptyRequest) (*RaspiService, error)
 	GetFullInfo(context.Context, *EmptyRequest) (*ServiceFullInfo, error)
 	GetConfig(context.Context, *EmptyRequest) (*ConfigResponse, error)
 	UpdateConfig(context.Context, *ConfigRequest) (*ConfigResponse, error)
-	mustEmbedUnimplementedWeatherServiceServer()
+	mustEmbedUnimplementedRaspiServiceServer()
 }
 
-// UnimplementedWeatherServiceServer must be embedded to have
+// UnimplementedRaspiServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedWeatherServiceServer struct{}
+type UnimplementedRaspiServiceServer struct{}
 
-func (UnimplementedWeatherServiceServer) Start(context.Context, *EmptyRequest) (*RaspiService, error) {
+func (UnimplementedRaspiServiceServer) Start(context.Context, *EmptyRequest) (*RaspiService, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Start not implemented")
 }
-func (UnimplementedWeatherServiceServer) Stop(context.Context, *EmptyRequest) (*RaspiService, error) {
+func (UnimplementedRaspiServiceServer) Stop(context.Context, *EmptyRequest) (*RaspiService, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Stop not implemented")
 }
-func (UnimplementedWeatherServiceServer) GetStatus(context.Context, *EmptyRequest) (*RaspiService, error) {
+func (UnimplementedRaspiServiceServer) GetStatus(context.Context, *EmptyRequest) (*RaspiService, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetStatus not implemented")
 }
-func (UnimplementedWeatherServiceServer) GetFullInfo(context.Context, *EmptyRequest) (*ServiceFullInfo, error) {
+func (UnimplementedRaspiServiceServer) GetFullInfo(context.Context, *EmptyRequest) (*ServiceFullInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFullInfo not implemented")
 }
-func (UnimplementedWeatherServiceServer) GetConfig(context.Context, *EmptyRequest) (*ConfigResponse, error) {
+func (UnimplementedRaspiServiceServer) GetConfig(context.Context, *EmptyRequest) (*ConfigResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetConfig not implemented")
 }
-func (UnimplementedWeatherServiceServer) UpdateConfig(context.Context, *ConfigRequest) (*ConfigResponse, error) {
+func (UnimplementedRaspiServiceServer) UpdateConfig(context.Context, *ConfigRequest) (*ConfigResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateConfig not implemented")
 }
-func (UnimplementedWeatherServiceServer) mustEmbedUnimplementedWeatherServiceServer() {}
-func (UnimplementedWeatherServiceServer) testEmbeddedByValue()                        {}
+func (UnimplementedRaspiServiceServer) mustEmbedUnimplementedRaspiServiceServer() {}
+func (UnimplementedRaspiServiceServer) testEmbeddedByValue()                      {}
 
-// UnsafeWeatherServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to WeatherServiceServer will
+// UnsafeRaspiServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to RaspiServiceServer will
 // result in compilation errors.
-type UnsafeWeatherServiceServer interface {
-	mustEmbedUnimplementedWeatherServiceServer()
+type UnsafeRaspiServiceServer interface {
+	mustEmbedUnimplementedRaspiServiceServer()
 }
 
-func RegisterWeatherServiceServer(s grpc.ServiceRegistrar, srv WeatherServiceServer) {
-	// If the following call pancis, it indicates UnimplementedWeatherServiceServer was
+func RegisterRaspiServiceServer(s grpc.ServiceRegistrar, srv RaspiServiceServer) {
+	// If the following call pancis, it indicates UnimplementedRaspiServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&WeatherService_ServiceDesc, srv)
+	s.RegisterService(&RaspiService_ServiceDesc, srv)
 }
 
-func _WeatherService_Start_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RaspiService_Start_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(EmptyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WeatherServiceServer).Start(ctx, in)
+		return srv.(RaspiServiceServer).Start(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: WeatherService_Start_FullMethodName,
+		FullMethod: RaspiService_Start_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WeatherServiceServer).Start(ctx, req.(*EmptyRequest))
+		return srv.(RaspiServiceServer).Start(ctx, req.(*EmptyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WeatherService_Stop_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RaspiService_Stop_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(EmptyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WeatherServiceServer).Stop(ctx, in)
+		return srv.(RaspiServiceServer).Stop(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: WeatherService_Stop_FullMethodName,
+		FullMethod: RaspiService_Stop_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WeatherServiceServer).Stop(ctx, req.(*EmptyRequest))
+		return srv.(RaspiServiceServer).Stop(ctx, req.(*EmptyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WeatherService_GetStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RaspiService_GetStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(EmptyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WeatherServiceServer).GetStatus(ctx, in)
+		return srv.(RaspiServiceServer).GetStatus(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: WeatherService_GetStatus_FullMethodName,
+		FullMethod: RaspiService_GetStatus_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WeatherServiceServer).GetStatus(ctx, req.(*EmptyRequest))
+		return srv.(RaspiServiceServer).GetStatus(ctx, req.(*EmptyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WeatherService_GetFullInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RaspiService_GetFullInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(EmptyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WeatherServiceServer).GetFullInfo(ctx, in)
+		return srv.(RaspiServiceServer).GetFullInfo(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: WeatherService_GetFullInfo_FullMethodName,
+		FullMethod: RaspiService_GetFullInfo_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WeatherServiceServer).GetFullInfo(ctx, req.(*EmptyRequest))
+		return srv.(RaspiServiceServer).GetFullInfo(ctx, req.(*EmptyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WeatherService_GetConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RaspiService_GetConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(EmptyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WeatherServiceServer).GetConfig(ctx, in)
+		return srv.(RaspiServiceServer).GetConfig(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: WeatherService_GetConfig_FullMethodName,
+		FullMethod: RaspiService_GetConfig_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WeatherServiceServer).GetConfig(ctx, req.(*EmptyRequest))
+		return srv.(RaspiServiceServer).GetConfig(ctx, req.(*EmptyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WeatherService_UpdateConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RaspiService_UpdateConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ConfigRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WeatherServiceServer).UpdateConfig(ctx, in)
+		return srv.(RaspiServiceServer).UpdateConfig(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: WeatherService_UpdateConfig_FullMethodName,
+		FullMethod: RaspiService_UpdateConfig_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WeatherServiceServer).UpdateConfig(ctx, req.(*ConfigRequest))
+		return srv.(RaspiServiceServer).UpdateConfig(ctx, req.(*ConfigRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// WeatherService_ServiceDesc is the grpc.ServiceDesc for WeatherService service.
+// RaspiService_ServiceDesc is the grpc.ServiceDesc for RaspiService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var WeatherService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "raspiservices.WeatherService",
-	HandlerType: (*WeatherServiceServer)(nil),
+var RaspiService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "raspiservices.RaspiService",
+	HandlerType: (*RaspiServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Start",
-			Handler:    _WeatherService_Start_Handler,
+			Handler:    _RaspiService_Start_Handler,
 		},
 		{
 			MethodName: "Stop",
-			Handler:    _WeatherService_Stop_Handler,
+			Handler:    _RaspiService_Stop_Handler,
 		},
 		{
 			MethodName: "GetStatus",
-			Handler:    _WeatherService_GetStatus_Handler,
+			Handler:    _RaspiService_GetStatus_Handler,
 		},
 		{
 			MethodName: "GetFullInfo",
-			Handler:    _WeatherService_GetFullInfo_Handler,
+			Handler:    _RaspiService_GetFullInfo_Handler,
 		},
 		{
 			MethodName: "GetConfig",
-			Handler:    _WeatherService_GetConfig_Handler,
+			Handler:    _RaspiService_GetConfig_Handler,
 		},
 		{
 			MethodName: "UpdateConfig",
-			Handler:    _WeatherService_UpdateConfig_Handler,
+			Handler:    _RaspiService_UpdateConfig_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
