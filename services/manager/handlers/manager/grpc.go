@@ -17,23 +17,27 @@ import (
 type ManagerGrpcHandler struct {
 	pb.UnimplementedServiceManagerServer
 	serviceManager types.ServiceManager
-	weatherService pb.WeatherServiceClient
 	logService     pb.LoggerServiceClient
+	raspiServices  map[uint32]pb.RaspiServiceClient
 }
 
 func NewManagerGrpcHandler(grpc *grpc.Server, sm types.ServiceManager) {
 	// Load all the conns
 	weatherGrpc := util.NewGrpcClient(config.ServicesConfig.WeatherServPort)
-	weatherConn := pb.NewWeatherServiceClient(weatherGrpc)
+	weatherConn := pb.NewRaspiServiceClient(weatherGrpc)
 
 	logGrpc := util.NewGrpcClient(config.ServicesConfig.LoggerServPort)
 	logConn := pb.NewLoggerServiceClient(logGrpc)
 
 	gRPCHandler := &ManagerGrpcHandler{
 		serviceManager: sm,
-		weatherService: weatherConn,
 		logService:     logConn,
+		raspiServices:  make(map[uint32]pb.RaspiServiceClient),
 	}
+
+	//  TODO: podría ser mejor, usar la id que viene del servicio en lugar
+	// de hardcodear
+	gRPCHandler.raspiServices[0] = weatherConn
 
 	ctx := context.Background()
 	ctx, cancel := context.WithTimeout(ctx, time.Second*5)
@@ -61,16 +65,15 @@ func NewManagerGrpcHandler(grpc *grpc.Server, sm types.ServiceManager) {
 // PERF: `LoadServices` no debería estar dentro del handler sino que debaria llamarse
 // antes de crear `ManagerGrpcHandler`
 func (h *ManagerGrpcHandler) LoadServices(ctx context.Context) error {
-	ws, err := h.weatherService.GetStatus(ctx, &pb.EmptyRequest{})
-	if err != nil {
-		h.logService.LogMessage(ctx, logs.MakeLog(
-			pb.LogMessageType_ERROR, "error receiving weather data"+err.Error()))
-		return err
+	for i := range h.raspiServices {
+		ws, err := h.raspiServices[i].GetStatus(ctx, &pb.EmptyRequest{})
+		if err != nil {
+			h.logService.LogMessage(ctx, logs.MakeLog(
+				pb.LogMessageType_ERROR, "error receiving weather data"+err.Error()))
+			return err
+		}
+		h.serviceManager.LoadService(ctx, ws)
 	}
-
-	// TODO: Cambiar `LoadService` por `LoadServices`; ir obteniendo la data de cada servicio
-	// para luego cargarlo de una con una sola llamada a la función
-	h.serviceManager.LoadService(ctx, ws)
 
 	return nil
 }
@@ -90,7 +93,8 @@ func (h *ManagerGrpcHandler) StartService(ctx context.Context, req *pb.ServiceId
 	ctx, cancel := context.WithTimeout(ctx, time.Second*2)
 	defer cancel()
 
-	st, err := h.weatherService.Start(ctx, &pb.EmptyRequest{})
+	id := req.GetId()
+	st, err := h.raspiServices[id].Start(ctx, &pb.EmptyRequest{})
 	if err != nil {
 		_, err := h.logService.LogMessage(ctx,
 			logs.MakeLog(pb.LogMessageType_ERROR, "error starting weather service -"+err.Error()))
@@ -105,7 +109,8 @@ func (h *ManagerGrpcHandler) StopService(ctx context.Context, req *pb.ServiceIdR
 	ctx, cancel := context.WithTimeout(ctx, time.Second*2)
 	defer cancel()
 
-	st, err := h.weatherService.Stop(ctx, &pb.EmptyRequest{})
+	id := req.GetId()
+	st, err := h.raspiServices[id].Stop(ctx, &pb.EmptyRequest{})
 	if err != nil {
 		_, err := h.logService.LogMessage(ctx,
 			logs.MakeLog(pb.LogMessageType_ERROR, "error starting stoping service -"+err.Error()))
@@ -117,7 +122,8 @@ func (h *ManagerGrpcHandler) StopService(ctx context.Context, req *pb.ServiceIdR
 }
 
 func (h *ManagerGrpcHandler) GetFullInfo(ctx context.Context, req *pb.ServiceIdRequest) (*pb.ServiceFullInfo, error) {
-	info, err := h.weatherService.GetFullInfo(ctx, &pb.EmptyRequest{})
+	id := req.GetId()
+	info, err := h.raspiServices[id].GetFullInfo(ctx, &pb.EmptyRequest{})
 	if err != nil {
 		return nil, err
 	}
