@@ -20,7 +20,7 @@ type WeatherService struct {
 
 func NewWeatherService() *WeatherService {
 	return &WeatherService{
-		id:      1,
+		id:      0,
 		mu:      new(sync.RWMutex),
 		canChan: make(chan struct{}),
 	}
