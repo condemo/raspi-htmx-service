@@ -9,12 +9,10 @@ service RaspiService {
   rpc Stop(EmptyRequest) returns (manager.RaspiService) {}
   rpc GetStatus(EmptyRequest) returns (manager.RaspiService) {}
   rpc GetFullInfo(EmptyRequest) returns (manager.ServiceFullInfo) {}
-  rpc GetConfig(EmptyRequest) returns (ConfigResponse) {}
-  rpc UpdateConfig(ConfigRequest) returns (ConfigResponse) {}
+  rpc GetConfig(EmptyRequest) returns (manager.ConfigResponse) {}
+  rpc UpdateConfig(ConfigRequest) returns (manager.ConfigResponse) {}
 }
 
 message EmptyRequest {}
 
 message ConfigRequest {}
-
-message ConfigResponse {}

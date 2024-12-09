@@ -7,8 +7,9 @@ service ServiceManager {
   rpc StartService(ServiceIdRequest) returns (RaspiService) {}
   rpc StopService(ServiceIdRequest) returns (RaspiService) {}
   rpc GetFullInfo(ServiceIdRequest) returns (ServiceFullInfo) {}
+  rpc GetConfig(ServiceIdRequest) returns (ConfigResponse) {}
 
-  // TODO: falta `UpdateConfig` y `GetConfig`
+  // TODO: falta `UpdateConfig`
 }
 
 message ServiceIdRequest {
@@ -61,3 +62,5 @@ message GetServicesRequest {}
 message GetServicesResponse {
   repeated RaspiService services = 1;
 }
+
+message ConfigResponse {}
