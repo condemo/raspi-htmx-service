@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"strconv"
 	"time"
@@ -81,5 +82,18 @@ func (h *ServiceHandler) getFullInfo(w http.ResponseWriter, r *http.Request) err
 }
 
 func (h *ServiceHandler) getConfig(w http.ResponseWriter, r *http.Request) error {
+	id, err := strconv.ParseInt(r.PathValue("id"), 10, 32)
+	if err != nil {
+		return err
+	}
+	ctx, cancel := context.WithTimeout(r.Context(), time.Second*2)
+	defer cancel()
+
+	res, err := h.managerConn.GetConfig(ctx, &pb.ServiceIdRequest{Id: uint32(id)})
+	if err != nil {
+		return err
+	}
+	// TODO: res está vacío, borrar print cuando implemente todo
+	fmt.Println(res)
 	return RenderTempl(w, r, components.ServiceConfigModal())
 }
