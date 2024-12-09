@@ -20,11 +20,6 @@ templ ServiceCarousel(services []*pb.RaspiService) {
 }
 
 templ ServiceCard(s *pb.RaspiService) {
-	<script type="text/javascript">
-  function showServiceConfig() {
-    document.getElementById('my_modal_5').showModal()
-  }
-</script>
 	<div id="service-card">
 		<div class="carousel-item">
 			<div class="card bg-base-100 w-72">
@@ -45,7 +40,12 @@ templ ServiceCard(s *pb.RaspiService) {
 				}
 				<div class="card-actions w-full flex justify-evenly">
 					@ServiceSwitchButton(s.Status, s.Id)
-					<button class="btn bg-base-200 w-31" onclick="showServiceConfig()">
+					// TODO: hace la peticion de la config al server usando HTMX
+					<button
+						class="btn bg-base-200 w-31"
+						hx-get={ string(templ.URL(fmt.Sprintf("/services/config/%d", s.GetId()))) }
+						hx-target="#config-modal"
+					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
@@ -62,7 +62,9 @@ templ ServiceCard(s *pb.RaspiService) {
 							<path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path>
 						</svg>
 					</button>
-					@ServiceConfigModal()
+					// TODO: Meter este div como target al pedir la config, buscar la manera de
+					// evitar el error al clickar en config y que aún no exista el modal
+					<div id="config-modal"></div>
 				</div>
 			</div>
 		</div>
