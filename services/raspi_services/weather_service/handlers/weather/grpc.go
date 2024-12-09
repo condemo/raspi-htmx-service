@@ -81,8 +81,8 @@ func (h *WeatherGrpcHandler) GetFullInfo(ctx context.Context, req *pb.EmptyReque
 }
 
 func (h *WeatherGrpcHandler) GetConfig(ctx context.Context, req *pb.EmptyRequest) (*pb.ConfigResponse, error) {
-	// TODO:
-	return nil, nil
+	res := h.wservice.GetConfig(ctx)
+	return res, nil
 }
 
 func (h *WeatherGrpcHandler) UpdateConfig(ctx context.Context, req *pb.ConfigRequest) (*pb.ConfigResponse, error) {

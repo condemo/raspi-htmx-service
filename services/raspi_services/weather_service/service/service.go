@@ -73,12 +73,11 @@ func (s *WeatherService) GetStatus(ctx context.Context) *pb.RaspiService {
 }
 
 func (s *WeatherService) GetConfig(ctx context.Context) *pb.ConfigResponse {
-	// TODO:
-	return nil
+	res := &pb.ConfigResponse{}
+	return res
 }
 
 func (s *WeatherService) UpdateConfig(ctx context.Context, req *pb.ConfigRequest) (*pb.ConfigResponse, error) {
-	// TODO:
 	return nil, nil
 }
 

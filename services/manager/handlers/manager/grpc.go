@@ -129,3 +129,13 @@ func (h *ManagerGrpcHandler) GetFullInfo(ctx context.Context, req *pb.ServiceIdR
 	}
 	return info, nil
 }
+
+func (h *ManagerGrpcHandler) GetConfig(ctx context.Context, req *pb.ServiceIdRequest) (*pb.ConfigResponse, error) {
+	id := req.GetId()
+	res, err := h.raspiServices[id].GetConfig(ctx, &pb.EmptyRequest{})
+	if err != nil {
+		return nil, err
+	}
+
+	return res, nil
+}

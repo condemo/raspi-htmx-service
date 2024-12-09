@@ -86,3 +86,7 @@ func (w *Weather) NewFullInfo() *FullInfo {
 
 	return fi
 }
+
+func (w *Weather) GetConfig() *config.WeatherConfig {
+	return w.config
+}
