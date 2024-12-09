@@ -26,6 +26,7 @@ func (h *ServiceHandler) RegisterRoutes(r *http.ServeMux) {
 	r.HandleFunc("POST /start/{id}", MakeHandler(h.startService))
 	r.HandleFunc("POST /stop/{id}", MakeHandler(h.stopService))
 	r.HandleFunc("GET /full/{id}", MakeHandler(h.getFullInfo))
+	r.HandleFunc("GET /config/{id}", MakeHandler(h.getConfig))
 }
 
 func (h *ServiceHandler) startService(w http.ResponseWriter, r *http.Request) error {
@@ -77,4 +78,8 @@ func (h *ServiceHandler) getFullInfo(w http.ResponseWriter, r *http.Request) err
 	}
 
 	return RenderTempl(w, r, components.FullInfoView(res))
+}
+
+func (h *ServiceHandler) getConfig(w http.ResponseWriter, r *http.Request) error {
+	return RenderTempl(w, r, components.ServiceConfigModal())
 }
