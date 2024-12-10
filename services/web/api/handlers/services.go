@@ -28,6 +28,7 @@ func (h *ServiceHandler) RegisterRoutes(r *http.ServeMux) {
 	r.HandleFunc("POST /stop/{id}", MakeHandler(h.stopService))
 	r.HandleFunc("GET /full/{id}", MakeHandler(h.getFullInfo))
 	r.HandleFunc("GET /config/{id}", MakeHandler(h.getConfig))
+	r.HandleFunc("PUT /config/{id}", MakeHandler(h.updateConfig))
 }
 
 func (h *ServiceHandler) startService(w http.ResponseWriter, r *http.Request) error {
@@ -93,7 +94,15 @@ func (h *ServiceHandler) getConfig(w http.ResponseWriter, r *http.Request) error
 	if err != nil {
 		return err
 	}
-	// TODO: res está vacío, borrar print cuando implemente todo
-	fmt.Println(res)
-	return RenderTempl(w, r, components.ServiceConfigModal())
+
+	return RenderTempl(w, r, components.ServiceConfigModal(res.GetConfig()))
+}
+
+func (h *ServiceHandler) updateConfig(w http.ResponseWriter, r *http.Request) error {
+	city := r.FormValue("city")
+	id := r.PathValue("id")
+
+	fmt.Println("update -> city: ", city)
+	fmt.Println("update -> id: ", id)
+	return nil
 }

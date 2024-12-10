@@ -8,7 +8,12 @@ package components
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-func ServiceConfigModal() templ.Component {
+import (
+	"fmt"
+	"github.com/condemo/raspi-htmx-service/services/common/genproto/pb"
+)
+
+func ServiceConfigModal(c *pb.ServiceConfig) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -26,7 +31,33 @@ func ServiceConfigModal() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<dialog id=\"my_modal_5\" class=\"modal modal-open sm:modal-middle\"><div class=\"modal-box\"><h3 class=\"text-lg font-bold\">Hello!</h3><p class=\"py-4\">Press ESC key or click the button below to close</p><div class=\"modal-action\"><button class=\"btn fixed top-4 right-4\" hx-on:click=\"document.getElementById(&#34;my_modal_5&#34;).remove()\">X</button></div></div></dialog>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<dialog id=\"config-modal\" class=\"modal modal-open sm:modal-middle\"><div class=\"modal-box\"><form hx-put=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var2 string
+		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(string(templ.URL(fmt.Sprintf("/services/config/%d", c.GetId()))))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/components/service_config_modal.templ`, Line: 11, Col: 83}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-target=\"#config-modal\" hx-swap=\"delete\"><h3 class=\"text-lg font-bold my-2\">Weather Config</h3><label for=\"city\">City: </label> <input id=\"city\" name=\"city\" type=\"text\" class=\"input input-bordered\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var3 string
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(c.GetCity())
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/components/service_config_modal.templ`, Line: 15, Col: 95}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"><br><button type=\"submit\" class=\"btn btn-success my-2\">Save</button></form><div class=\"modal-action\"><button class=\"btn fixed top-4 right-4\" hx-on:click=\"document.getElementById(&#34;config-modal&#34;).remove()\">X</button></div></div></dialog>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

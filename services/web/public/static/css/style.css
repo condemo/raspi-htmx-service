@@ -2621,10 +2621,6 @@ details.collapse summary::-webkit-details-marker {
   height: 320px;
 }
 
-.modal-bottom {
-  place-items: end;
-}
-
 .stats-vertical {
   grid-auto-flow: row;
 }

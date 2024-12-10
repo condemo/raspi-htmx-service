@@ -11,6 +11,6 @@ type WeatherConfig struct {
 func NewWeatherConfig() *WeatherConfig {
 	godotenv.Load("services/raspi_services/weather_service/.env")
 	return &WeatherConfig{
-		City: "zaragoza",
+		City: "Zaragoza",
 	}
 }

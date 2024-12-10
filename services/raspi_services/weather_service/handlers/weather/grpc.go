@@ -85,7 +85,7 @@ func (h *WeatherGrpcHandler) GetConfig(ctx context.Context, req *pb.EmptyRequest
 	return res, nil
 }
 
-func (h *WeatherGrpcHandler) UpdateConfig(ctx context.Context, req *pb.ConfigRequest) (*pb.ConfigResponse, error) {
-	// TODO:
-	return nil, nil
+func (h *WeatherGrpcHandler) UpdateConfig(ctx context.Context, req *pb.ServiceConfig) (*pb.ConfigResponse, error) {
+	res, err := h.wservice.UpdateConfig(ctx, req)
+	return res, err
 }

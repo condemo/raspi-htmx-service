@@ -15,7 +15,7 @@ type RaspiService interface {
 	Stop(context.Context) error
 	GetStatus(context.Context) *pb.RaspiService
 	GetConfig(context.Context) *pb.ConfigResponse
-	UpdateConfig(context.Context, *pb.ConfigRequest) (*pb.ConfigResponse, error)
+	UpdateConfig(context.Context, *pb.ServiceConfig) (*pb.ConfigResponse, error)
 	GetFullInfo(context.Context, *pb.EmptyRequest) *pb.ServiceFullInfo
 }
 
