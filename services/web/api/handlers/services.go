@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"strconv"
 	"time"
@@ -100,9 +99,18 @@ func (h *ServiceHandler) getConfig(w http.ResponseWriter, r *http.Request) error
 
 func (h *ServiceHandler) updateConfig(w http.ResponseWriter, r *http.Request) error {
 	city := r.FormValue("city")
-	id := r.PathValue("id")
+	id, err := strconv.ParseInt(r.PathValue("id"), 10, 32)
+	if err != nil {
+		return err
+	}
 
-	fmt.Println("update -> city: ", city)
-	fmt.Println("update -> id: ", id)
-	return nil
+	ctx, cancel := context.WithTimeout(r.Context(), time.Second*2)
+	defer cancel()
+
+	_, err = h.managerConn.UpdateConfig(ctx, &pb.ServiceConfig{
+		Id:   uint32(id),
+		City: city,
+	})
+
+	return err
 }
