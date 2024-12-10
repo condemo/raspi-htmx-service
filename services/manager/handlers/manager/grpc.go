@@ -139,3 +139,9 @@ func (h *ManagerGrpcHandler) GetConfig(ctx context.Context, req *pb.ServiceIdReq
 
 	return res, nil
 }
+
+func (h *ManagerGrpcHandler) UpdateConfig(ctx context.Context, req *pb.ServiceConfig) (*pb.ConfigResponse, error) {
+	id := req.GetId()
+	res, err := h.raspiServices[id].UpdateConfig(ctx, req)
+	return res, err
+}

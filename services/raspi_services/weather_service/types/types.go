@@ -26,7 +26,7 @@ func NewWeather() *Weather {
 
 	w.Name = "WeatherService"
 	w.config = config.NewWeatherConfig()
-	w.ID = 1
+	w.ID = 0
 	w.State = false
 	w.FullInfo = w.NewFullInfo()
 
@@ -88,5 +88,11 @@ func (w *Weather) NewFullInfo() *FullInfo {
 }
 
 func (w *Weather) GetConfig() *config.WeatherConfig {
+	return w.config
+}
+
+func (w *Weather) UpdateConfig(city string) *config.WeatherConfig {
+	w.config.City = city
+
 	return w.config
 }

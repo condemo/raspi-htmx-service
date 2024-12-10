@@ -24,6 +24,7 @@ const (
 	ServiceManager_StopService_FullMethodName  = "/manager.ServiceManager/StopService"
 	ServiceManager_GetFullInfo_FullMethodName  = "/manager.ServiceManager/GetFullInfo"
 	ServiceManager_GetConfig_FullMethodName    = "/manager.ServiceManager/GetConfig"
+	ServiceManager_UpdateConfig_FullMethodName = "/manager.ServiceManager/UpdateConfig"
 )
 
 // ServiceManagerClient is the client API for ServiceManager service.
@@ -35,6 +36,7 @@ type ServiceManagerClient interface {
 	StopService(ctx context.Context, in *ServiceIdRequest, opts ...grpc.CallOption) (*RaspiService, error)
 	GetFullInfo(ctx context.Context, in *ServiceIdRequest, opts ...grpc.CallOption) (*ServiceFullInfo, error)
 	GetConfig(ctx context.Context, in *ServiceIdRequest, opts ...grpc.CallOption) (*ConfigResponse, error)
+	UpdateConfig(ctx context.Context, in *ServiceConfig, opts ...grpc.CallOption) (*ConfigResponse, error)
 }
 
 type serviceManagerClient struct {
@@ -95,6 +97,16 @@ func (c *serviceManagerClient) GetConfig(ctx context.Context, in *ServiceIdReque
 	return out, nil
 }
 
+func (c *serviceManagerClient) UpdateConfig(ctx context.Context, in *ServiceConfig, opts ...grpc.CallOption) (*ConfigResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ConfigResponse)
+	err := c.cc.Invoke(ctx, ServiceManager_UpdateConfig_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ServiceManagerServer is the server API for ServiceManager service.
 // All implementations must embed UnimplementedServiceManagerServer
 // for forward compatibility.
@@ -104,6 +116,7 @@ type ServiceManagerServer interface {
 	StopService(context.Context, *ServiceIdRequest) (*RaspiService, error)
 	GetFullInfo(context.Context, *ServiceIdRequest) (*ServiceFullInfo, error)
 	GetConfig(context.Context, *ServiceIdRequest) (*ConfigResponse, error)
+	UpdateConfig(context.Context, *ServiceConfig) (*ConfigResponse, error)
 	mustEmbedUnimplementedServiceManagerServer()
 }
 
@@ -128,6 +141,9 @@ func (UnimplementedServiceManagerServer) GetFullInfo(context.Context, *ServiceId
 }
 func (UnimplementedServiceManagerServer) GetConfig(context.Context, *ServiceIdRequest) (*ConfigResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetConfig not implemented")
+}
+func (UnimplementedServiceManagerServer) UpdateConfig(context.Context, *ServiceConfig) (*ConfigResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateConfig not implemented")
 }
 func (UnimplementedServiceManagerServer) mustEmbedUnimplementedServiceManagerServer() {}
 func (UnimplementedServiceManagerServer) testEmbeddedByValue()                        {}
@@ -240,6 +256,24 @@ func _ServiceManager_GetConfig_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ServiceManager_UpdateConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ServiceConfig)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceManagerServer).UpdateConfig(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ServiceManager_UpdateConfig_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceManagerServer).UpdateConfig(ctx, req.(*ServiceConfig))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ServiceManager_ServiceDesc is the grpc.ServiceDesc for ServiceManager service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -266,6 +300,10 @@ var ServiceManager_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetConfig",
 			Handler:    _ServiceManager_GetConfig_Handler,
+		},
+		{
+			MethodName: "UpdateConfig",
+			Handler:    _ServiceManager_UpdateConfig_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

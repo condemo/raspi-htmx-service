@@ -8,6 +8,7 @@ service ServiceManager {
   rpc StopService(ServiceIdRequest) returns (RaspiService) {}
   rpc GetFullInfo(ServiceIdRequest) returns (ServiceFullInfo) {}
   rpc GetConfig(ServiceIdRequest) returns (ConfigResponse) {}
+  rpc UpdateConfig(ServiceConfig) returns (ConfigResponse) {}
 
   // TODO: falta `UpdateConfig`
 }
