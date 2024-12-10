@@ -63,4 +63,11 @@ message GetServicesResponse {
   repeated RaspiService services = 1;
 }
 
-message ConfigResponse {}
+message ServiceConfig {
+  uint32 id = 1;
+  string city = 2;
+}
+
+message ConfigResponse {
+  ServiceConfig config = 1;
+}

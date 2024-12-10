@@ -36,7 +36,7 @@ type RaspiServiceClient interface {
 	GetStatus(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*RaspiService, error)
 	GetFullInfo(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*ServiceFullInfo, error)
 	GetConfig(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*ConfigResponse, error)
-	UpdateConfig(ctx context.Context, in *ConfigRequest, opts ...grpc.CallOption) (*ConfigResponse, error)
+	UpdateConfig(ctx context.Context, in *ServiceConfig, opts ...grpc.CallOption) (*ConfigResponse, error)
 }
 
 type raspiServiceClient struct {
@@ -97,7 +97,7 @@ func (c *raspiServiceClient) GetConfig(ctx context.Context, in *EmptyRequest, op
 	return out, nil
 }
 
-func (c *raspiServiceClient) UpdateConfig(ctx context.Context, in *ConfigRequest, opts ...grpc.CallOption) (*ConfigResponse, error) {
+func (c *raspiServiceClient) UpdateConfig(ctx context.Context, in *ServiceConfig, opts ...grpc.CallOption) (*ConfigResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ConfigResponse)
 	err := c.cc.Invoke(ctx, RaspiService_UpdateConfig_FullMethodName, in, out, cOpts...)
@@ -116,7 +116,7 @@ type RaspiServiceServer interface {
 	GetStatus(context.Context, *EmptyRequest) (*RaspiService, error)
 	GetFullInfo(context.Context, *EmptyRequest) (*ServiceFullInfo, error)
 	GetConfig(context.Context, *EmptyRequest) (*ConfigResponse, error)
-	UpdateConfig(context.Context, *ConfigRequest) (*ConfigResponse, error)
+	UpdateConfig(context.Context, *ServiceConfig) (*ConfigResponse, error)
 	mustEmbedUnimplementedRaspiServiceServer()
 }
 
@@ -142,7 +142,7 @@ func (UnimplementedRaspiServiceServer) GetFullInfo(context.Context, *EmptyReques
 func (UnimplementedRaspiServiceServer) GetConfig(context.Context, *EmptyRequest) (*ConfigResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetConfig not implemented")
 }
-func (UnimplementedRaspiServiceServer) UpdateConfig(context.Context, *ConfigRequest) (*ConfigResponse, error) {
+func (UnimplementedRaspiServiceServer) UpdateConfig(context.Context, *ServiceConfig) (*ConfigResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateConfig not implemented")
 }
 func (UnimplementedRaspiServiceServer) mustEmbedUnimplementedRaspiServiceServer() {}
@@ -257,7 +257,7 @@ func _RaspiService_GetConfig_Handler(srv interface{}, ctx context.Context, dec f
 }
 
 func _RaspiService_UpdateConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ConfigRequest)
+	in := new(ServiceConfig)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -269,7 +269,7 @@ func _RaspiService_UpdateConfig_Handler(srv interface{}, ctx context.Context, de
 		FullMethod: RaspiService_UpdateConfig_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RaspiServiceServer).UpdateConfig(ctx, req.(*ConfigRequest))
+		return srv.(RaspiServiceServer).UpdateConfig(ctx, req.(*ServiceConfig))
 	}
 	return interceptor(ctx, in, info, handler)
 }
