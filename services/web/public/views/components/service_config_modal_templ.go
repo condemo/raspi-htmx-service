@@ -38,26 +38,26 @@ func ServiceConfigModal(c *pb.ServiceConfig) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(string(templ.URL(fmt.Sprintf("/services/config/%d", c.GetId()))))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/components/service_config_modal.templ`, Line: 11, Col: 83}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/components/service_config_modal.templ`, Line: 12, Col: 77}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-target=\"#config-modal\" hx-swap=\"delete\"><h3 class=\"text-lg font-bold my-2\">Weather Config</h3><label for=\"city\">City: </label> <input id=\"city\" name=\"city\" type=\"text\" class=\"input input-bordered\" value=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-target=\"#config-modal\" hx-swap=\"delete\"><h3 class=\"text-xl font-bold my-2\">Weather Config</h3><label for=\"city\" class=\"font-bold text-lg\">City: </label> <input id=\"city\" name=\"city\" type=\"text\" class=\"input input-bordered\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(c.GetCity())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/components/service_config_modal.templ`, Line: 15, Col: 95}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/components/service_config_modal.templ`, Line: 18, Col: 93}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"><br><button type=\"submit\" class=\"btn btn-success my-2\">Save</button></form><div class=\"modal-action\"><button class=\"btn fixed top-4 right-4\" hx-on:click=\"document.getElementById(&#34;config-modal&#34;).remove()\">X</button></div></div></dialog>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"><br><button type=\"submit\" class=\"btn btn-success my-2 font-bold text-lg\">Save</button></form><div class=\"modal-action\"><button class=\"btn fixed top-4 right-4\" hx-on:click=\"document.getElementById(&#34;config-modal&#34;).remove()\">X</button></div></div></dialog>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
