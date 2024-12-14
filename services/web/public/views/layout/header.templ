@@ -3,19 +3,19 @@ package layout
 import "github.com/condemo/raspi-htmx-service/services/common/config"
 
 templ Header(title string) {
-<!DOCTYPE html>
-<html lang="en" data-theme={ string(config.UsConf.GeneralConf.CurrentTheme) }>
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{ title } | Raspi</title>
-  <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
-  <link rel="manifest" href="/static/manifest.json" />
-  <script src="/static/js/htmx.js"></script>
-  <script src="/static/js/htmx-ws.js"></script>
-</head>
-{ children... }
-
-</html>
+	<!DOCTYPE html>
+	<html lang="en" data-theme={ string(config.UsConf.GeneralConf.CurrentTheme) }>
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<title>{ title } | Raspi</title>
+			<link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
+			<link rel="manifest" href="/static/manifest.json"/>
+			<script src="/static/js/htmx.js"></script>
+			<script src="/static/js/htmx-ws.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+			<script defer src="/static/js/events.js"></script>
+		</head>
+		{ children... }
+	</html>
 }

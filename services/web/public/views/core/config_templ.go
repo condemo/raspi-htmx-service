@@ -44,7 +44,7 @@ func ConfigPage(c config.UserConfig) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<h1 class=\"text-6xl font-bold py-3\">Configuration</h1><hr class=\"p-2\"><form hx-put=\"/conf\"><div id=\"config-section\" class=\"md:mx-3\">")
+			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -52,7 +52,7 @@ func ConfigPage(c config.UserConfig) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"space-x-3 md:w-1/3 mx-auto w-full\"><button class=\"btn bg-base-content mx-auto my-5 text-lg text-black w-1/3\" type=\"submit\">Save</button> <button class=\"btn btn-neutral mx-auto my-5 text-lg w-1/3\" hx-get=\"/conf\" hx-target=\"#config-section\">Reset</button></div></form>")
+			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 2)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
