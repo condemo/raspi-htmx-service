@@ -87,5 +87,13 @@ func (h *WeatherGrpcHandler) GetConfig(ctx context.Context, req *pb.EmptyRequest
 
 func (h *WeatherGrpcHandler) UpdateConfig(ctx context.Context, req *pb.ServiceConfig) (*pb.ConfigResponse, error) {
 	res, err := h.wservice.UpdateConfig(ctx, req)
-	return res, err
+	if err != nil {
+		h.LogService.LogMessage(ctx, logs.MakeLog(
+			pb.LogMessageType_ERROR, err.Error()))
+		return nil, err
+	}
+	h.LogService.LogMessage(ctx, logs.MakeLog(
+		pb.LogMessageType_SUCCESS, "Config Updated"))
+
+	return res, nil
 }
