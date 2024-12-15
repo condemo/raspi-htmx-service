@@ -1,2 +1,0 @@
- <body hx-boost=\"true\" hx-ext=\"ws\" ws-connect=\"/ws/info\"><div id=\"main-container\" class=\"flex flex-col mx-auto text-center h-screen\">
-</div></body>

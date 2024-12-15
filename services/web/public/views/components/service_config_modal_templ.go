@@ -31,7 +31,7 @@ func ServiceConfigModal(c *pb.ServiceConfig) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<dialog id=\"config-modal\" class=\"modal modal-open sm:modal-middle\"><div class=\"modal-box\"><form hx-put=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -44,7 +44,7 @@ func ServiceConfigModal(c *pb.ServiceConfig) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 2)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-target=\"#config-modal\" hx-swap=\"delete\"><h3 class=\"text-xl font-bold my-2\">Weather Config</h3><label for=\"city\" class=\"font-bold text-lg\">City: </label> <input id=\"city\" name=\"city\" type=\"text\" class=\"input input-bordered\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -57,7 +57,7 @@ func ServiceConfigModal(c *pb.ServiceConfig) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 3)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"><br><button type=\"submit\" class=\"btn btn-success my-2 font-bold text-lg\">Save</button></form><div class=\"modal-action\"><button class=\"btn fixed top-4 right-4\" hx-on:click=\"document.getElementById(&#34;config-modal&#34;).remove()\">X</button></div></div></dialog>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

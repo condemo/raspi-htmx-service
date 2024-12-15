@@ -10,8 +10,11 @@ document.getElementById("config-section").addEventListener("htmx:afterRequest", 
       toast.onmouseenter = Swal.stopTimer;
       toast.onmouseleave = Swal.resumeTimer;
     },
-    background: "green",
-    color: "white"
+    background: "#2DD4BF",
+    color: "black",
+    iconColor: "black",
+    width: "15em",
+    padding: ".9em .9em .9em"
   });
   Toast.fire({
     icon: "success",
