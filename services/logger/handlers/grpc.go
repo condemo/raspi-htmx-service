@@ -30,3 +30,11 @@ func (h *LoggerGrpcHandler) LogMessage(ctx context.Context, req *pb.LogRequest) 
 	res := &pb.LogResponse{}
 	return res, nil
 }
+
+func (h *LoggerGrpcHandler) CleanErrorLog(ctx context.Context, req *pb.CleanErrorReq) (*pb.CleanErrorRes, error) {
+	if err := h.loggerService.CleanErrorLog(ctx, req); err != nil {
+		return nil, err
+	}
+
+	return &pb.CleanErrorRes{}, nil
+}

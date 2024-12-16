@@ -43,3 +43,11 @@ func (s *LoggerService) LogMessage(ctx context.Context, req *pb.LogRequest) erro
 
 	return nil
 }
+
+func (s *LoggerService) CleanErrorLog(ctx context.Context, req *pb.CleanErrorReq) error {
+	if err := s.conf.Clean(); err != nil {
+		return err
+	}
+
+	return nil
+}

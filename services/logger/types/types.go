@@ -8,4 +8,5 @@ import (
 
 type Logger interface {
 	LogMessage(ctx context.Context, req *pb.LogRequest) error
+	CleanErrorLog(ctx context.Context, req *pb.CleanErrorReq) error
 }
