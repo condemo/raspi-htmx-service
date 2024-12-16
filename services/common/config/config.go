@@ -51,12 +51,29 @@ type UserConfig struct {
 }
 
 func loadUserConfig() UserConfig {
-	f, err := os.Open(confFile)
-	if err != nil {
-		log.Fatal(err)
-	}
 	us := &UserConfig{}
-	toml.NewDecoder(f).Decode(us)
+
+	if _, err := os.Stat(confFile); os.IsNotExist(err) {
+		f, err := os.Create(confFile)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer f.Close()
+
+		us.GeneralConf = GeneralConfig{CurrentTheme: night}
+		us.InfoConf = InfoConfig{InfoTick: time.Duration(time.Second * 2)}
+
+		toml.NewEncoder(f).Encode(us)
+
+	} else {
+		f, err := os.Open(confFile)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer f.Close()
+
+		toml.NewDecoder(f).Decode(us)
+	}
 
 	return *us
 }
