@@ -24,6 +24,7 @@ func NewConfigHandler(logC *grpc.ClientConn) *ConfigHandler {
 func (h *ConfigHandler) RegisterRoutes(r *http.ServeMux) {
 	r.HandleFunc("GET /", MakeHandler(h.getConfig))
 	r.HandleFunc("PUT /", MakeHandler(h.updateConfig))
+	r.HandleFunc("DELETE /logs", MakeHandler(h.cleanErrorLog))
 }
 
 func (h *ConfigHandler) getConfig(w http.ResponseWriter, r *http.Request) error {
@@ -49,6 +50,19 @@ func (h *ConfigHandler) updateConfig(w http.ResponseWriter, r *http.Request) err
 	w.Header().Set("HX-Redirect", "/app/config")
 	w.WriteHeader(http.StatusAccepted)
 	h.logConn.LogMessage(r.Context(), utils.MakeLog(
-		pb.LogMessageType_SUCCESS, "Config Successfull Updated"))
+		pb.LogMessageType_INFO, "Config Updated"))
+	return nil
+}
+
+func (h *ConfigHandler) cleanErrorLog(w http.ResponseWriter, r *http.Request) error {
+	if _, err := h.logConn.CleanErrorLog(r.Context(), &pb.CleanErrorReq{}); err != nil {
+		return err
+	}
+
+	w.Header().Set("HX-Redirect", "/app/config")
+	w.WriteHeader(http.StatusAccepted)
+	h.logConn.LogMessage(r.Context(), utils.MakeLog(
+		pb.LogMessageType_INFO, "Error Log File Cleaned"))
+
 	return nil
 }
