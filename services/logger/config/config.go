@@ -54,3 +54,10 @@ func (c *LoggerConfig) SaveLog(msg string) error {
 
 	return nil
 }
+
+func (c *LoggerConfig) Clean() error {
+	if err := os.Truncate(c.LogFilePath, 0); err != nil {
+		return err
+	}
+	return nil
+}
