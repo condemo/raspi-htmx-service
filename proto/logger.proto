@@ -5,6 +5,7 @@ option go_package = "github.com/condemo/raspi-htmx-service/common/services/pb";
 
 service LoggerService {
   rpc LogMessage(LogRequest) returns (LogResponse) {}
+  rpc CleanErrorLog(CleanErrorReq) returns (CleanErrorRes) {}
 }
 
 enum ServiceName {
@@ -28,3 +29,7 @@ message LogRequest {
 }
 
 message LogResponse {}
+
+message CleanErrorReq {}
+
+message CleanErrorRes {}
