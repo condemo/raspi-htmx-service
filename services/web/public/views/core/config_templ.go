@@ -52,7 +52,21 @@ func ConfigPage(c config.UserConfig) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"space-x-3 md:w-1/3 mx-auto w-full\"><button class=\"btn bg-base-content mx-auto my-5 text-lg text-black w-1/3\" type=\"submit\">Save</button> <button class=\"btn btn-neutral mx-auto my-5 text-lg w-1/3\" hx-get=\"/conf\" hx-target=\"#config-section\">Reset</button></div></form>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"space-x-3 md:w-1/3 mx-auto w-full\"><button class=\"btn bg-base-content mx-auto my-5 text-lg text-black w-1/3\" type=\"submit\">Save</button> <button class=\"btn btn-neutral mx-auto my-5 text-lg w-1/3\" hx-get=\"/conf\" hx-target=\"#config-section\">Reset</button> <button class=\"btn btn-error text-sm px-1 fixed bottom-1 right-1 rounded-full\" hx-delete=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var3 string
+			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(
+				string(templ.URL("/conf/logs")))
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `services/web/public/views/core/config.templ`, Line: 21, Col: 37}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\">Clear Logs</button></div></form>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
